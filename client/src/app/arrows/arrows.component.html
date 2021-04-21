@@ -1,0 +1,32 @@
+<div class="frecce">
+
+<div *ngIf="dir[0]; else notSinistra">
+    <img id="sinistra" class="freccia_verde" src="../../assets/turn_left_green.png"> 
+</div>
+<ng-template #notSinistra>
+    <img id="sinistra" class="freccia_nera" src="../../assets/turn_left.png">
+</ng-template>
+
+<div *ngIf="dir[1]; else notBasso">
+    <img id="basso" class="freccia_verde" src="../../assets/turn_around_green.png"> 
+</div>
+<ng-template #notBasso>
+    <img id="basso" class="freccia_nera" src="../../assets/turn_around.png">
+</ng-template>
+
+<div *ngIf="dir[2]; else notDestra">
+    <img id="destra" class="freccia_verde" src="../../assets/turn_right_green.png"> 
+</div>
+<ng-template #notDestra>
+    <img id="destra" class="freccia_nera" src="../../assets/turn_right.png">
+</ng-template>
+
+<div *ngIf="dir[3]; else notMoving">
+    <img id="movement" class="play_stop" src="../../assets/play.png"> 
+</div>
+<ng-template #notMoving>
+    <img id="movement" class="play_stop" src="../../assets/stop.png">
+</ng-template>
+
+</div>
+

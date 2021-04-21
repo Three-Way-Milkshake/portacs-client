@@ -1,0 +1,22 @@
+<h1>Mappa</h1>
+
+<table class="map">
+    <tr *ngFor="let row of tmp; let i = index">
+        <td *ngFor="let cell of row; let j = index">
+            <div class="cc" [ngSwitch]="cell">
+                <div *ngSwitchCase="0" class="NTr">&nbsp;</div>
+                <div *ngSwitchCase="1" class="YTr">&nbsp;</div>
+                <div *ngSwitchCase="2" class="dir">&#8593;</div>
+                <div *ngSwitchCase="3" class="dir">&#8594;</div>
+                <div *ngSwitchCase="4" class="dir">&#8595;</div>
+                <div *ngSwitchCase="5" class="dir">&#8592;</div>
+                <img *ngSwitchCase="6" class="unit" src="assets/mulettoN.png">
+                <img *ngSwitchCase="7" class="unit" src="assets/mulettoE.png">
+                <img *ngSwitchCase="8" class="unit" src="assets/mulettoS.png">
+                <img *ngSwitchCase="9" class="unit" src="assets/mulettoO.png">
+                <p *ngSwitchDefault class="POI">{{cell}}</p>
+            </div>
+           
+        </td>
+    </tr>
+</table>

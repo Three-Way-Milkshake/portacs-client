@@ -1,0 +1,48 @@
+<h1>Mappa modificabile</h1>
+<table class="map">
+    <tr *ngFor="let row of tmp; let i = index">
+        <td *ngFor="let cell of row; let j = index">
+            <div [ngSwitch]="cell">
+                <input *ngSwitchCase="0" type="submit" class="NTr" value="&nbsp;" (click)="pressedButton(i, j)"/> <!-- i = riga, j = colonna -->
+                <input *ngSwitchCase="1" type="submit" class="YTr" value="&nbsp;" (click)="pressedButton(i, j)"/> 
+                <input *ngSwitchCase="2" type="submit" class="dir" value="&#8593;" (click)="pressedButton(i, j)"/> 
+                <input *ngSwitchCase="3" type="submit" class="dir" value="&#8594;" (click)="pressedButton(i, j)"/>
+                <input *ngSwitchCase="4" type="submit" class="dir" value="&#8595;" (click)="pressedButton(i, j)"/> 
+                <input *ngSwitchCase="5" type="submit" class="dir" value="&#8592;" (click)="pressedButton(i, j)"/> 
+                <input *ngSwitchDefault type="submit" class="POI" value="{{cell}}" (click)="pressedButton(i, j)"/> 
+            </div>
+           
+        </td>
+    </tr>
+</table>
+<input type ="submit" (click)="newRow()"    value="Aggiungi riga"/>
+<input type ="submit" (click)="deleteRow()" value="Elimina riga"/>
+<input type="submit"  (click)="newCol()"    value="Aggiungi colonna"/>
+<input type="submit"  (click)="deleteCol()" value="Elimina colonna"/>
+
+<div *ngIf="displaySelection">
+    <table>
+        <tr>
+            <td class="non"><input type="submit" class="NTr" value="&nbsp;" (click)="changeType(0)"/></td>
+            <td class="non"><input type="submit" class="YTr" value="&nbsp;" (click)="changeType(1)"/></td>
+            <td class="non"><input type="submit" class="dir" value="&#8593;" (click)="changeType(2)"/></td>
+            <td class="non"><input type="submit" class="dir" value="&#8594;" (click)="changeType(3)"/></td>
+            <td class="non"><input type="submit" class="dir" value="&#8595;" (click)="changeType(4)"/></td>
+            <td class="non"><input type="submit" class="dir" value="&#8592;" (click)="changeType(5)"/></td>
+            <td class="non">
+                <input type="text" class="POI-input" #POI value="inserisci ID POI"/>
+                <button class="add-button" (click)="changeType(POI.value)" >
+                    Aggiungi POI
+                </button> 
+            </td> 
+        </tr>
+    </table>
+</div>
+
+<div>
+    <button class="confirm" (click)="confirmMap()" >
+        Conferma
+    </button> 
+</div>
+
+

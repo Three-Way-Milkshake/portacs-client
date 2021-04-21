@@ -1,0 +1,14 @@
+<div *ngIf="isLoggedin; else notLoggedin">
+    <!-- aggiungere tag comuni -->
+    <app-generic></app-generic>
+    <div *ngIf="isAdmin; else isManager">
+        <app-admin></app-admin>
+    </div>
+    <ng-template #isManager>
+        <app-manager></app-manager>
+    </ng-template>
+</div>
+<ng-template #notLoggedin><app-login></app-login></ng-template>
+
+<router-outlet></router-outlet>
+

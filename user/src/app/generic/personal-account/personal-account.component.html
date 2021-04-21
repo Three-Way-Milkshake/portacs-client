@@ -1,0 +1,20 @@
+<p>il tuo account</p>
+<div>
+    <label id="name">Name: </label>
+    <input for="name" #Name value={{name}} />
+    
+    <label id="surname">Surname: </label>
+    <input for="surname" #Surname value={{surname}} />
+     
+    <div>
+        <label>Password</label>
+        <input type="password" #Password value={{password}}>
+        <input type="password"  #Password pPassword />
+        <p-password [ngModel]="password"></p-password>
+    </div>
+
+    <button class="add-button" (click)="save(Name.value, Surname.value, Password.value)" >
+      Salva mofiche
+    </button> 
+
+  </div>

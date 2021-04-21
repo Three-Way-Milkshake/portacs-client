@@ -1,0 +1,10 @@
+<h1>Lista task</h1>
+<ol>
+    <li *ngFor="let task of lista">
+        {{task}}
+     </li>
+</ol>
+
+<div *ngIf="showButton">
+    <button class="task_ok" (click)="taskCompletata()">Task Completata</button>
+</div>
