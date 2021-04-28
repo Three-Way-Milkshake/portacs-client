@@ -7,6 +7,9 @@ const UserInformation = require('./js/user-information');
 const POIlist = require('./js/POIlist')
 const net = require('net');
 const ListsTask = require('./js/listsTask')
+const ListManager = require('./js/listManager.js');
+const CommandsToJava = require('./js/commandsToJava.js');
+const { createJsxText } = require("typescript");
 const SERVER_PORT = 1723;
 
 const io = require("socket.io")(http, {
@@ -16,6 +19,8 @@ const io = require("socket.io")(http, {
     }
 });
 
+let ctj = new CommandsToJava();
+let listManager = new ListManager();
 let user = new UserInformation();
 let map = new Map();
 let poil = new POIlist();
@@ -34,6 +39,7 @@ dir:
 
 var client = net.connect(SERVER_PORT, 'localhost', ()=>{
     console.log('connected to server');
+    /*----------------------------- SERVE ANCORA? ------------------------------------ */
     client.write("RESP\n");
     client.setNoDelay();
 });
@@ -50,7 +56,6 @@ client.on('data', (data)=>{
         console.log(cmd);
         switch(cmd[0]){
             case "MAP":
-                
                 map.createMap(cmd[1], cmd[2], cmd[3]);
                 io.emit("map", map.getMap());
                 break;
@@ -61,12 +66,14 @@ client.on('data', (data)=>{
                 }
                 io.emit("unit", mul);
                 break;
-            
-
+            case "ADU":
+                io.emit("responseregistration", cmd[1]+","+cmd[2]);
+                break;
             default: 
-                console.log("Unrecognized message from server");
+                console.log("Unrecognized message from server: " + cmd[0]);
         }
     }
+    client.write(ctj.getDatiESvuota());
     client.write('\n', ()=>{
         console.log("response sent");
     });
@@ -97,6 +104,10 @@ io.on("connection", (socket) => {
         user.setInfo(userInfo[0], userInfo[1], userInfo[2]);
         socket.emit("userinformation", user.getInformation());
     });
+    socket.on("registration", (data) => {
+        listManager.add(data);
+        ctj.aggiungiComando("ADU,MANAGER,"+data);
+    });
     socket.on("getinfoaccount", () => {
         socket.emit("userinformation", user.getInformation());
     });
@@ -115,7 +126,6 @@ io.on("connection", (socket) => {
     });
     socket.on("getlistAss", () => {
         socket.emit("listAss", l.getAss());
-        
     });
     socket.on("getlistNotAss", () => {
         socket.emit("listnotAss", l.getNotAss());

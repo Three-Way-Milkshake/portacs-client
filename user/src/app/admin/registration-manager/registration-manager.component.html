@@ -1,1 +1,19 @@
-<p>registration-manager works!</p>
+<p>Buongiornissimo caro  </p>
+
+<form>
+    <div class="input">
+        <label>Inserire nome responsabile</label>
+        <input type="text" name="name" [(ngModel)]="name">
+    </div>
+    <div class="input">
+        <label>Inserire cognome responsabile</label>
+        <input type="text" name="surname" [(ngModel)]="surname">
+    </div>
+    <div>
+        <input type="submit" value="Registra" (click)="registration()">
+    </div>
+</form>
+    <div *ngIf="response">
+        <h4>ID: {{id}}</h4>
+        <h4>Password: {{pwd}}</h4>
+    </div>
