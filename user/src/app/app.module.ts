@@ -18,6 +18,7 @@ import {AccordionModule} from 'primeng/accordion';
 import { TaskListsComponent } from './manager/task-lists/task-lists.component';
 import {OrderListModule} from 'primeng/orderlist';
 import {ListboxModule} from 'primeng/listbox';
+import { RegistrationManagerComponent } from './admin/registration-manager/registration-manager.component';
 
 @NgModule({
   declarations: [
@@ -30,8 +31,8 @@ import {ListboxModule} from 'primeng/listbox';
     POIListComponent,
     PersonalAccountComponent,
     ManageMapComponent,
-    TaskListsComponent
-
+    TaskListsComponent,
+    RegistrationManagerComponent,
   ],
   imports: [
     BrowserModule,
