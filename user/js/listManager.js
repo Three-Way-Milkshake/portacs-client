@@ -1,9 +1,12 @@
 class ListManager{
-    listM = ["red,john", "teresa,lisbon"];
-    
+    listM = ["patrick,jane", "red,john", "teresa,lisbon"];    
     add(s) {
         this.listM.push(s);
     }
-
+/*
+    setlistM(l){
+        this.listM = l;
+    }
+*/
 }
 module.exports = ListManager;

@@ -69,7 +69,12 @@ client.on('data', (data)=>{
             case "ADU":
                 io.emit("responseregistration", cmd[1]+","+cmd[2]);
                 break;
-            default: 
+            case "LISTU":
+                for (let k = 2; k < parseInt(cmd[1])*3+2; k+=3) {
+                    listManager.add(cmd[k],cmd[k+1],cmd[k+2]);
+                }
+                break;
+            default:
                 console.log("Unrecognized message from server: " + cmd[0]);
         }
     }
