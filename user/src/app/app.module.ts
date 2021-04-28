@@ -19,6 +19,7 @@ import { TaskListsComponent } from './manager/task-lists/task-lists.component';
 import {OrderListModule} from 'primeng/orderlist';
 import {ListboxModule} from 'primeng/listbox';
 import { RegistrationManagerComponent } from './admin/registration-manager/registration-manager.component';
+import { ViewListManagerComponent } from './admin/view-list-manager/view-list-manager.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { RegistrationManagerComponent } from './admin/registration-manager/regis
     ManageMapComponent,
     TaskListsComponent,
     RegistrationManagerComponent,
+    ViewListManagerComponent,
   ],
   imports: [
     BrowserModule,

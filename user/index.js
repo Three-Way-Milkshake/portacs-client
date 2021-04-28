@@ -21,6 +21,8 @@ const io = require("socket.io")(http, {
 
 let ctj = new CommandsToJava();
 let listManager = new ListManager();
+let tmpName = "";
+let tmpSurname = "";
 let user = new UserInformation();
 let map = new Map();
 let poil = new POIlist();
@@ -68,8 +70,10 @@ client.on('data', (data)=>{
                 break;
             case "ADU":
                 io.emit("responseregistration", cmd[1]+","+cmd[2]);
+                addTempManager(cmd[1]);
                 break;
             case "LISTU":
+                listManager.delete();
                 for (let k = 2; k < parseInt(cmd[1])*3+2; k+=3) {
                     listManager.add(cmd[k],cmd[k+1],cmd[k+2]);
                 }
@@ -109,8 +113,14 @@ io.on("connection", (socket) => {
         user.setInfo(userInfo[0], userInfo[1], userInfo[2]);
         socket.emit("userinformation", user.getInformation());
     });
+    socket.on("getlistmanager", () => {
+        socket.emit("viewlistmanager", );
+    });
     socket.on("registration", (data) => {
-        listManager.add(data);
+        //listManager.add(data);
+        let tmpStr = data.split(',');
+        tmpName = tmpStr[0];
+        tmpSurname = tmpStr[1];
         ctj.aggiungiComando("ADU,MANAGER,"+data);
     });
     socket.on("getinfoaccount", () => {
@@ -139,6 +149,13 @@ io.on("connection", (socket) => {
 
 
 });
+
+function addTempManager(idManager) {
+    listManager.add(tmpName+","+tmpSurname+","+idManager);
+    tmpName = "";
+    tmpSurname = "";
+    console.log(listManager.getListManager());
+}
 
 http.listen(HTTP_PORT, () => {
     console.log("server is listening" + HTTP_PORT);
