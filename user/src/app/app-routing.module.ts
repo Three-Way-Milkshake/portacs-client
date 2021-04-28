@@ -2,6 +2,7 @@ import { TaskListsComponent } from './manager/task-lists/task-lists.component';
 
 import { ManageMapComponent } from './admin/manage-map/manage-map.component';
 import { PersonalAccountComponent } from './generic/personal-account/personal-account.component';
+import { RegistrationManagerComponent } from './admin/registration-manager/registration-manager.component';
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: 'managemap',
     component: ManageMapComponent
+  },
+  {
+    path: 'registrationmanager',
+    component: RegistrationManagerComponent
   },
   {
     path: 'tasklist',
