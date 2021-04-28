@@ -74,8 +74,8 @@ client.on('data', (data)=>{
                 break;
             case "LISTU":
                 listManager.delete();
-                for (let k = 2; k < parseInt(cmd[1])*3+2; k+=3) {
-                    listManager.add(cmd[k],cmd[k+1],cmd[k+2]);
+                for (let k = 2; k < parseInt(cmd[1])*4+2; k+=4) {
+                    listManager.add(cmd[k+1],cmd[k+2],cmd[k]);
                 }
                 break;
             default:
@@ -114,7 +114,7 @@ io.on("connection", (socket) => {
         socket.emit("userinformation", user.getInformation());
     });
     socket.on("getlistmanager", () => {
-        socket.emit("viewlistmanager", );
+        socket.emit("viewlistmanager", listManager.getListManager());
     });
     socket.on("registration", (data) => {
         //listManager.add(data);
@@ -154,7 +154,6 @@ function addTempManager(idManager) {
     listManager.add(tmpName+","+tmpSurname+","+idManager);
     tmpName = "";
     tmpSurname = "";
-    console.log(listManager.getListManager());
 }
 
 http.listen(HTTP_PORT, () => {

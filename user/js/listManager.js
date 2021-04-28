@@ -1,5 +1,5 @@
 class ListManager{
-    listM = ["patrick,jane,0000", "red,john,000005", "teresa,lisbon,00001"];
+    listM = ["0000,patrick,jane", "0001,red,john", "0002,teresa,lisbon"];
 
     delete() {
         this.listM = [];

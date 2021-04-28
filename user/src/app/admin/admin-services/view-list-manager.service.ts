@@ -10,7 +10,6 @@ export class ViewListManagerService {
     return new Observable(observer => {
       socket.on('viewlistmanager', (msg: string) => {
         observer.next(msg);
-        console.log(msg);
       });
     });
   }

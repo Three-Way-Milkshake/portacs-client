@@ -8,11 +8,16 @@ import { NgZone } from '@angular/core';
   styleUrls: ['./view-list-manager.component.css']
 })
 export class ViewListManagerComponent implements OnInit {
-
+  listManager : string[] = [];
   constructor(private service : ViewListManagerService, private ngZone: NgZone) { }
 
   ngOnInit(): void {
     this.service.getListManager();
+    this.service.onNewListManager().subscribe((data : string[]) => {
+      this.ngZone.run(() => {
+        this.listManager = data;
+      });      
+    });
   }
 
 }

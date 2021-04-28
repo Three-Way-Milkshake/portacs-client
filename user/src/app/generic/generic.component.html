@@ -1,8 +1,11 @@
-<p>generic works!</p>
-
-<a routerLink="viewmap">mappa</a>
-<a routerLink="poilist">Lista POI</a>
-<a routerLink="account">Il tuo Account</a>
+<h1>DASHBOARD</h1>
+<ul>
+    <li><a routerLink="viewmap">mappa</a></li>
+    <li><a routerLink="poilist">Lista POI</a></li>
+    <li><a routerLink="account">Il tuo Account</a></li>
+    <li><a *ngIf="isAdmin" routerLink="managemap">Modifica la mappa</a></li>
+    <li><a *ngIf="isAdmin" routerLink="registrationmanager">Registra un manager</a></li>
+    <li><a *ngIf="isAdmin" routerLink="viewlistmanager">Visualizza lista manager</a></li>
+</ul>
 <button routerLink="">Chiudi</button>
-
 
