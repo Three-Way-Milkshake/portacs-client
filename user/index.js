@@ -198,6 +198,7 @@ io.on("connection", (socket) => {
     socket.on("removeList", (data) =>{
         ctj.aggiungiComando("RML,"+data);
         l.removeList(data);
+        socket.emit("listnotAss", l.getNotAss());
     })
 
 

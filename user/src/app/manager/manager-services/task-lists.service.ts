@@ -34,6 +34,5 @@ export class TaskListsService {
 
   remove(id){
     socket.emit("removeList", id);
-    this.getListNotAss();
   }
 }

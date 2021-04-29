@@ -24,11 +24,16 @@ class ListsTask {
     }
 
     removeList(id){
+        let index = -1;
         for (let i = 0; i<this.notAss.length; i++){
             let tmp= this.notAss[i].split(",");
             if (tmp[0] == id) {
-                delete this.notAss[i];
+                index = i;
+                break;
             }
+        }
+        if (index >= 0) {
+            this.notAss.splice(index, 1);
         }
     }
 

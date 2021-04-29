@@ -36,7 +36,7 @@ export class ManageTaskComponent implements OnInit {
 
   }
 
-  confermation(d) {
+  confermation(d : string) {
     this.added = true;
     let tmp = d.split(",");
     if (tmp[0] == "OK") {
@@ -51,7 +51,8 @@ export class ManageTaskComponent implements OnInit {
   add(sP : string){
     this.newList.push(sP);
   }
-  deleteCurrentTask(l){
+  
+  deleteCurrentTask(l : string){
     let index = this.newList.indexOf(l);
     if (index > -1) {
       this.newList.splice(index, 1);
@@ -68,4 +69,5 @@ export class ManageTaskComponent implements OnInit {
       this.poi[i] = tmp[i];
     }
   }
+  
 }
