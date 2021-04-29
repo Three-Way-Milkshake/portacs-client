@@ -11,7 +11,7 @@ export class ManageListService {
 
   confirm(list: string[]){
     socket.emit("newlisttask", list);
-    console.log(list)
+    console.log(list);
   }
 
   response(){
