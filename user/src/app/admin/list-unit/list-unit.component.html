@@ -1,0 +1,32 @@
+
+<div class="newUnit">
+<h2>Registra unità</h2>
+
+<form>
+    <div class="input">
+        <label>Inserire ID</label>
+        <input type="text" name="newUnit" [(ngModel)]="newUnit">
+    </div>
+    <div>
+        <input type="submit" value="Registra" (click)="registration()">
+    </div>
+</form>
+</div>
+
+<div class = "deleteunit"> 
+    <h2>Elimina Unità</h2>
+    <select class="custom-select" [(ngModel)]="selectedUnit">
+        <option *ngFor="let unit of listUnit">{{unit}}</option>
+      </select>
+      <input type="submit" value="Elminina {{selectedUnit}}" (click)="delete()">
+</div>
+
+<!--carino che venisse fuori che ha eliminato-->
+
+<h2>Lista unità</h2>
+
+<ol>
+    <li *ngFor="let unit of listUnit">
+        {{unit}}
+     </li>
+</ol>

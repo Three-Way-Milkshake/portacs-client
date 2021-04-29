@@ -12,6 +12,7 @@ export class TaskListsService {
     return new Observable(observer => {
       socket.on('listAss', (list: string) => {
         observer.next(list);
+        
       });
     });
   }
@@ -29,5 +30,10 @@ export class TaskListsService {
 
   getListNotAss(){
     socket.emit("getlistNotAss");
+  }
+
+  remove(id){
+    socket.emit("removeList", id);
+    this.getListNotAss();
   }
 }

@@ -1,4 +1,4 @@
-import { logging } from 'protractor';
+
 import { TaskListsService } from './../manager-services/task-lists.service';
 import { Component, OnInit, NgZone } from '@angular/core';
 
@@ -15,45 +15,27 @@ export class TaskListsComponent implements OnInit {
   ngOnInit(): void {
     this.service.getListAss();
     this.service.getListNotAss();
-    this.service.onNewListAss().subscribe((data) => {
+    this.service.onNewListAss().subscribe((data : string []) => {
       this.ngZone.run(() => {
-        this.setValues(String(data));
-
+        this.ass = data;
       });      
     });
     
-    this.service.onNewListNotAss().subscribe((data) => {
+    this.service.onNewListNotAss().subscribe((data : string[]) => {
       this.ngZone.run(() => {
-        this.setLists(String(data));
-        console.log(data)
+        this.notAss = data
+        
       });      
     });
-  }
-  setValues(data){
-    let tmp = 0;
-    for(let i = 0; i < data.length; i++){
-      if (data[i] == "]"){
-        tmp++;
-      }else if (data[i] !== "[" ){
-       
-        this.ass[tmp] += data[i];
-      } else {
-      }
-    }
-    
+
   }
 
-  setLists(data) {
-    let tmp = 0;
-    for (let i = 0; i< data.length; i++)
-    {
-      if(data[i] === ";")
-      {
-        tmp ++;
-      } else {
-        this.notAss[tmp] += data[i];
-      }
-    }
+  remove(a){
+    let tmp = a.split(",");
+    this.service.remove(tmp[0]);
+    
   }
+  
+  
 
 }

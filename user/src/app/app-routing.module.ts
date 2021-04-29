@@ -1,3 +1,5 @@
+import { ManageTaskComponent } from './manager/manage-task/manage-task.component';
+import { ListUnitComponent } from './admin/list-unit/list-unit.component';
 import { TaskListsComponent } from './manager/task-lists/task-lists.component';
 
 import { ManageMapComponent } from './admin/manage-map/manage-map.component';
@@ -38,6 +40,14 @@ const routes: Routes = [
   {
     path: 'tasklist',
     component: TaskListsComponent
+  },
+  {
+    path: 'listunit',
+    component: ListUnitComponent
+  },
+  {
+    path: 'managetask',
+    component: ManageTaskComponent
   }
 ];
 

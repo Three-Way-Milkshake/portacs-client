@@ -1,11 +1,13 @@
-input {
+input[type="text"] {
     width: 100%;
+    
     padding: 12px 20px;
     margin: 10px 0;
     font-size: 1em;
     box-sizing: border-box;
    
   }
+
 label{
     font-size: 1.2em;
 }
@@ -13,14 +15,16 @@ label{
     border: 3px solid #555;
   }
 
-  button{
+input[type="submit"]{
+  
     background-color: burlywood;
     text-align: center;
     padding: 16px;
     border-radius: 20%;
-    margin-left: 45%;
+   margin-left: 45%;
 }
 
 h2{
     text-align: center;
 }
+

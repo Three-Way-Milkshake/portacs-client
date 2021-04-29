@@ -8,8 +8,10 @@ const POIlist = require('./js/POIlist')
 const net = require('net');
 const ListsTask = require('./js/listsTask')
 const ListManager = require('./js/listManager.js');
+const UnitsList = require('./js/unitsList');
 const CommandsToJava = require('./js/commandsToJava.js');
-const { createJsxText } = require("typescript");
+const { createJsxText, addSyntheticLeadingComment } = require("typescript");
+const { ScopeAwareRuleWalker } = require("tslint");
 const SERVER_PORT = 1723;
 
 const io = require("socket.io")(http, {
@@ -21,6 +23,7 @@ const io = require("socket.io")(http, {
 
 let ctj = new CommandsToJava();
 let listManager = new ListManager();
+let unitsL = new UnitsList();
 let tmpName = "";
 let tmpSurname = "";
 let user = new UserInformation();
@@ -78,6 +81,31 @@ client.on('data', (data)=>{
                     listManager.add(cmd[k+1],cmd[k+2],cmd[k]);
                 }
                 break;
+            case "LISTF":
+                unitsL.delete();
+                for (let k=2; k < parseInt(cmd[1])*2+2; k+=4){
+                    unitsL.add(cmd[k+1],cmd[k+2])
+                }
+                break;
+                //CONTROLLARE SE CORRETTO
+            case "ADL":
+                io.emit("responsenewlist", cmd[1]+","+ cmd[2]);
+                if(cmd[1] == "OK") {
+                l.addListnotAss(cmd[2]);
+                } 
+                break;
+            case "ADL":
+                    io.emit("responsedeletelist", cmd[1]+","+ cmd[2]);
+                    if(cmd[1] == "OK") {
+                    l.removeList(cmd[2]);
+                    } 
+                    break;
+            case "LIST":
+                let tmp = cmd[1];
+                for (let i=3; i< parseInt(cmd[2])+2; i++) {
+                    tmp = tmp + "," +cmd[i];
+                }
+                addListAss(tmp);
             default:
                 console.log("Unrecognized message from server: " + cmd[0]);
         }
@@ -126,6 +154,21 @@ io.on("connection", (socket) => {
     socket.on("getinfoaccount", () => {
         socket.emit("userinformation", user.getInformation());
     });
+    socket.on("getlistunit", () => {
+        socket.emit("viewlistunit", unitsL.getListUnit());
+    });
+
+    socket.on("newunit", (data) => {
+        //unitL.add(data);
+        ctj.aggiungiComando("ADF,"+data);
+        unitsL.add(data+",token")
+    });
+    socket.on("deleteunit", (data) => {
+        //cerca nel index con id
+        let tmp = data.split(',');
+        ctj.aggiungiComando("ADF,"+tmp[0]);
+        
+    });
     socket.on("getmap", () => {
         socket.emit("map", map.getMap());
     });
@@ -146,6 +189,16 @@ io.on("connection", (socket) => {
         socket.emit("listnotAss", l.getNotAss());
         
     });
+
+    socket.on("newlisttask", (data) =>{
+        ctj.aggiungiComando("ADL,"+data);
+        l.addTemporaryList(data);
+    }) 
+
+    socket.on("removeList", (data) =>{
+        ctj.aggiungiComando("RML,"+data);
+        l.removeList(data);
+    })
 
 
 });

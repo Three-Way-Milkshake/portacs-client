@@ -8,5 +8,6 @@
 <ol>
     <li *ngFor="let a of notAss">
         {{a}}
+        <input type="submit" value="Elimina" (click)="remove(a)">
      </li>
 </ol>
