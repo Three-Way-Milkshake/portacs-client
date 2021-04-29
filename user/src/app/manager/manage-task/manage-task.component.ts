@@ -51,7 +51,7 @@ export class ManageTaskComponent implements OnInit {
   add(sP : string){
     this.newList.push(sP);
   }
-  
+
   deleteCurrentTask(l : string){
     let index = this.newList.indexOf(l);
     if (index > -1) {
@@ -65,6 +65,9 @@ export class ManageTaskComponent implements OnInit {
 
   setValues(s: string) {
     let tmp : string[] = s.split(",");
+    if (tmp.length > 0) {
+      this.selectedPoi = tmp[0];
+    }
     for (let i = 0; i < tmp.length; i++){
       this.poi[i] = tmp[i];
     }
