@@ -20,6 +20,7 @@ import {OrderListModule} from 'primeng/orderlist';
 import {ListboxModule} from 'primeng/listbox';
 import { RegistrationManagerComponent } from './admin/registration-manager/registration-manager.component';
 import { ViewListManagerComponent } from './admin/view-list-manager/view-list-manager.component';
+import { ListUnitComponent } from './admin/list-unit/list-unit.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { ViewListManagerComponent } from './admin/view-list-manager/view-list-ma
     TaskListsComponent,
     RegistrationManagerComponent,
     ViewListManagerComponent,
+    ListUnitComponent,
   ],
   imports: [
     BrowserModule,
