@@ -1,3 +1,4 @@
+import { ManageTaskComponent } from './manager/manage-task/manage-task.component';
 import { ListUnitComponent } from './admin/list-unit/list-unit.component';
 import { TaskListsComponent } from './manager/task-lists/task-lists.component';
 
@@ -44,6 +45,10 @@ const routes: Routes = [
     path: 'listunit',
     component: ListUnitComponent
   },
+  {
+    path: 'managetask',
+    component: ManageTaskComponent
+  }
 ];
 
 @NgModule({

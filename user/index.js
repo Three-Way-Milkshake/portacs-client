@@ -10,7 +10,8 @@ const ListsTask = require('./js/listsTask')
 const ListManager = require('./js/listManager.js');
 const UnitsList = require('./js/unitsList');
 const CommandsToJava = require('./js/commandsToJava.js');
-const { createJsxText } = require("typescript");
+const { createJsxText, addSyntheticLeadingComment } = require("typescript");
+const { ScopeAwareRuleWalker } = require("tslint");
 const SERVER_PORT = 1723;
 
 const io = require("socket.io")(http, {
@@ -85,6 +86,26 @@ client.on('data', (data)=>{
                 for (let k=2; k < parseInt(cmd[1])*2+2; k+=4){
                     unitsL.add(cmd[k+1],cmd[k+2])
                 }
+                break;
+                //CONTROLLARE SE CORRETTO
+            case "ADL":
+                io.emit("responsenewlist", cmd[1]+","+ cmd[2]);
+                if(cmd[1] == "OK") {
+                l.addListnotAss(cmd[2]);
+                } 
+                break;
+            case "ADL":
+                    io.emit("responsedeletelist", cmd[1]+","+ cmd[2]);
+                    if(cmd[1] == "OK") {
+                    l.removeList(cmd[2]);
+                    } 
+                    break;
+            case "LIST":
+                let tmp = cmd[1];
+                for (let i=3; i< parseInt(cmd[2])+2; i++) {
+                    tmp = tmp + "," +cmd[i];
+                }
+                addListAss(tmp);
             default:
                 console.log("Unrecognized message from server: " + cmd[0]);
         }
@@ -168,6 +189,16 @@ io.on("connection", (socket) => {
         socket.emit("listnotAss", l.getNotAss());
         
     });
+
+    socket.on("newlisttask", (data) =>{
+        ctj.aggiungiComando("ADL,"+data);
+        l.addTemporaryList(data);
+    }) 
+
+    socket.on("removeList", (data) =>{
+        ctj.aggiungiComando("RML,"+data);
+        l.removeList(data);
+    })
 
 
 });

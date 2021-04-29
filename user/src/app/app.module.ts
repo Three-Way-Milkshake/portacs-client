@@ -21,6 +21,7 @@ import {ListboxModule} from 'primeng/listbox';
 import { RegistrationManagerComponent } from './admin/registration-manager/registration-manager.component';
 import { ViewListManagerComponent } from './admin/view-list-manager/view-list-manager.component';
 import { ListUnitComponent } from './admin/list-unit/list-unit.component';
+import { ManageTaskComponent } from './manager/manage-task/manage-task.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ListUnitComponent } from './admin/list-unit/list-unit.component';
     RegistrationManagerComponent,
     ViewListManagerComponent,
     ListUnitComponent,
+    ManageTaskComponent,
   ],
   imports: [
     BrowserModule,

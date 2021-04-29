@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./generic.component.css']
 })
 export class GenericComponent {
-  isAdmin : boolean = true;
+  isAdmin : boolean = false;
+  isManager : boolean = true;
   constructor() { }
 
 }

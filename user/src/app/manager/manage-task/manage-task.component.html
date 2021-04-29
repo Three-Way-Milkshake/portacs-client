@@ -1,0 +1,30 @@
+<h2>Aggiungi una nuova lista di task</h2>
+
+<div class = "addTask"> 
+    
+    <select class="custom-select" [(ngModel)]="selectedPoi">
+        <option *ngFor="let p of poi">{{p}}</option>
+      </select>
+      <input type="submit" value="Aggiungi" (click)="add(selectedPoi)">
+</div>
+
+<div class="mostraNewList">
+    <ol>
+        <li *ngFor="let l of newList">
+            {{l}}
+            <input type="submit" value="Cancella" (click) = "deleteCurrentTask(l)">
+         </li>
+    </ol>
+</div>
+
+<input  type="submit" value="Conferma Lista" (click)="confirm()">
+
+
+<div *ngIf="added">
+    <div *ngIf="error; else noterror">
+        <h2>La lista non è stata creata per il seguente motivo {{msg}}</h2> 
+    </div>
+    <ng-template #noterror>
+        <h2>La lista è stata creata con id: {{newId}}</h2>
+    </ng-template>
+</div>

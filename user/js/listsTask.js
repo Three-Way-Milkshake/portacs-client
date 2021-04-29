@@ -1,23 +1,37 @@
 class ListsTask {
-    ass = ["1,ab,cd,efe", "2,ad,ef,re", "3,sdf,sd,fd"];
-    notAss = ["a,c,v,d", "s,a"];
-
+    ass = ["unita1,0000,ab,cx,sd", "unita2,0001,ab,cx,sd", "unita3,0003,ab,cx,sd"];
+    notAss = ["1, abc, df", "3, abc, df"];
+    listJustAdded;
     getAss(){
-        let out = [];
-        for (let i = 0; i < this.ass.length; i++){
-            out += "[";
-            out += this.ass[i];
-            out += "]"
-        }
-        return out;
+        return this.ass;
     }
 
     getNotAss(){
-        let out = [];
-        for (let i = 0; i < this.notAss.length; i++){
-            out += this.notAss[i] + ";"
-        }
-        return out
+        return this.notAss;
     }
+
+    addTemporaryList(l){
+        this.listJustAdded = l;
+    }
+
+    addListnotAss(id) {
+        this.notAss.push(id + "," + this.listJustAdded);
+        this.listJustAdded = ""
+    }
+
+    addListAss(list) {
+        this.ass.push(list);
+    }
+
+    removeList(id){
+        for (let i = 0; i<this.notAss.length; i++){
+            let tmp= this.notAss[i].split(",");
+            if (tmp[0] == id) {
+                delete this.notAss[i];
+            }
+        }
+    }
+
+    
 }
 module.exports = ListsTask;
