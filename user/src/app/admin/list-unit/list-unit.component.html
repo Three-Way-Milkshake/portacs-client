@@ -1,10 +1,4 @@
-<h2>Lista unità</h2>
 
-<ol>
-    <li *ngFor="let unit of listUnit">
-        {{unit}}
-     </li>
-</ol>
 <div class="newUnit">
 <h2>Registra unità</h2>
 
@@ -21,10 +15,18 @@
 
 <div class = "deleteunit"> 
     <h2>Elimina Unità</h2>
-    <select [(ngModel)]="selectedUnit">
+    <select class="custom-select" [(ngModel)]="selectedUnit">
         <option *ngFor="let unit of listUnit">{{unit}}</option>
       </select>
       <input type="submit" value="Elminina {{selectedUnit}}" (click)="delete()">
 </div>
 
 <!--carino che venisse fuori che ha eliminato-->
+
+<h2>Lista unità</h2>
+
+<ol>
+    <li *ngFor="let unit of listUnit">
+        {{unit}}
+     </li>
+</ol>

@@ -140,6 +140,7 @@ io.on("connection", (socket) => {
     socket.on("newunit", (data) => {
         //unitL.add(data);
         ctj.aggiungiComando("ADF,"+data);
+        unitsL.add(data+",token")
     });
     socket.on("deleteunit", (data) => {
         //cerca nel index con id
