@@ -291,7 +291,6 @@ io.on("connection", (socket) => {
     socket.on("login", (data) =>{
         let tmpData = data.split(',');
         ctj.aggiungiComando("USER\n"+tmpData[0]+"\n"+tmpData[1]);
-        socket.emit("loginerror", "non funzia FRATM");
     });
     socket.on("logout", () =>{
         ctj.aggiungiComando("LOGOUT");
