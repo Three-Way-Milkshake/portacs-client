@@ -93,6 +93,7 @@ client.on('data', (data)=>{
                     io.emit("responseeliminationU", cmd[1]+","+ cmd[2]);
                 }
                 tmpIDUser = "";
+                break;
             case "EDU":
                 if(cmd[1] == "OK"){
                     if (cmd[2] != null) {
@@ -106,6 +107,7 @@ client.on('data', (data)=>{
                     //c'è errore
                     io.emit("responseeditmanager", cmd[1], "," + cmd[2]);
                 }
+                break;
             case "LISTU":
                 listManager.delete();
                 for (let k = 2; k < parseInt(cmd[1])*4+2; k+=4) {
@@ -238,6 +240,9 @@ io.on("connection", (socket) => {
     });
     socket.on("getpoilist", () => {
         socket.emit("poilist", poil.getListString());
+    });
+    socket.on("getpoilistmap", () => {
+        socket.emit("poilistmap", poil.getListMap());
     });
     socket.on("changedmap", (data) => {
         map.setMap(data);

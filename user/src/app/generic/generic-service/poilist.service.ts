@@ -20,4 +20,16 @@ export class POIListService {
   getValues() {
     socket.emit("getpoilist");
   }
+
+  getPOIMap(){
+    socket.emit("getpoilistmap");
+  }
+
+  onPOIMap(){
+    return new Observable(observer => {
+      socket.on('poilistmap', (information: string) => {
+        observer.next(information);
+      });
+    });
+  }
 }

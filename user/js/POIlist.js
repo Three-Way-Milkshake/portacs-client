@@ -1,8 +1,8 @@
 class POIlist{
-    poi = [];
-    y = [];
-    x = [];
-    t = [];
+    poi = ["ab", "cv", "sdf"];
+    y = ["1","3","3"];
+    x = ["1","3","4"];
+    t = ["s","s","s"];
     getListString(){
       return this.poi;
     }

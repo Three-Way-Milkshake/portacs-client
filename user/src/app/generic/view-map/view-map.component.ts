@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 import { Observable } from 'rxjs';
 import { NgZone } from '@angular/core';
 import { UnitPosition } from '../../unitposition';
-
+import { POIListService } from '../generic-service/poilist.service';
 
 const socket = io("http://127.0.0.1:8090/");
 
@@ -14,30 +14,49 @@ const socket = io("http://127.0.0.1:8090/");
   styleUrls: ['./view-map.component.css']
 })
 export class ViewMapComponent implements OnInit {
-  map : string = '';
   tmp : string[][] = [];
   pos : UnitPosition [] = [];
-  
-  constructor(private ngZone: NgZone) {}
+  listPOIID : string[] = [];
+  listPOIx : number[] = [];
+  listPOIy : number[] = [];
+  listPOIt : string[] = [];
+  constructor(private ngZone: NgZone, private servicePOI: POIListService) {}
 
   ngOnInit() {
+    this.servicePOI.getPOIMap();
     this.onNewAction().subscribe((data) =>{
       this.ngZone.run(() => {
         this.changePosition(String(data));
       }); 
     })
-
     this.onNewMessage().subscribe((data) => {
       this.ngZone.run(() => {
         this.setValues(String(data));
-
-      });      
+      });
     });
+    this.servicePOI.onPOIMap().subscribe((data : string[]) => {
+      this.ngZone.run(() => {
+        this.setPOI(data);
+      });
+    });
+  }
+
+  setPOI(data: string[]) {
+    
+    for (let i = 0; i < data.length ; i++){
+      
+      let dataTmp = data[i].split(",");
+      this.listPOIx[i] = parseInt(dataTmp[0]);
+      this.listPOIy[i] = parseInt(dataTmp[1]);
+      this.listPOIt[i] = dataTmp[2];
+      this.listPOIID[i] = dataTmp[3];
+    }
+    
   }
 
   onNewMessage() {
     return new Observable(observer => {
-      socket.on('map', (msg: string) => {
+      socket.on('map', (msg: string) => { 
         observer.next(msg);
       });
     });
@@ -52,46 +71,7 @@ export class ViewMapComponent implements OnInit {
   }
 
 
-  getMap (map: string[][]){
-    let tabellaHtml : string = '<table>';
-    for (let i = 0; i < map.length; i++) {
-      tabellaHtml += '<tr>';
-      for (let j = 0; j < map[i].length; j++) {
-        if(map[i][j] === '1') {                                          // zona transitabile
-          tabellaHtml += '<td><img src="assets/white.png"></td>';
-        } else if (map[i][j] === '0'){                                   // zona non transitabile
-          tabellaHtml += '<td><img src="assets/black.png" ></td>';
-        } else if(map[i][j] === '2'){                                    // sx -> dx
-          tabellaHtml += '<td><img src="assets/up.png"></td>';
-        } else if(map[i][j] === '3'){                                    // up -> down
-          tabellaHtml += '<td><img src="assets/dx.png"></td>';
-        } else if(map[i][j] === '4'){                                    // dx -> sx
-          tabellaHtml += '<td><img src="assets/down.png"></td>';
-        } else if(map[i][j] === '5'){                                    // down -> up
-          tabellaHtml += '<td><img src="assets/sx.png"></td>';
-        } else if(map[i][j] === '&'){
-          let unitDir = this.getDir(i, j);
-          if        (unitDir == 0) { // facing NORTH
-            tabellaHtml += '<td><img src="assets/mulettoN.png"></td>';
-          } else if (unitDir == 1) { // facing EAST
-            tabellaHtml += '<td><img src="assets/mulettoE.png"></td>';
-          } else if (unitDir == 2) { // facing SOUTH
-            tabellaHtml += '<td><img src="assets/mulettoS.png"></td>';
-          } else if (unitDir == 3) { // facing WEST
-            tabellaHtml += '<td><img src="assets/mulettoO.png"></td>';
-          }
-        } else { //POI
-          
-          tabellaHtml += '<td style="background-color: red;">'+map[i][j]+'</td>';          
-        }
-      }
-      tabellaHtml += '</tr>';
-    }
-    tabellaHtml += '</table>';
-
-    
-    return tabellaHtml;
-  }
+  
 
   setValues(data: string) {
     this.tmp[0] = [];
@@ -112,11 +92,19 @@ export class ViewMapComponent implements OnInit {
       }
       i++;
     }
-    for (let t = 0; t < this.pos.length; t++) {
-      this.tmp[this.pos[t].posX][this.pos[t].posY] = (this.pos[t].dir).toString();
+    this.setPOIonMap();
+    if (this.pos != null) {
+      for (let t = 0; t < this.pos.length; t++) {
+        this.tmp[this.pos[t].posX][this.pos[t].posY] = (this.pos[t].dir).toString();
+      }
     }
   }
   
+  setPOIonMap() {
+    for (let i = 0; i < this.listPOIID.length; i++){
+      this.tmp[this.listPOIx[i]][this.listPOIy[i]] = this.listPOIID[i];
+    }
+  }  
 
   getDir(x : number, y : number) {
     for (let t = 0; t < this.pos.length; t++) {
