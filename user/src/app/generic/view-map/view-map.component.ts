@@ -28,7 +28,7 @@ export class ViewMapComponent implements OnInit {
       this.ngZone.run(() => {
         this.changePosition(String(data));
       }); 
-    })
+    });
     this.onNewMessage().subscribe((data) => {
       this.ngZone.run(() => {
         this.setValues(String(data));

@@ -16,7 +16,21 @@ export class PersonalAccountService {
         console.log(information);
       });
     });
-    
+  }
+  
+  correctLogin() {
+    return new Observable(observer => {
+      socket.on('logincorrect', (information: string) => {
+        observer.next(information);
+      });
+    });
+  }
+  failLogin() {
+    return new Observable(observer => {
+      socket.on('loginerror', (information: string) => {
+        observer.next(information);
+      });
+    });
   }
 
   sendNewUserInformation(name: string, surname: string, password: string) {
@@ -25,5 +39,13 @@ export class PersonalAccountService {
 
   getValues() {
     socket.emit("getinfoaccount");
+  }
+
+  login(name : string, password : string) {
+    socket.emit("login", name+","+password);
+  }
+
+  logout() {
+    socket.emit("logout");
   }
 }

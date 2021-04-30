@@ -12,6 +12,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { ViewMapComponent } from './generic/view-map/view-map.component';
 import { POIListComponent } from './generic/poilist/poilist.component';
 
+import { LoginComponent } from './login/login.component';
+
 const routes: Routes = [
   {
     path: 'viewmap',
@@ -48,6 +50,10 @@ const routes: Routes = [
   {
     path: 'managetask',
     component: ManageTaskComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   }
 ];
 

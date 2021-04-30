@@ -1,6 +1,7 @@
+<div *ngIf="isLoggedIn">
 <h1>DASHBOARD</h1>
 <ul>
-    <li><a routerLink="viewmap">mappa</a></li>
+    <li><a routerLink="viewmap">Mappa</a></li>
     <li><a routerLink="poilist">Lista POI</a></li>
     <li><a routerLink="account">Il tuo Account</a></li>
     <li><a *ngIf="isAdmin" routerLink="managemap">Modifica la mappa</a></li>
@@ -9,6 +10,8 @@
     <li><a *ngIf="isAdmin" routerLink="listunit">Visualizza lista unità</a></li>
     <li><a *ngIf="isManager" routerLink="tasklist">Visualizza liste di task</a></li>
     <li><a *ngIf="isManager" routerLink="managetask">Aggiungi lista di task</a></li>
+    
+    <li class="last"><a routerLink="login" (click)="logout()">Logout</a></li>
+    <!--<li class="last"><a routerLink="">Chiudi</a></li>-->
 </ul>
-<button routerLink="">Chiudi</button>
-
+</div>

@@ -1,5 +1,8 @@
 import { Router } from '@angular/router';
 import { Component, Input, OnInit } from '@angular/core';
+import { PersonalAccountService } from './../generic/generic-service/personal-account.service';
+import { NgZone } from '@angular/core';
+
 
 @Component({
   selector: 'app-login',
@@ -7,37 +10,25 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  errorLogin : string = "";
   username: string = "";
   password : string = "";
-  isLoggedin: boolean = false;
-  isAdmin: boolean = false;
-  constructor(private router: Router) { }
+  
+  constructor(private router: Router, private service : PersonalAccountService, private ngZone: NgZone) { }
 
   ngOnInit(): void {
+    this.service.failLogin().subscribe((data : string) =>{
+      this.ngZone.run(() => {
+        this.errorLogin = data;
+      }); 
+    });
   }
 
-  checkLogin(str : string) {
-    if (str == "admin") {
-      this.isLoggedin = true;
-      this.isAdmin = true;
-      this.router.navigate(['admin']);
-    } else if (str == "manager") {
-      this.isLoggedin = true;
-      this.isAdmin = false;
-      this.router.navigate(['manager']);
-    } else {
-      this.isLoggedin = false;
-    }
-    // ----------------------- da controllare reload -------------------
-    window.location.reload();
-  }
-
-  login() { //---------------------------------------testing--------------------------
-    this.isLoggedin = true;
-    this.isAdmin = true;
-    //this.router.navigate(['admin']);
-    window.location.reload();
-   //io.emit("login", username+","+password);
+  //window.location.reload();
+   
+ 
+  login() {
+    this.service.login(this.username, this.password);
   }
 
 }

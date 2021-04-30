@@ -1,7 +1,6 @@
-.map{
-    
+h2{
+    text-align: center;
 }
-
 td{
     border: 1px solid black;
 }
@@ -10,8 +9,7 @@ td{
     width: 2em;
     height: 2em;
     padding: 0;
-    margin: 0;   
-    
+    margin: 0;       
 }
 
 img{
@@ -35,7 +33,8 @@ img{
     color: white;
     padding: 0;
     margin: 0;
-    font-size: 2em;
+    font-size: 1.2em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .NTr{

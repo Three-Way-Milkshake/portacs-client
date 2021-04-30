@@ -1,16 +1,19 @@
-<h1>Login</h1>
+
+<h1>LOGIN</h1>
+<div class="all">
 <form>
-    <div class="input">
-        <label>Username</label>
+    <div>
+        <label>Username</label><br>
         <input type="text" name="username" [(ngModel)]="username" >
     </div>
     <div>
-        <label>Password</label>
+        <label>Password</label><br>
         <input type="password" name="password" [(ngModel)]="password">
     </div>
     <div>
         <input type="submit" value="Login" (click)="login()">
     </div>
 </form>
-
+<p style="color:red;font-weight: bold;">{{errorLogin}}</p>
+</div>
 

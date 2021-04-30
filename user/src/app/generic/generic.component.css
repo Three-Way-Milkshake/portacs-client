@@ -1,3 +1,6 @@
+*{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
 ul {
     list-style-type: none;
     margin: 0;
@@ -15,7 +18,7 @@ ul {
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding:16px;
     text-decoration: none;
   }
   
@@ -23,10 +26,9 @@ li a:hover{
     background-color: red;
 }
 
+.last{
+  float: right;
+  background-color:black;
+  color: whitesmoke;
 
-button{
-    background-color: burlywood;
-    text-align: center;
-    padding: 16px;
-    border-radius: 20%;
 }

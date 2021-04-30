@@ -61,6 +61,12 @@ client.on('data', (data)=>{
         let cmd = msg[i].split(",");
         console.log(cmd);
         switch(cmd[0]){
+            case "OK":
+                io.emit("logincorrect", cmd[1]);
+                break;
+            case "FAIL":
+                io.emit("loginerror", cmd[1]);
+                break;
             case "MAP":
                 //se cmd[1]=OK ho cambiato la mappa
                 //se cmd[1]=dail errore cambio mappa
@@ -273,19 +279,23 @@ io.on("connection", (socket) => {
         socket.emit("listnotAss", l.getNotAss());
         
     });
-
     socket.on("newlisttask", (data) =>{
         ctj.aggiungiComando("ADL,"+data);
         l.addTemporaryList(data);
-    }) 
-
+    });
     socket.on("removeList", (data) =>{
         ctj.aggiungiComando("RML,"+data);
         l.removeList(data);
         socket.emit("listnotAss", l.getNotAss());
-    })
-
-
+    });
+    socket.on("login", (data) =>{
+        let tmpData = data.split(',');
+        ctj.aggiungiComando("USER\n"+tmpData[0]+"\n"+tmpData[1]);
+        socket.emit("loginerror", "non funzia FRATM");
+    });
+    socket.on("logout", () =>{
+        ctj.aggiungiComando("LOGOUT");
+    });
 });
 
 function addTempManager(idManager) {
