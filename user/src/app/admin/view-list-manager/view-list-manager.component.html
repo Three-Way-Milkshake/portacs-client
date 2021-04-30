@@ -1,6 +1,29 @@
 <h2>Lista manager</h2>
 <ol>
-    <li *ngFor="let user of listManager">
-        {{user}}
+    <li *ngFor="let id of listManagerId; let i = index">
+        <form>
+            <label id="name">Name: </label>
+            <input for="name" #Name value={{listManagerName[i]}} />
+    
+        <label id="surname">Surname: </label>
+        <input for="surname" #Surname value={{listManagerSurname[i]}} />
+        </form>
+       
+        <input class="button" type="submit" value="Elimina" (click)="delete(id)">
+        <input class="button" type="submit" value="Conferma Modifica" (click)="modify(id, Name.value, Surname.value)">
+        <input class="button" type="submit" value="Reset Password" (click)="reset(id)">
      </li>
 </ol>
+
+<div *ngIf= "elimination">
+    <h3>Il manager è stato eliminato con successo</h3>
+</div>
+<div *ngIf= "edit">
+    <h3>Il manager è stato modificato con successo</h3>
+</div>
+<div *ngIf= "password">
+    <h3>La nuova password è : {{password}}</h3>
+</div>
+<div *ngIf= "error">
+    <h3>Non è stato possibile eseguire l'operazione a causa del seguente errore: {{msg}}</h3>
+</div>

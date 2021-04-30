@@ -14,9 +14,45 @@ export class ViewListManagerService {
     });
   }
 
+  responseEdit(){
+    return new Observable(observer => {
+      socket.on('responseeditmanager', (msg: string) => {
+        observer.next(msg);
+      });
+    });
+  }
+
+  responsePsw(){
+    return new Observable(observer => {
+      socket.on('responseresetpwdmanager', (msg: string) => {
+        observer.next(msg);
+      });
+    });
+  }
+
   constructor() { }
 
   getListManager() {
     socket.emit("getlistmanager");
+  }
+
+  delete(id : string) {
+    socket.emit("removemanager", id);
+  } 
+
+  confirmElimination(){
+    return new Observable(observer => {
+      socket.on('responseeliminationU', (msg: string) => {
+        observer.next(msg);
+      });
+    });
+  }
+
+  modify(id : string, name: string, surname: string) {
+    socket.emit("modifymanager", id + "," + name + "," + surname);
+  }
+
+  reset(id: string) {
+    socket.emit("resetmanager",id);
   }
 }

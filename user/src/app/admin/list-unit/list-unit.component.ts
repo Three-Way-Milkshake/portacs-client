@@ -10,6 +10,12 @@ export class ListUnitComponent implements OnInit {
   listUnit : string[] = [];
   newUnit : string;
   selectedUnit : string;
+  added : boolean = false;
+  deleted : boolean = false;
+  token : string;
+  fail: boolean = false;
+  msg : string
+  
   constructor(private service : ListUnitService, private ngZone: NgZone) { }
 
   ngOnInit(): void {
@@ -17,6 +23,32 @@ export class ListUnitComponent implements OnInit {
     this.service.onNewListUnit().subscribe((data : string[]) => {
       this.ngZone.run(() => {
         this.listUnit = data;
+      });      
+    });
+
+    this.service.responseDelete().subscribe((data : string) => {
+      this.ngZone.run(() => {
+        let tmpData = data.split(",");
+        if (tmpData[0] == "OK") {
+          this.deleted = true;
+        } else {
+          this.fail = true;
+          this.msg = tmpData[1];
+        }
+      });      
+    });
+
+    this.service.response().subscribe((data : string) => {
+      this.ngZone.run(() => {
+        let tmpData = data.split(",");
+        
+        if (tmpData[0] == "OK") {
+          this.added = true;
+          this.token = tmpData[1];
+        } else {
+          this.fail = true;
+          this.msg = tmpData[1];
+        }
       });      
     });
 

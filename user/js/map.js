@@ -3,20 +3,20 @@ class Map {
     0 = spazio non transitabile
     1 = spazio transitabile
     2 = ^
-    3 = v
-    4 = >
+    3 = >
+    4 = v
     5 = <
-    'character' = POI
+    6 = POI
     */
     map = [];
   
     setMap(m) {
       this.map = m;
+      console.log(this.map);
     }
 
-  
-
     getMap() {
+      console.log(this.map);
       return this.mapToString();
     }
     

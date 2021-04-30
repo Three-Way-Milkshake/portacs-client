@@ -10,6 +10,20 @@ class ListManager{
     getListManager() {
         return this.listM;
     }
+
+    removeOne(id) {
+        let index = -1;
+        for (let i = 0; i<this.listM.length; i++){
+            let tmp= this.listM[i].split(",");
+            if (tmp[0] == id) {
+                index = i;
+                break;
+            }
+        }
+        if (index >= 0) {
+            this.listM.splice(index, 1);
+        }
+    }
     
 }
 module.exports = ListManager;

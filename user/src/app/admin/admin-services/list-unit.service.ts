@@ -13,7 +13,21 @@ export class ListUnitService {
       });
     });
   }
+  response(){
+    return new Observable(observer => {
+      socket.on('responsenewunit', (msg: string) => {
+        observer.next(msg);
+      });
+    });
+  }
 
+  responseDelete(){
+    return new Observable(observer => {
+      socket.on('responsedeleteunit', (msg: string) => {
+        observer.next(msg);
+      });
+    });
+  }
   constructor() { }
 
   getListUnit() {
@@ -21,11 +35,9 @@ export class ListUnitService {
   }
   newUnit(id: string){
     socket.emit("newunit", id);
-    this.getListUnit();
   }
 
   deleteUnit(unit: string){
     socket.emit("deleteunit", unit);
-    this.getListUnit();
   }
 }
