@@ -30,5 +30,7 @@ li a:hover{
   float: right;
   background-color:black;
   color: whitesmoke;
-
+}
+h2{
+  text-align: center;
 }

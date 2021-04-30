@@ -13,7 +13,8 @@ export class LoginComponent implements OnInit {
   errorLogin : string = "";
   username: string = "";
   password : string = "";
-  
+  isNotLoggedIn : boolean = (sessionStorage.getItem('isLoggedIn') == 'FALSE');
+
   constructor(private router: Router, private service : PersonalAccountService, private ngZone: NgZone) { }
 
   ngOnInit(): void {
@@ -23,10 +24,9 @@ export class LoginComponent implements OnInit {
       }); 
     });
   }
-
-  //window.location.reload();
+  
+  // window.location.reload();
    
- 
   login() {
     this.service.login(this.username, this.password);
   }
