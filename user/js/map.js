@@ -9,14 +9,38 @@ class Map {
     6 = POI
     */
     map = [];
-  
-    setMap(m) {
-      this.map = m;
-      console.log(this.map);
+
+    getPOIonMap() {
+      let poiArr = [];
+      let k = 0;
+      for (let i = 0; i < this.map.length; i++){
+        for(let j = 0; j < this.map[i].length; j++) {
+          if (isNaN(parseInt(this.map[i][j]))) {
+            poiArr[k] = i + "," + j + ",6,1," + this.map[i][j];
+            this.map[i][j] = "6";
+            k++;
+          }
+        }
+      }
+      return poiArr;
     }
 
+    getR() {
+      return this.map.length;
+    }
+
+    getC() {
+      if (this.map.length > 0) {
+        return this.map[0].length;
+      }
+    }
+
+    setMap(m) {
+      this.map = [];
+      this.map = m;
+    }  
+
     getMap() {
-      console.log(this.map);
       return this.mapToString();
     }
     

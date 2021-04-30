@@ -62,8 +62,17 @@ client.on('data', (data)=>{
         console.log(cmd);
         switch(cmd[0]){
             case "MAP":
-                map.createMap(cmd[1], cmd[2], cmd[3]);
-                io.emit("map", map.getMap());
+                //se cmd[1]=OK ho cambiato la mappa
+                //se cmd[1]=dail errore cambio mappa
+                //else la richiedo per la view map
+                if (cmd[1] == "OK") {
+                    ctj.aggiungiComando("POI")
+                } else if (cmd[1] == "FAIL") {
+                    ctj.aggiungiComando("MAP");
+                } else {
+                    map.createMap(cmd[1], cmd[2], cmd[3]);
+                    io.emit("map", map.getMap());
+                }
                 break;
             case "POI":
                 poil.delete();
@@ -244,8 +253,17 @@ io.on("connection", (socket) => {
     socket.on("getpoilistmap", () => {
         socket.emit("poilistmap", poil.getListMap());
     });
+    socket.on("getpoilistmanagemap", () => {
+        socket.emit("poilistmanagemap", poil.getListMap());
+    });
     socket.on("changedmap", (data) => {
         map.setMap(data);
+        let poiArr = map.getPOIonMap();
+        ctj.aggiungiComando("MAP,"+map.getR()+","+map.getC()+map.getMap());
+        for (let k = 0; k < poiArr.length; k++) {
+            ctj.aggiungiComando("CELL,"+poiArr[k]);
+        }
+
         //inviare al server
     });
     socket.on("getlistAss", () => {

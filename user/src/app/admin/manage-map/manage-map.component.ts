@@ -1,6 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { NgZone } from '@angular/core';
+import { POIListService } from 'src/app/generic/generic-service/poilist.service';
 import { ManageMapService } from '../admin-services/manage-map.service';
 
 @Component({
@@ -11,20 +12,43 @@ import { ManageMapService } from '../admin-services/manage-map.service';
 export class ManageMapComponent implements OnInit {
   map : string = '';
   tmp : string[][] = [];
+  listPOIID : string[] = [];
+  listPOIx : number[] = [];
+  listPOIy : number[] = [];
+  listPOIt : string[] = [];
   displaySelection : boolean = false;
   lastButtonI : number;
   lastButtonJ : number;
-  constructor(private service : ManageMapService, private ngZone: NgZone) { }
+  constructor(private service : ManageMapService, private ngZone: NgZone, private servicePOI: POIListService) { }
 
   ngOnInit(): void {
     this.getValues();
+    this.servicePOI.getPOIManageMap();
     this.service.onNewMap().subscribe((data) => {
       this.ngZone.run(() => {
         this.setValues(String(data));
       });      
     });
+
+    this.servicePOI.onPOIManageMap().subscribe((data : string[]) => {
+      this.ngZone.run(() => {
+        this.setPOI(data);
+      });
+    });
   }
 
+  setPOI(data: string[]) {
+    
+    for (let i = 0; i < data.length ; i++){
+      
+      let dataTmp = data[i].split(",");
+      this.listPOIx[i] = parseInt(dataTmp[0]);
+      this.listPOIy[i] = parseInt(dataTmp[1]);
+      this.listPOIt[i] = dataTmp[2];
+      this.listPOIID[i] = dataTmp[3];
+    }
+    
+  }
   setValues(data : string) {
     this.tmp[0] = [];
     let k = 0; //virgole
@@ -44,8 +68,13 @@ export class ManageMapComponent implements OnInit {
       }
       i++; 
     }
-    console.log(this.tmp);    
+    this.setPOIonMap(); 
   }
+  setPOIonMap() {
+    for (let i = 0; i < this.listPOIID.length; i++){
+      this.tmp[this.listPOIx[i]][this.listPOIy[i]] = this.listPOIID[i];
+    }
+  } 
 
   getValues(){
     this.service.getValues();
