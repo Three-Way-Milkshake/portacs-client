@@ -1,0 +1,35 @@
+ol{
+
+        list-style-type: none;
+        text-align: center;
+    
+}
+li{
+    margin: 1em;
+}
+input {
+
+    padding: 5px 10px;
+    margin: 10px 4px;
+    font-size: 1em;
+    box-sizing: border-box;
+   
+  }
+
+label{
+    font-size: 1.2em;
+}
+  input:focus {
+    border: 3px solid #555;
+  }
+
+input[type="submit"]{
+    background-color: burlywood;
+    text-align: center;
+    padding: 3px;
+    border-radius: 10%;
+}
+
+h2{
+    text-align: center;
+}

@@ -290,6 +290,9 @@ io.on("connection", (socket) => {
     });
     socket.on("login", (data) =>{
         let tmpData = data.split(',');
+        //provaaa
+        socket.emit("logincorrect", "ADMIN");
+        
         ctj.aggiungiComando("USER\n"+tmpData[0]+"\n"+tmpData[1]);
     });
     socket.on("logout", () =>{

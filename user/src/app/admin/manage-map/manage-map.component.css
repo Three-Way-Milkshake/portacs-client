@@ -43,7 +43,34 @@ input{
 
 .non{
     border: none;
+    
 }
 h2{
     text-align: center;
+}
+.button{
+    background-color: burlywood;
+    text-align: center;
+    padding: 3px;
+    border-radius: 10%;
+    font-size: 1em;
+}
+
+.add-button{
+    background-color: burlywood;
+    text-align: center;
+    padding: 3px;
+    border-radius: 10%;
+    font-size: 1.5em;
+}
+.change{
+    float: right;
+    margin-bottom: 4em;
+}
+.confirm{
+    background-color: #BFFFBC;
+    text-align: center;
+    padding: 3px;
+    border-radius: 10%;
+    font-size: 1.5em;
 }

@@ -14,12 +14,12 @@
         </td>
     </tr>
 </table>
-<input type ="submit" (click)="newRow()"    value="Aggiungi riga"/>
-<input type ="submit" (click)="deleteRow()" value="Elimina riga"/>
-<input type="submit"  (click)="newCol()"    value="Aggiungi colonna"/>
-<input type="submit"  (click)="deleteCol()" value="Elimina colonna"/>
+<input class = "button" type ="submit" (click)="newRow()"    value="Aggiungi riga"/>
+<input class = "button" type ="submit" (click)="deleteRow()" value="Elimina riga"/>
+<input class = "button" type="submit"  (click)="newCol()"    value="Aggiungi colonna"/>
+<input class = "button" type="submit"  (click)="deleteCol()" value="Elimina colonna"/>
 
-<div *ngIf="displaySelection">
+<div class="change" *ngIf="displaySelection">
     <table>
         <tr>
             <td class="non"><input type="submit" class="NTr" value="&nbsp;" (click)="changeType(0)"/></td>

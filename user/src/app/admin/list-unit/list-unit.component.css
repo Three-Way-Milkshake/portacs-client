@@ -27,4 +27,28 @@ input[type="submit"]{
 h2{
     text-align: center;
 }
+.deleteunit{
+  display: inline;
+  margin-right: 0;
+}
+select {
+
+  background-color: transparent;
+  border: 3px solid #555;
+  padding: 1em;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: center;
+  cursor: inherit;
+  line-height: inherit;
+}
+
+
+
+
+
+
+
 
