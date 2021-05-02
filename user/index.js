@@ -42,162 +42,168 @@ dir:
 3 = sinistra
 */
   //-----------------------------CLIENT---------------------------------
+var client;
 
-var client = net.connect(SERVER_PORT, 'localhost', ()=>{
-    console.log('connected to server');
-    /*----------------------------- SERVE ANCORA? ------------------------------------ */
-    client.write("RESP\n");
-    client.setNoDelay();
-});
-client.setEncoding('utf8');
-client.on('error', ()=>{
-    console.log("Something went wrong with the server. Quitting.");
-})
-
-client.on('data', (data)=>{
-    data = data.toString().replace(/(\r\n|\n|\r)/gm, "");
-    let msg=data.toString().split(";");
-    for (let i = 0; i < msg.length; i++) {
-        let cmd = msg[i].split(",");
-        console.log(cmd);
-        switch(cmd[0]){
-            case "OK":
-                io.emit("logincorrect", cmd[1]);
-                break;
-            case "FAIL":
-                io.emit("loginerror", cmd[1]);
-                break;
-            case "MAP":
-                //se cmd[1]=OK ho cambiato la mappa
-                //se cmd[1]=dail errore cambio mappa
-                //else la richiedo per la view map
-                if (cmd[1] == "OK") {
-                    ctj.aggiungiComando("POI")
-                } else if (cmd[1] == "FAIL") {
-                    ctj.aggiungiComando("MAP");
-                } else {
-                    map.createMap(cmd[1], cmd[2], cmd[3]);
-                    io.emit("map", map.getMap());
-                }
-                break;
-            case "POI":
-                poil.delete();
-                for (let k = 2; k < parseInt(cmd[1]*5+2); k+=5) {
-                    poil.addPOI(cmd[k], cmd[k+1], cmd[k+2], cmd[k+3]);
-                }
-                io.emit("poilist", poil.getListString());
-                io.emit("poilistmap", poil.getListMap());
-                break;
-            case "UNI":
-                let mul = "";
-                for (let k = 1; k < cmd.length; k++) {
-                    mul += cmd[k] + (cmd.length - k <= 1? "" : ",");
-                }
-                io.emit("unit", mul);
-                break;
-            case "ADU":
-                io.emit("responseregistration", cmd[1]+","+cmd[2]);
-                addTempManager(cmd[1]);
-                break;
-                //rimozione un account
-            case "RMU":
-                if(cmd[1] == "OK"){
-                    io.emit("responseeliminationU", cmd[1]);
-                    listManager.removeOne(tmpIDUser);
-                }  else {
-                    io.emit("responseeliminationU", cmd[1]+","+ cmd[2]);
-                }
-                tmpIDUser = "";
-                break;
-            case "EDU":
-                if(cmd[1] == "OK"){
-                    if (cmd[2] != null) {
-                        //c'è la password
-                        io.emit("responseresetpwdmanager", cmd[1]);
-                    } else {
-                        io.emit("responseeditmanager", cmd[1]);
-                        ctj.aggiungiComando("LISTU");
-                    }
-                }  else {
-                    //c'è errore
-                    io.emit("responseeditmanager", cmd[1], "," + cmd[2]);
-                }
-                break;
-            case "LISTU":
-                listManager.delete();
-                for (let k = 2; k < parseInt(cmd[1])*4+2; k+=4) {
-                    listManager.add(cmd[k+1],cmd[k+2],cmd[k]);
-                }
-                break;
-            case "LISTF":
-                unitsL.delete();
-                for (let k=2; k < parseInt(cmd[1])*2+2; k+=2){
-                    unitsL.add(cmd[k],cmd[k+1])
-                }
-                break;
-                //CONTROLLARE SE CORRETTO
-            case "ADL":
-                io.emit("responsenewlist", cmd[1]+","+ cmd[2]);
-                if(cmd[1] == "OK") {
-                    l.addListnotAss(cmd[2]);
-                } 
-                break;
-            case "RML":
-                io.emit("responsedeletelist", cmd[1]+","+ cmd[2]);
-                if(cmd[1] == "OK") {
-                    l.removeList(cmd[2]);
-                } 
-                break;
-            case "LIST":
-                let tmp = cmd[1];
-                for (let k=3; k< parseInt(cmd[2])+2; k++) {
-                    tmp = tmp + "," +cmd[k];
-                }
-                addListAss(tmp);
-                break;
-            case "ADF":
-                io.emit("responsenewunit", cmd[1]+","+ cmd[2]);
-                if(cmd[1] == "OK") {
-                    ctj.aggiungiComando("LISTF");
-                } 
-            break;
-            //risposta unità rimossa
-            case "RMF":
-            
-              if(cmd[1] == "OK") {
-                    ctj.aggiungiComando("LISTF");
-                    io.emit("responsedeleteunit", cmd[1]);
-                } else {
-                    io.emit("responsedeleteunit", cmd[1]+","+ cmd[2]);
-                }
-            break;
-            default:
-                console.log("Unrecognized message from server: " + cmd[0]);
-        }
-    }
-    client.write(ctj.getDatiESvuota());
-    client.write('\n', ()=>{
-        console.log("response sent");
+function createConnectionServer(id, password) {
+    var failClient = false;
+    client = net.connect(SERVER_PORT, 'localhost', ()=>{
+        console.log('connected to server');
+        client.write("USER\n"+id+"\n"+password);
+        client.setNoDelay();
     });
-});
 
+    client.setEncoding('utf8');
+    client.on('error', ()=>{
+        console.log("Something went wrong with the server. Quitting.");
+    });
 
+    client.on('end', ()=>{ 
+        console.log('disconnected from server');
+    });
 
-//-----------------------------ANGULAR---------------------------------
- 
-client.on('end', ()=>{ 
-    console.log('disconnected from server');
-});
+    client.on('close', ()=>{
+        console.log('Socket is fully closed now.');
+    });
 
-client.on('close', ()=>{
-    console.log('Socket is fully closed now.');
-})
+    client.on('data', (data)=>{
+        data = data.toString().replace(/(\r\n|\n|\r)/gm, "");
+        let msg=data.toString().split(";");
+        for (let i = 0; i < msg.length; i++) {
+            let cmd = msg[i].split(",");
+            console.log(cmd);
+            switch(cmd[0]){
+                case "OK":
+                    io.emit("logincorrect", cmd[1]);
+                    break;
+                case "FAIL":
+                    io.emit("loginerror", cmd[1]);
+                    failClient = true;
+                    break;
+                case "MAP":
+                    //se cmd[1]=OK ho cambiato la mappa
+                    //se cmd[1]=dail errore cambio mappa
+                    //else la richiedo per la view map
+                    if (cmd[1] == "OK") {
+                        ctj.aggiungiComando("POI")
+                    } else if (cmd[1] == "FAIL") {
+                        ctj.aggiungiComando("MAP");
+                    } else {
+                        map.createMap(cmd[1], cmd[2], cmd[3]);
+                    io.emit("map", map.getMap());
+                    }
+                    break;
+                case "POI":
+                    poil.delete();
+                    for (let k = 2; k < parseInt(cmd[1]*5+2); k+=5) {
+                        poil.addPOI(cmd[k], cmd[k+1], cmd[k+2], cmd[k+3]);
+                    }
+                    io.emit("poilist", poil.getListString());
+                    io.emit("poilistmap", poil.getListMap());
+                    break;
+                case "UNI":
+                    let mul = "";
+                    for (let k = 1; k < cmd.length; k++) {
+                        mul += cmd[k] + (cmd.length - k <= 1? "" : ",");
+                    }
+                    io.emit("unit", mul);
+                    break;
+                case "ADU":
+                    io.emit("responseregistration", cmd[1]+","+cmd[2]);
+                    addTempManager(cmd[1]);
+                    break;
+                //rimozione un account
+                case "RMU":
+                    if(cmd[1] == "OK"){
+                        io.emit("responseeliminationU", cmd[1]);
+                        listManager.removeOne(tmpIDUser);
+                    }  else {
+                        io.emit("responseeliminationU", cmd[1]+","+ cmd[2]);
+                    }
+                    tmpIDUser = "";
+                    break;
+                case "EDU":
+                    if(cmd[1] == "OK"){
+                        if (cmd[2] != null) {
+                            //c'è la password
+                            io.emit("responseresetpwdmanager", cmd[1]);
+                        } else {
+                            io.emit("responseeditmanager", cmd[1]);
+                            ctj.aggiungiComando("LISTU");
+                        }
+                    }  else {
+                        //c'è errore
+                        io.emit("responseeditmanager", cmd[1], "," + cmd[2]);
+                    }
+                    break;
+                case "LISTU":
+                    listManager.delete();
+                    for (let k = 2; k < parseInt(cmd[1])*4+2; k+=4) {
+                        listManager.add(cmd[k+1],cmd[k+2],cmd[k]);
+                    }
+                    break;
+                case "LISTF":
+                    unitsL.delete();
+                    for (let k=2; k < parseInt(cmd[1])*2+2; k+=2){
+                        unitsL.add(cmd[k],cmd[k+1])
+                    }
+                    break;
+                //CONTROLLARE SE CORRETTO
+                case "ADL":
+                    io.emit("responsenewlist", cmd[1]+","+ cmd[2]);
+                    if(cmd[1] == "OK") {
+                        l.addListnotAss(cmd[2]);
+                    } 
+                    break;
+                case "RML":
+                    io.emit("responsedeletelist", cmd[1]+","+ cmd[2]);
+                    if(cmd[1] == "OK") {
+                        l.removeList(cmd[2]);
+                    } 
+                    break;
+                case "LIST":
+                    let tmp = cmd[1];
+                    for (let k=3; k< parseInt(cmd[2])+2; k++) {
+                        tmp = tmp + "," +cmd[k];
+                    }
+                    addListAss(tmp);
+                    break;
+                case "ADF":
+                    io.emit("responsenewunit", cmd[1]+","+ cmd[2]);
+                    if(cmd[1] == "OK") {
+                        ctj.aggiungiComando("LISTF");
+                    } 
+                break;
+                //risposta unità rimossa
+                case "RMF":
+            
+                    if(cmd[1] == "OK") {
+                        ctj.aggiungiComando("LISTF");
+                        io.emit("responsedeleteunit", cmd[1]);
+                    } else {
+                        io.emit("responsedeleteunit", cmd[1]+","+ cmd[2]);
+                    }
+                break;
+                default:
+                    console.log("Unrecognized message from server: " + cmd[0]);
+            }
+        }
+        if (!failClient) {
+            client.write(ctj.getDatiESvuota());
+            client.write('\n', ()=>{
+                console.log("response sent");
+            });
+        } else {
+            client.destroy();
+        }
+    });    
+}
 
 function onErr(err) {
     console.log(err);
     return 1;
 }
 
+//-----------------------------ANGULAR---------------------------------
 
 io.on("connection", (socket) => {
 
@@ -291,9 +297,8 @@ io.on("connection", (socket) => {
     socket.on("login", (data) =>{
         let tmpData = data.split(',');
         //provaaa
-        socket.emit("logincorrect", "MANAGER");
-        
-        ctj.aggiungiComando("USER\n"+tmpData[0]+"\n"+tmpData[1]);
+        //socket.emit("logincorrect", "MANAGER");
+        createConnectionServer(tmpData[0], tmpData[1]);
     });
     socket.on("logout", () =>{
         ctj.aggiungiComando("LOGOUT");
