@@ -48,7 +48,7 @@ function createConnectionServer(id, password) {
     var failClient = false;
     client = net.connect(SERVER_PORT, 'localhost', ()=>{
         console.log('connected to server');
-        client.write("USER\n"+id+"\n"+password);
+        client.write("USER\n"+id+"\n"+password+"\n");
         client.setNoDelay();
     });
 
