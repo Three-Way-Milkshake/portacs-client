@@ -20,7 +20,7 @@ class Map {
     }
 
     getCell(x, y) {
-      return (typeof this.map[y][x] !== 'undefined'? this.map[y][x] : "");
+      // return (typeof this.map[y][x] !== 'undefined'? this.map[y][x] : "");
     }
 
     getMap() {
