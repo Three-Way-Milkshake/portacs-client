@@ -1,12 +1,13 @@
 *{
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  
 }
 ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #262730;
   }
   
   li {
@@ -23,7 +24,7 @@ ul {
   }
   
 li a:hover{
-    background-color: red;
+    background-color: #d7c0d0;
 }
 
 .last{

@@ -1,3 +1,30 @@
 h2{
     text-align: center;
 }
+.custom-select{
+
+        width: 30%;
+        padding: 12px 20px;
+        margin: 10px 0;
+        font-size: 1em;
+        box-sizing: border-box;
+        margin-left: 3em;
+}
+input[type="submit"]{
+    background-color: #77ba99;
+    text-align: center;
+    padding: 10px;
+    border-radius: 20%;
+ 
+}
+.mostraNewList{
+    margin-left: 3em;
+    
+}
+ol{
+    list-style-type: none;
+}
+#confirm{
+    background-color: #d7c0d0;
+    margin-left: 3em;
+}

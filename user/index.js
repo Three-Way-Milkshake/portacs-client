@@ -291,7 +291,7 @@ io.on("connection", (socket) => {
     socket.on("login", (data) =>{
         let tmpData = data.split(',');
         //provaaa
-        socket.emit("logincorrect", "ADMIN");
+        socket.emit("logincorrect", "MANAGER");
         
         ctj.aggiungiComando("USER\n"+tmpData[0]+"\n"+tmpData[1]);
     });

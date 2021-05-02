@@ -1,3 +1,26 @@
 h2{
+    font-size: 1.5em;
+}
+.ass{
+    
+    margin-left: 20%;
+    float: left;
+    
+}
+
+.Nass{
+   
+    width: 30%;
+    float: right;
+
+}
+ol{
+    list-style-type: circle;
+}
+input[type="submit"]{
+    background-color: #77ba99;
     text-align: center;
+    padding: 10px;
+    border-radius: 20%;
+ 
 }

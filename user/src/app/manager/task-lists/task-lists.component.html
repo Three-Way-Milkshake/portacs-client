@@ -1,9 +1,12 @@
+<div class="ass">
 <h2>Liste  assegnate</h2>
 <ol>
     <li *ngFor="let a of ass">
         {{a}}
      </li>
 </ol>
+</div>
+<div class="Nass">
 <h2>Liste non assegnate</h2>
 <ol>
     <li *ngFor="let a of notAss">
@@ -11,3 +14,4 @@
         <input type="submit" value="Elimina" (click)="remove(a)">
      </li>
 </ol>
+</div>
