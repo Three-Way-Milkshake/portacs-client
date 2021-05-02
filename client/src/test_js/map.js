@@ -20,8 +20,7 @@ class Map {
     }
 
     getCell(x, y) {
-      let tempVar = this.map[y][x];
-      return (tempVar === 'undefined'? "" : tempVar);
+      return (typeof this.map[y][x] !== 'undefined'? this.map[y][x] : "");
     }
 
     getMap() {
@@ -44,7 +43,7 @@ class Map {
       for (let i = 0; i < r; i++) {
         this.map[i] = [];
         for (let j = 0; j < c; j++) {
-          this.map[i][j] = seq[i*r + j];
+          //this.map[i][j] = seq[i*r + j];
           this.map[i][j] = seq[counter++];
         }
       }

@@ -14,8 +14,8 @@ const SERVER_PORT = 1723;
 const io = require("socket.io")(http, {
     cors: {
     //   origin: "http://localhost:4200",
-    //   origin: `http://localhost:${process.argv[2]}`,
-        origin: `${process.argv[2]}`,
+      origin: `http://localhost:${process.argv[2]}`,
+        // origin: `${process.argv[2]}`,
         methods: ["GET", "POST"]
     }
 });
@@ -51,7 +51,7 @@ let c = new Container();
 
 var client = net.connect(SERVER_PORT, 'localhost', ()=>{
     console.log('connected to server');
-    client.write(`FORKLIFT\n${process.argv[6]}\n${process.argv[7]}`);
+    client.write(`FORKLIFT\n${process.argv[6]}\n${process.argv[7]}\n`);
     client.setNoDelay();
 });
 client.setEncoding('utf8');
