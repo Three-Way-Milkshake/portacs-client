@@ -20,9 +20,9 @@ export class ManageTaskComponent implements OnInit {
 
   ngOnInit(): void {
     this.poiService.getValues();
-    this.poiService.onNewPOIList().subscribe((data) => {
+    this.poiService.onNewPOIList().subscribe((data: string[]) => {
       this.ngZone.run(() => {
-        this.setValues(String(data));
+        this.setValues(data);
       });      
     });
 
@@ -63,13 +63,13 @@ export class ManageTaskComponent implements OnInit {
     this.service.confirm(this.newList);
   }
 
-  setValues(s: string) {
-    let tmp : string[] = s.split(",");
-    if (tmp.length > 0) {
-      this.selectedPoi = tmp[0];
+  setValues(s: string[]) {
+    //let tmp : string[] = s.split(",");
+    if (s.length > 0) {
+      this.selectedPoi = s[0];
     }
-    for (let i = 0; i < tmp.length; i++){
-      this.poi[i] = tmp[i];
+    for (let i = 0; i < s.length; i++){
+      this.poi[i] = s[i];
     }
   }
   

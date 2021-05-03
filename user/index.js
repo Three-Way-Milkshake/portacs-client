@@ -172,10 +172,14 @@ function createConnectionServer(id, password) {
                     break;
                 case "LIST":
                     let tmp = cmd[1];
-                    for (let k=3; k< parseInt(cmd[2])+2; k++) {
+                    for (let k=3; k < parseInt(cmd[2])+2; k++) {
                         tmp = tmp + "," +cmd[k];
                     }
-                    addListAss(tmp);
+                    console.log("TASK: ");
+                    console.log(tmp);
+                    
+                    l.addListAss(tmp);
+                    socket.emit("listAss", l.getAss());
                     break;
                 case "ADF":
                     io.emit("responsenewunit", cmd[1]+","+ cmd[2]);
@@ -289,7 +293,8 @@ io.on("connection", (socket) => {
         //inviare al server
     });
     socket.on("getlistAss", () => {
-        socket.emit("listAss", l.getAss());
+        l.remove();
+        ctj.aggiungiComando("LIST");
     });
     socket.on("getlistNotAss", () => {
         socket.emit("listnotAss", l.getNotAss());

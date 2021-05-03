@@ -1,6 +1,6 @@
 class ListsTask {
-    ass = ["unita1,0000,ab,cx,sd", "unita2,0001,ab,cx,sd", "unita3,0003,ab,cx,sd"];
-    notAss = ["1, abc, df", "3, abc, df"];
+    ass = [];
+    notAss = ["ciao"];
     listJustAdded;
     getAss(){
         return this.ass;
@@ -35,6 +35,10 @@ class ListsTask {
         if (index >= 0) {
             this.notAss.splice(index, 1);
         }
+    }
+
+    remove(){
+        this.ass = [];
     }
 
     
