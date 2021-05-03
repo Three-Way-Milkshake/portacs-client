@@ -20,6 +20,7 @@ export class ViewMapComponent implements OnInit {
   listPOIx : number[] = [];
   listPOIy : number[] = [];
   listPOIt : string[] = [];
+  listPOIName : string[] = [];
   constructor(private ngZone: NgZone, private servicePOI: POIListService) {}
 
   ngOnInit() {
@@ -42,15 +43,15 @@ export class ViewMapComponent implements OnInit {
   }
 
   setPOI(data: string[]) {
-    
     for (let i = 0; i < data.length ; i++){
-      
       let dataTmp = data[i].split(",");
       this.listPOIx[i] = parseInt(dataTmp[0]);
       this.listPOIy[i] = parseInt(dataTmp[1]);
       this.listPOIt[i] = dataTmp[2];
       this.listPOIID[i] = dataTmp[3];
+      this.listPOIName[i] = dataTmp[4];
     }
+    
     
   }
 
@@ -68,10 +69,8 @@ export class ViewMapComponent implements OnInit {
         observer.next(msg);
       });
     });
+    
   }
-
-
-  
 
   setValues(data: string) {
     this.tmp[0] = [];
@@ -92,17 +91,20 @@ export class ViewMapComponent implements OnInit {
       }
       i++;
     }
+    
     this.setPOIonMap();
     if (this.pos != null) {
       for (let t = 0; t < this.pos.length; t++) {
         this.tmp[this.pos[t].posX][this.pos[t].posY] = (this.pos[t].dir).toString();
       }
     }
+    console.log("---1---");
+    console.log(this.tmp);
   }
   
   setPOIonMap() {
     for (let i = 0; i < this.listPOIID.length; i++){
-      this.tmp[this.listPOIx[i]][this.listPOIy[i]] = this.listPOIID[i];
+      this.tmp[this.listPOIx[i]][this.listPOIy[i]] = this.listPOIName[i];
     }
   }  
 
@@ -116,29 +118,38 @@ export class ViewMapComponent implements OnInit {
   }
 
   dirToNumber(d : string) {
-    if        (d == "UP") {
-      return 6;
-    } else if (d == "RIGHT") {
+    if        (d == "0") {
       return 7;
-    } else if (d == "DOWN") {
+    } else if (d == "1") {
       return 8;
-    } else if (d == "LEFT") {
+    } else if (d == "2") {
       return 9;
+    } else if (d == "3") {
+      return 10;
     } else {
       return -1;
     }
   }
 
   changePosition(cmd : string){
+    /*
     cmd = cmd.toString().replace(/(\r\n|\n|\r)/gm, "");
     let data : string[] = cmd.toString().split(",");
     for (let j = 0, i = 0; i < data.length; i= i+3, j++) {
       this.pos[j] = {posX: parseInt(data[i]), posY: parseInt(data[i+1]), dir: this.dirToNumber(data[i+2])};
     }
     socket.emit("getmap");
+    */
+   
+    cmd = cmd.toString().replace(/(\r\n|\n|\r)/gm, "");
+    let data : string[] = cmd.toString().split(";");//una unità
+    let unitTemp : string[];
+    for (let k = 1; k < parseInt(data[0])+1; k++) {
+      unitTemp = data[k].split(',');
+      this.pos[k-1] = {posX: parseInt(unitTemp[1]), posY: parseInt(unitTemp[2]), dir: this.dirToNumber(unitTemp[3])};
+    }
+    
+    socket.emit("getmap");
   }
 
-  
-
-  
 }

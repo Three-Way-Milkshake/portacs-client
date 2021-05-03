@@ -49,7 +49,8 @@ class Map {
       for (let i = 0; i < r; i++) {
         this.map[i] = [];
         for (let j = 0; j < c; j++) {
-          this.map[i][j] = seq[counter++];
+          this.map[i][j] = seq[counter];
+          counter++;
         }
       }
     }

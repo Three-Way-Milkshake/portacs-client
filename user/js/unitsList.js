@@ -1,5 +1,5 @@
 class UnitsList{
-    listU = ["0000,token1", "0001,token2", "0002,token3"];
+    listU = [];
 
     delete() {
         this.listU = [];

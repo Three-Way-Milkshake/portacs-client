@@ -1,27 +1,30 @@
 class POIlist{
-    poi = ["ab", "cv", "sdf"];
-    y = ["1","3","3"];
-    x = ["1","3","4"];
-    t = ["s","s","s"];
+    id = [];
+    y = [];
+    x = [];
+    t = [];
+    name = [];
     getListString(){
-      return this.poi;
+      return this.id; 
     }
     delete(){
-      this.poi = [];
+      this.id = [];
       this.y = [];
       this.x = [];
       this.t = [];
+      this.name = [];
     }
-    addPOI(x, y, t, id){
-        this.poi.push(id);
+    addPOI(x, y, t, id, name){
+        this.id.push(id);
         this.y.push(y);
         this.x.push(x);
         this.t.push(t);
+        this.name.push(name);
     }
     getListMap(){
       let str = [];
-      for (let i = 0; i < this.poi.length; i++) {
-        str[i] = this.x[i] + "," + this.y[i] + "," + this.t[i] + "," + this.poi[i];
+      for (let i = 0; i < this.id.length; i++) {
+        str[i] = this.x[i] + "," + this.y[i] + "," + this.t[i] + "," + this.id[i] + "," + this.name[i];
       }
       return str;
     }

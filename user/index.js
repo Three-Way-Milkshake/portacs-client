@@ -23,7 +23,7 @@ const io = require("socket.io")(http, {
 
 let ctj = new CommandsToJava();
 let listManager = new ListManager();
-let unitsL = new UnitsList();
+let unitsL = new UnitsList(); //lista muletti
 let tmpName = "";
 let tmpSurname = "";
 let tmpIDUser = "";
@@ -88,24 +88,32 @@ function createConnectionServer(id, password) {
                     } else if (cmd[1] == "FAIL") {
                         ctj.aggiungiComando("MAP");
                     } else {
-                        map.createMap(cmd[1], cmd[2], cmd[3]);
-                    io.emit("map", map.getMap());
+                        map.createMap(parseInt(cmd[1]), parseInt(cmd[2]), cmd[3]);
+                        
+                        io.emit("map", map.getMap());
                     }
                     break;
                 case "POI":
                     poil.delete();
                     for (let k = 2; k < parseInt(cmd[1]*5+2); k+=5) {
-                        poil.addPOI(cmd[k], cmd[k+1], cmd[k+2], cmd[k+3]);
+                        poil.addPOI(cmd[k], cmd[k+1], cmd[k+2], cmd[k+3], cmd[k+4]);
                     }
                     io.emit("poilist", poil.getListString());
                     io.emit("poilistmap", poil.getListMap());
                     break;
                 case "UNI":
+                    let strUnit = cmd[1];
+                    for (let k = 2; k < parseInt(cmd[1]*4+2); k+=4) {
+                        strUnit += ";" + cmd[k] + "," + cmd[k+1] +  "," + cmd[k+2] + "," + cmd[k+3];
+                    }
+                    io.emit("unit", strUnit);
+                    /*
                     let mul = "";
                     for (let k = 1; k < cmd.length; k++) {
                         mul += cmd[k] + (cmd.length - k <= 1? "" : ",");
                     }
                     io.emit("unit", mul);
+                    */
                     break;
                 case "ADU":
                     io.emit("responseregistration", cmd[1]+","+cmd[2]);
