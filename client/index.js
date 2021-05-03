@@ -53,7 +53,7 @@ let c = new Container();
 
 var client = net.connect(SERVER_PORT, 'localhost', ()=>{
     console.log('connected to server');
-    client.write(`FORKLIFT\n${process.argv[6]}\n${process.argv[7]}\n`);
+    client.write(`FORKLIFT\n${process.argv[6]}\n${process.argv[7]}\nLIST;`);
     client.setNoDelay();
 });
 client.setEncoding('utf8');
@@ -78,7 +78,7 @@ client.on('data', (data)=>{
                 for (let k = 2; k < parseInt(cmd[1])*5+2; k+=5) {
                     poi.addPOI(cmd[k], cmd[k+1], cmd[k+2], cmd[k+3], cmd[k+4]);
                 }
-                io.emit("poilistmap", poil.getListMap());
+                io.emit("poilistmap", poi.getListMap());
                 break;
             case "PATH":
                 canCheckAuto = true;
