@@ -1,6 +1,7 @@
 <h2>Lista manager</h2>
 <ol>
     <li *ngFor="let id of listManagerId; let i = index">
+       ID: {{listManagerId[i]}} 
         <form>
             <label id="name">Name: </label>
             <input for="name" #Name value={{listManagerName[i]}} />

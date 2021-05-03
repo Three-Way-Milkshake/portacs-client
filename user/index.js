@@ -64,12 +64,14 @@ function createConnectionServer(id, password) {
     });
 
     client.on('data', (data)=>{
+        console.log(data);
         data = data.toString().replace(/(\r\n|\n|\r)/gm, "");
         let msg=data.toString().split(";");
         for (let i = 0; i < msg.length; i++) {
             let cmd = msg[i].split(",");
             switch(cmd[0]){
                 case "OK":
+                    console.log(cmd);
                     io.emit("logincorrect", cmd[1]);
                     user.setInfo(cmd[2], cmd[3]);
                     break;
@@ -137,7 +139,7 @@ function createConnectionServer(id, password) {
                 case "LISTU":
                     listManager.delete();
                     for (let k = 2; k < parseInt(cmd[1])*4+2; k+=4) {
-                        listManager.add(cmd[k+1],cmd[k+2],cmd[k]);
+                        listManager.add(cmd[k]+","+cmd[k+1]+","+cmd[k+2]); // manca ruolo
                     }
                     io.emit("viewlistmanager", listManager.getListManager());
                     break;
@@ -215,6 +217,9 @@ io.on("connection", (socket) => {
     socket.on("newuserinformation", (data) => {
         let userInfo = data.toString().split(',');
         user.setInfo(userInfo[0], userInfo[1], userInfo[2]);
+        ctj.aggiungiComando("EDIT,NAME,"+userInfo[0]);
+        ctj.aggiungiComando("EDIT,LAST,"+userInfo[1]);
+        ctj.aggiungiComando("EDIT,PWD,"+userInfo[2]);
         socket.emit("userinformation", user.getInformation());
     });
     socket.on("getlistmanager", () => {

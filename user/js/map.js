@@ -16,7 +16,7 @@ class Map {
       for (let i = 0; i < this.map.length; i++){
         for(let j = 0; j < this.map[i].length; j++) {
           if (isNaN(parseInt(this.map[i][j]))) {
-            poiArr[k] = i + "," + j + ",6,1," + this.map[i][j];
+            poiArr[k] = i + "," + j + ",6,0,1," + this.map[i][j];
             this.map[i][j] = "6";
             k++;
           }
