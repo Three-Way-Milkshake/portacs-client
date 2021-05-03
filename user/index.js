@@ -294,7 +294,23 @@ io.on("connection", (socket) => {
         
     });
     socket.on("newlisttask", (data) =>{
-        ctj.aggiungiComando("ADL,"+data);
+        //[ '0,1,p1', '0,5,p5', '0,9,p9' ]
+        let toSend='';
+        for(let i=0; i<data.length; ++i){
+            toSend+=data[i].split(',')[1];
+            if(i<data.length-1){
+                toSend+=',';
+            }
+            console.log(data[i].split(','));
+        }
+        // let slicer=data.slice(',');
+        // for(let i=1; i<slicer.length; i+=3){
+        //     toSend+=slicer[i];
+        // }
+        console.log(data);
+        console.log(toSend)
+        // ctj.aggiungiComando("ADL,"+data);
+        ctj.aggiungiComando("ADL,"+toSend+';');
         l.addTemporaryList(data);
     });
     socket.on("removeList", (data) =>{
