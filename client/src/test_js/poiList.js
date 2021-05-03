@@ -1,17 +1,34 @@
 class POIlist{
-    id = ["ab", "cv", "sdf"];
-    y = ["1","3","3"];
-    x = ["1","3","4"];
-    t = ["s","s","s"];
+    id = [];
+    y = [];
+    x = [];
+    t = [];
     name = [];
     getListString(){
       return this.poi;
     }
     delete(){
-      this.poi = [];
+      this.id = [];
       this.y = [];
       this.x = [];
       this.t = [];
+      this.name = [];
+    }
+    getNameFromId(id) {
+      for (let i = 0; i < this.id.length; i++) {
+        if (id == this.id[i]) {
+          return this.name[i]; 
+        }
+      }
+      return "";
+    }
+    getPosfromId(id){
+      for (let i = 0; i < this.id.length; i++) {
+        if (id == this.id[i]) {
+          return this.x[i]+ "," + this.y[i]; 
+        }
+      }
+      return "";
     }
     addPOI(x, y, t, id, name){
         this.id.push(id);
@@ -21,10 +38,11 @@ class POIlist{
         this.name.push(name);
     }
     getListMap(){
-      let str = [];
+      let str = "";
       for (let i = 0; i < this.id.length; i++) {
-        str[i] = this.x[i] + "," + this.y[i] + "," + this.t[i] + "," + this.id[i] + ","+ this.name[i];
+        str +=  this.x[i] + "," + this.y[i] + "," + this.t[i] + "," + this.id[i] + ","+ this.name[i] + ";" ;
       }
+      console.log(str);
       return str;
     }
     

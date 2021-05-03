@@ -20,6 +20,7 @@ export class MapService {
       });
     });
   }
+  
 
   onNewMap() {
     return new Observable(observer => {
@@ -43,6 +44,10 @@ export class MapService {
         observer.next(msg);
       });
     });
+  }
+
+  requestPOI() {
+    socket.emit("requestPOI");
   }
 
   requestMap() {

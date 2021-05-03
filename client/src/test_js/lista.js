@@ -23,6 +23,10 @@ class Lista {
       this.lista.shift();
       //aggiungere un return
     }
+
+    getLista() {
+      return this.lista;
+    }
     
     listaToString() {
       let out = "";

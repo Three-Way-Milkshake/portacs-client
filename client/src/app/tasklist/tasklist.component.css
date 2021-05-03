@@ -4,7 +4,7 @@
     margin-top: 1.5em;
     font-size: 1.5em;
     text-align: center;
-    border-radius: 85px;   
+      
     float: left;
 }
 ol {
@@ -13,7 +13,5 @@ ol {
    
 }
 li{
-    padding: 0.2em;
-    border: 1px solid #000;
     width: 2%;
 }

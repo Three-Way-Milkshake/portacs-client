@@ -99,8 +99,6 @@ export class ViewMapComponent implements OnInit {
         this.tmp[this.pos[t].posX][this.pos[t].posY] = (this.pos[t].dir).toString();
       }
     }
-    console.log("---1---");
-    console.log(this.tmp);
   }
   
   setPOIonMap() {

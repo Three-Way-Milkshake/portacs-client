@@ -17,10 +17,14 @@ class Map {
   
     setMap(m) {
       this.map = m;
+      console.log(this.map);
     }
 
     getCell(x, y) {
-      // return (typeof this.map[y][x] !== 'undefined'? this.map[y][x] : "");
+      if (x < this.getCol() && y < this.getRow()) { 
+        return this.map[x][y];
+      }
+      return '-1';
     }
 
     getMap() {
@@ -47,6 +51,7 @@ class Map {
           this.map[i][j] = seq[counter++];
         }
       }
+      console.log();
     }
     
     mapToString() { //per angular

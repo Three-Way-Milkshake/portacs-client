@@ -78,12 +78,17 @@ client.on('data', (data)=>{
                 for (let k = 2; k < parseInt(cmd[1])*5+2; k+=5) {
                     poi.addPOI(cmd[k], cmd[k+1], cmd[k+2], cmd[k+3], cmd[k+4]);
                 }
+                
                 io.emit("poilistmap", poi.getListMap());
                 break;
             case "PATH":
-                canCheckAuto = true;
-                mosse.createMosse(cmd[1]);
                 
+                canCheckAuto = true;
+                
+                for (let k = 1; k < cmd.length; k++) {
+                    mosse.addMove(cmd[k]);
+                    console.log("MOSSAAAAH "+k+": "+cmd[k]);
+                }
                 break;
             case "STOP":
                 if (cmd[1] == '0') {
@@ -97,26 +102,30 @@ client.on('data', (data)=>{
             case "START":
                 stopped = false;
                 break;
-            case "LIST": //uguale a manuale
-                for (let z = 1; z < cmd.length; z++) {
-                    lista.addPOI(cmd[z]);
-                }
-                io.emit("lista", lista.getLista());
-                let tempVar = lista.getFirstPOI();
-                io.emit("updatePOI", (tempVar === 'undefined'? "" : tempVar));
-                break;     
+                case "LIST": 
+                
+                    for (let z = 1; z < cmd.length; z++) {
+                        lista.addPOI(cmd[z]);
+                    }
+                    
+                    listNameFromIdList();
+                    let tempVar = lista.getFirstPOI();
+                    io.emit("updatePOI", (tempVar === 'undefined'? "" : tempVar));
+                    break;     
             default: 
                 console.log("Unrecognized message from server");
         }
     }
     //muovere il muletto in automatic driving
     if (!manualDriving && !stopped) {
-        changePosition(mosse.getMove());
-    }/* else if (!manualDriving) {
-        io.emit("arrows", "S");
-    }*/
+        changePosition(mosse.getLastInsertMove());
+    }
     //task completata
-    if (map.getCell(x, y) == lista.getFirstPOI()){
+    console.log("------------------------");
+    console.log(y+","+x);
+    console.log(poi.getPosfromId(lista.getFirstPOI()));
+    console.log("------------------------");
+    if ((y+","+x) == poi.getPosfromId(lista.getFirstPOI())){
         io.emit("completedtaskbutton");
     }
     client.write(c.getDatiESvuota("POS," + x + "," + y + "," + dir)); 
@@ -136,6 +145,18 @@ client.on('close', ()=>{
     console.log('Socket is fully closed now.');
 })
 
+function listNameFromIdList() {
+    let tmpStr = "";
+    let tmpLista = lista.getLista();
+    for (let z = 0; z < tmpLista.length; z++) {
+        tmpStr += poi.getNameFromId(tmpLista[z]);
+        if ((tmpLista.length-z) > 1) {
+            tmpStr += ",";
+        }
+    }
+    io.emit("lista", tmpStr);
+}
+
 function sendSth(){
     prompt.get(['first', 'last'], (err, res)=>{
         if (err) { return onErr(err); }
@@ -153,7 +174,7 @@ io.on("connection", (socket) => {
     
     //console.log("mostra il pulsante");
     // socket.emit("mappa", map.getMap());
-    io.emit("lista", lista.getLista());
+    listNameFromIdList();
     let tempVar = lista.getFirstPOI();
     io.emit("updatePOI", (tempVar === 'undefined'? "" : tempVar));
     
@@ -172,7 +193,10 @@ io.on("connection", (socket) => {
     });
     
     socket.on("mappa", () => {
-        io.emit("mappa", map.getMap());
+        socket.emit("mappa", map.getMap());
+    });
+    socket.on("requestPOI", () => {
+        socket.emit("poilistmap", poi.getListMap());
     });
     socket.on("start", () => { 
         c.aggiungiComando("PATH,0"); //PATH -> taskfinite -> gestito da server | 0 false -> richiede lo stesso percorso
@@ -205,7 +229,7 @@ io.on("connection", (socket) => {
     //task
     socket.on("taskcompletata", () => {
         lista.removeFirstPOI();
-        io.emit("lista", lista.getLista());
+        listNameFromIdList();
         let tempVar = lista.getFirstPOI();
         io.emit("updatePOI", (tempVar === 'undefined'? "" : tempVar));
         c.aggiungiComando("PATH,1"); //1 true -> rimuovi anche la task
@@ -225,7 +249,7 @@ http.listen(HTTP_PORT, () => {
 
 function changePosition(mossa){
     switch(mossa) {
-      case "R":
+      case "2": // turn right
         if      (dir == 0) dir = 1;
         else if (dir == 3) dir = 0;
         else if (dir == 2) dir = 3;
@@ -233,42 +257,43 @@ function changePosition(mossa){
         
 
         break;
-        case "L":
+        case "3": // turn left
           if      (dir == 0) dir = 3;
           else if (dir == 3) dir = 2;
           else if (dir == 2) dir = 1;
           else if (dir == 1) dir = 0;
           
           break;
-        case "T":
+        case "1": //turnaround
           if      (dir == 0) dir = 2;
           else if (dir == 3) dir = 1;
           else if (dir == 2) dir = 0;
           else if (dir == 1) dir = 3;
           
           break;
-        case "S":
+        case "4": //stop
           //fermo non fa niente
           break;
-        case "M":
-          let yTemp = y;
-          let xTemp = x;
+        case "0": // go straight
+          let movVertic = y;
+          let movOrizz = x;
           if        (dir == 0) {
-            yTemp--;
+            movVertic--;
           } else if (dir == 2) {
-            yTemp++;
+            movVertic++;
           } else if (dir == 1) {
-            xTemp++;
+            movOrizz++;
           } else if (dir == 3) {
-            xTemp--;
+            movOrizz--;
           }
-          if (xTemp >= 0 && yTemp >= 0 && xTemp < map.getCol() && yTemp < map.getRow() && (map.getCell(xTemp, yTemp) != '0')) {
-              y = yTemp;
-              x = xTemp;
+          
+          if (movOrizz >= 0 && movVertic >= 0 && movOrizz < map.getCol() && movVertic < map.getRow() && (map.getCell(movVertic, movOrizz) != '0')) {
+              y = movVertic;
+              x = movOrizz;
           }
           break;
           default:
-              mossa ="S";
+              mossa ="4"; // stop
     }
     io.emit("updatemap", x+","+y+","+dir);
     io.emit("arrows", mossa);
@@ -278,8 +303,8 @@ setInterval(() => {
     if (manualDriving) {
         let tempMove = manualDrivingList.getLastInsertMove();
         manualDrivingList.deleteAllMoves();
-        if (!manualStop || tempMove == "R" || tempMove == "L" || tempMove == "T") {
-            changePosition(tempMove === undefined ? "M" : tempMove);
+        if (!manualStop || tempMove == "2" || tempMove == "3" || tempMove == "1") {
+            changePosition(tempMove === undefined ? "0" : tempMove);
         } 
     }
 }, 1000);

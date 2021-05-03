@@ -146,7 +146,7 @@ function createConnectionServer(id, password) {
                     for (let k=2; k < parseInt(cmd[1])*2+2; k+=2){
                         unitsL.add(cmd[k],cmd[k+1])
                     }
-                    socket.emit("viewlistunit", unitsL.getListUnit());
+                    io.emit("viewlistunit", unitsL.getListUnit());
                     break;
                 //CONTROLLARE SE CORRETTO
                 case "ADL":

@@ -41,8 +41,9 @@ export class TasklistComponent implements OnInit {
 
   setValues(data : string) {
     this.lista = [];
-    for (let i = 0; i < data.length; i++) {
-      this.lista[i] = data[i];
+    let tmp = data.split(",");
+    for (let i = 0; i < tmp.length; i++) {
+      this.lista[i] = tmp[i];
     }
   }
   

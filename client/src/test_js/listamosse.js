@@ -4,14 +4,16 @@ class Listamosse {
         ad ogni mossa si aggiorna la mappa cambiando il muletto
     */
     moves = [];
-
+    
     createMosse(seq){
         this.moves = [];
         for (let i = 0; i < seq.length; i++) {
             this.moves.push(seq[i]);
         }
     }
-
+    addMove(mossa){
+        this.moves.push(mossa);
+    }
     deleteAllMoves() {
         this.moves=[];
     }
