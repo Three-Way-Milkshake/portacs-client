@@ -126,7 +126,7 @@ function createConnectionServer(id, password) {
                     if(cmd[1] == "OK"){
                         if (cmd[2] != null) {
                             //c'è la password
-                            io.emit("responseresetpwdmanager", cmd[1]);
+                            io.emit("responseresetpwdmanager", cmd[2]);
                         } else {
                             io.emit("responseeditmanager", cmd[1]);
                             ctj.aggiungiComando("LISTU");
