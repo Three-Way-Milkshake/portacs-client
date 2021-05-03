@@ -85,7 +85,8 @@ export class MapComponent implements OnInit {
       i++;
     }
     this.setPOIonMap();
-    this.tmp[this.pos.posY][this.pos.posX] = this.dirToIntArray(); //metto il muletto nella mappa con la sua direzione
+    //scambiato x e y
+    this.tmp[this.pos.posX][this.pos.posY] = this.dirToIntArray(); //metto il muletto nella mappa con la sua direzione
     
   }
 

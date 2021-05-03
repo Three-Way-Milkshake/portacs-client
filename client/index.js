@@ -125,8 +125,8 @@ client.on('data', (data)=>{
     console.log(y+","+x);
     console.log(poi.getPosfromId(lista.getFirstPOI()));
     console.log("------------------------");
-    if ((y+","+x) == poi.getPosfromId(lista.getFirstPOI())){
-        io.emit("completedtaskbutton");
+    if ((x+","+y) == poi.getPosfromId(lista.getFirstPOI())){
+        io.emit("completedtaskbutton"); //scambiato x e y
     }
     client.write(c.getDatiESvuota("POS," + x + "," + y + "," + dir)); 
     client.write('\n');
@@ -275,8 +275,9 @@ function changePosition(mossa){
           //fermo non fa niente
           break;
         case "0": // go straight
-          let movVertic = y;
-          let movOrizz = x;
+          //scambiato x e y
+          let movVertic = x; 
+          let movOrizz = y;
           if        (dir == 0) {
             movVertic--;
           } else if (dir == 2) {
@@ -288,8 +289,9 @@ function changePosition(mossa){
           }
           
           if (movOrizz >= 0 && movVertic >= 0 && movOrizz < map.getCol() && movVertic < map.getRow() && (map.getCell(movVertic, movOrizz) != '0')) {
-              y = movVertic;
-              x = movOrizz;
+              //scambiato x e y
+              x = movVertic;
+              y = movOrizz;
           }
           break;
           default:
