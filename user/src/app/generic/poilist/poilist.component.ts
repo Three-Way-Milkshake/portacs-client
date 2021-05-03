@@ -12,19 +12,24 @@ export class POIListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getValues();
-    this.service.onNewPOIList().subscribe((data) => {
+    this.service.onNewPOIList().subscribe((data : string[]) => {
       this.ngZone.run(() => {
-        this.setValues(String(data));
+        this.setValues(data);
         
       });      
     });
   }
 
-  setValues(s: string) {
-    let tmp : string[] = s.split(",");
-    for (let i = 0; i < tmp.length; i++){
-      this.list[i] = tmp[i];
+  setValues(s: string[]) {
+    
+    
+
+    for (let k = 0; k < s.length; k++) {
+      let tmp : string[] = s[k].split(",");
+      this.list[k] = "ID: "+tmp[1]+", Nome: "+tmp[2];
+      
     }
+
   }
   getValues() {
     this.service.getValues();

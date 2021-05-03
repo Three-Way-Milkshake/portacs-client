@@ -5,7 +5,11 @@ class POIlist{
     t = [];
     name = [];
     getListString(){
-      return this.id; 
+      let str = [];
+      for (let i = 0; i < this.id.length; i++) {
+        str[i] = this.t[i] + "," + this.id[i] + "," + this.name[i];
+      }
+      return str;
     }
     delete(){
       this.id = [];

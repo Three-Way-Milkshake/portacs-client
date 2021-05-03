@@ -12,7 +12,6 @@ export class POIListService {
     return new Observable(observer => {
       socket.on('poilist', (information: string) => {
         observer.next(information);
-        console.log(information);
       });
     });
     
