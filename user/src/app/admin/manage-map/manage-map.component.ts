@@ -16,14 +16,15 @@ export class ManageMapComponent implements OnInit {
   listPOIx : number[] = [];
   listPOIy : number[] = [];
   listPOIt : string[] = [];
+  listPOIName : string[] = [];
   displaySelection : boolean = false;
   lastButtonI : number;
   lastButtonJ : number;
   constructor(private service : ManageMapService, private ngZone: NgZone, private servicePOI: POIListService) { }
 
   ngOnInit(): void {
-    this.getValues();
     this.servicePOI.getPOIManageMap();
+    this.getValues();
     this.service.onNewMap().subscribe((data) => {
       this.ngZone.run(() => {
         this.setValues(String(data));
@@ -46,6 +47,7 @@ export class ManageMapComponent implements OnInit {
       this.listPOIy[i] = parseInt(dataTmp[1]);
       this.listPOIt[i] = dataTmp[2];
       this.listPOIID[i] = dataTmp[3];
+      this.listPOIName[i] = dataTmp[4];
     }
     
   }
@@ -68,11 +70,11 @@ export class ManageMapComponent implements OnInit {
       }
       i++; 
     }
-    this.setPOIonMap(); 
+    this.setPOIonMap();
   }
   setPOIonMap() {
     for (let i = 0; i < this.listPOIID.length; i++){
-      this.tmp[this.listPOIx[i]][this.listPOIy[i]] = this.listPOIID[i];
+      this.tmp[this.listPOIx[i]][this.listPOIy[i]] = this.listPOIName[i];
     }
   } 
 

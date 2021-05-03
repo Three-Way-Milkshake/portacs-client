@@ -25,6 +25,7 @@ export class ViewMapComponent implements OnInit {
 
   ngOnInit() {
     this.servicePOI.getPOIMap();
+    socket.emit("getmap");
     this.onNewAction().subscribe((data) =>{
       this.ngZone.run(() => {
         this.changePosition(String(data));

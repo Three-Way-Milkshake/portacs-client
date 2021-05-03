@@ -54,6 +54,16 @@ class Map {
         }
       }
     }
+
+    getMapForServer() {
+      let strMap = "";
+      for (let i = 0; i < this.map.length; i++) {
+        for (let j = 0; j < this.map[i].length; j++) {
+          strMap += this.map[i][j];
+        }
+      }
+      return strMap;
+    }
     
     mapToString() { //per angular
       let out = "[";

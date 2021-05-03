@@ -31,9 +31,6 @@ let user = new UserInformation();
 let map = new Map();
 let poil = new POIlist();
 let l = new ListsTask();
-let x = [];
-let y = [];
-let dir = [];
 /*
 dir:
 0 = su
@@ -71,7 +68,6 @@ function createConnectionServer(id, password) {
         let msg=data.toString().split(";");
         for (let i = 0; i < msg.length; i++) {
             let cmd = msg[i].split(",");
-            console.log(cmd);
             switch(cmd[0]){
                 case "OK":
                     io.emit("logincorrect", cmd[1]);
@@ -83,7 +79,7 @@ function createConnectionServer(id, password) {
                     break;
                 case "MAP":
                     //se cmd[1]=OK ho cambiato la mappa
-                    //se cmd[1]=dail errore cambio mappa
+                    //se cmd[1]=fail errore cambio mappa
                     //else la richiedo per la view map
                     if (cmd[1] == "OK") {
                         ctj.aggiungiComando("POI")
@@ -109,13 +105,6 @@ function createConnectionServer(id, password) {
                         strUnit += ";" + cmd[k] + "," + cmd[k+1] +  "," + cmd[k+2] + "," + cmd[k+3];
                     }
                     io.emit("unit", strUnit);
-                    /*
-                    let mul = "";
-                    for (let k = 1; k < cmd.length; k++) {
-                        mul += cmd[k] + (cmd.length - k <= 1? "" : ",");
-                    }
-                    io.emit("unit", mul);
-                    */
                     break;
                 case "ADU":
                     io.emit("responseregistration", cmd[1]+","+cmd[2]);
@@ -150,12 +139,14 @@ function createConnectionServer(id, password) {
                     for (let k = 2; k < parseInt(cmd[1])*4+2; k+=4) {
                         listManager.add(cmd[k+1],cmd[k+2],cmd[k]);
                     }
+                    io.emit("viewlistmanager", listManager.getListManager());
                     break;
                 case "LISTF":
                     unitsL.delete();
                     for (let k=2; k < parseInt(cmd[1])*2+2; k+=2){
                         unitsL.add(cmd[k],cmd[k+1])
                     }
+                    socket.emit("viewlistunit", unitsL.getListUnit());
                     break;
                 //CONTROLLARE SE CORRETTO
                 case "ADL":
@@ -227,11 +218,10 @@ io.on("connection", (socket) => {
         socket.emit("userinformation", user.getInformation());
     });
     socket.on("getlistmanager", () => {
-        socket.emit("viewlistmanager", listManager.getListManager());
+        ctj.aggiungiComando("LISTU");
     });
     //new account
     socket.on("registration", (data) => {
-        //listManager.add(data);
         let tmpStr = data.split(',');
         tmpName = tmpStr[0];
         tmpSurname = tmpStr[1];
@@ -249,7 +239,7 @@ io.on("connection", (socket) => {
         socket.emit("userinformation", user.getInformation());
     });
     socket.on("getlistunit", () => {
-        socket.emit("viewlistunit", unitsL.getListUnit());
+        ctj.aggiungiComando("LISTF");
     });
     socket.on("modifymanager", (data) => {
         let tmpData = data.split(',');
@@ -259,7 +249,7 @@ io.on("connection", (socket) => {
     socket.on("resetmanager", (data) => {
         ctj.aggiungiComando("EDU," + data + ",RESET");
     });
-    socket.on("newunit", (data) => {
+    socket.on("newunit", (data) => {        
         ctj.aggiungiComando("ADF,"+data);
     });
     socket.on("deleteunit", (data) => {
@@ -285,12 +275,10 @@ io.on("connection", (socket) => {
     socket.on("changedmap", (data) => {
         map.setMap(data);
         let poiArr = map.getPOIonMap();
-        ctj.aggiungiComando("MAP,"+map.getR()+","+map.getC()+map.getMap());
+        ctj.aggiungiComando("MAP,"+map.getR()+","+map.getC()+","+map.getMapForServer());
         for (let k = 0; k < poiArr.length; k++) {
             ctj.aggiungiComando("CELL,"+poiArr[k]);
         }
-
-        //inviare al server
     });
     socket.on("getlistAss", () => {
         l.remove();
