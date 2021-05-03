@@ -12,7 +12,9 @@ class Lista {
     addPOI(p) {
       this.lista.push(p);
     }
-
+    isEmpty(){
+      return this.lista.length == 0;
+    }
     getFirstPOI() {
       return this.lista[0];
     }

@@ -23,6 +23,7 @@ export class MapComponent implements OnInit {
         this.changePosition(String(data));
 
       });
+      
     })
 
     this.service.onNewMap().subscribe((data) => {

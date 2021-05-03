@@ -13,6 +13,14 @@ const socket = io(`http://127.0.0.1:${environment.socketio_port}/`);
 export class MapService {
   constructor(private http: HttpClient) { }
 
+  onNewPOIList() {
+    return new Observable(observer => {
+      socket.on('poilistmap', (msg: string) => {
+        observer.next(msg);
+      });
+    });
+  }
+
   onNewMap() {
     return new Observable(observer => {
       socket.on('mappa', (msg: string) => {

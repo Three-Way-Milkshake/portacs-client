@@ -7,6 +7,7 @@ const Map = require('./src/test_js/map');
 const Lista = require('./src/test_js/lista');
 const Container = require('./src/test_js/container');
 const Listamosse = require('./src/test_js/listamosse');
+const POIlist = require('./src/test_js/poiList');
 const net = require('net');
 const SERVER_PORT = 1723;
 
@@ -22,7 +23,8 @@ const io = require("socket.io")(http, {
 
 let map = new Map();
 let mosse = new Listamosse();
-let lista = new Lista(); //dei POI
+let lista = new Lista(); //delle task
+let poi = new POIlist(); //tutti i POI nella mappa
 
 //da modificare x, y, dir
 // let x = 0, y = 0, dir = 0;
@@ -70,7 +72,13 @@ client.on('data', (data)=>{
                 
                 break;
             case "MAP":
-                map.createMap(cmd[1], cmd[2], cmd[3]);
+                map.createMap(parseInt(cmd[1]), parseInt(cmd[2]), cmd[3]);
+                break;
+            case "POI":
+                for (let k = 2; k < parseInt(cmd[1])*5+2; k+=5) {
+                    poi.addPOI(cmd[k], cmd[k+1], cmd[k+2], cmd[k+3], cmd[k+4]);
+                }
+                io.emit("poilistmap", poil.getListMap());
                 break;
             case "PATH":
                 canCheckAuto = true;
@@ -89,9 +97,9 @@ client.on('data', (data)=>{
             case "START":
                 stopped = false;
                 break;
-            case "LIST":
-                for (let z = 0; z < cmd[1].length; z++) {
-                    lista.addPOI(cmd[1][z]);
+            case "LIST": //uguale a manuale
+                for (let z = 1; z < cmd.length; z++) {
+                    lista.addPOI(cmd[z]);
                 }
                 io.emit("lista", lista.getLista());
                 let tempVar = lista.getFirstPOI();
@@ -172,7 +180,6 @@ io.on("connection", (socket) => {
     });
     socket.on("alert-notification", () => {
         c.aggiungiComando("ECC");
-        console.log("ECC");
     }) 
     
     //---guida manuale--
@@ -202,7 +209,11 @@ io.on("connection", (socket) => {
         let tempVar = lista.getFirstPOI();
         io.emit("updatePOI", (tempVar === 'undefined'? "" : tempVar));
         c.aggiungiComando("PATH,1"); //1 true -> rimuovi anche la task
-        c.aggiungiComando("MAP"); 
+        if (lista.isEmpty()) {
+            c.aggiungiComando("LIST");
+        }
+        //c.aggiungiComando("MAP"); 
+
     });
 
 
