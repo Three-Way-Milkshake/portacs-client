@@ -45,6 +45,7 @@ dir:
 var client;
 
 function createConnectionServer(id, password) {
+    user.setPassword(password);
     var failClient = false;
     client = net.connect(SERVER_PORT, 'localhost', ()=>{
         console.log('connected to server');
@@ -74,6 +75,7 @@ function createConnectionServer(id, password) {
             switch(cmd[0]){
                 case "OK":
                     io.emit("logincorrect", cmd[1]);
+                    user.setInfo(cmd[2], cmd[3]);
                     break;
                 case "FAIL":
                     io.emit("loginerror", cmd[1]);
