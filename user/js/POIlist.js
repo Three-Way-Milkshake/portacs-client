@@ -32,6 +32,16 @@ class POIlist{
       }
       return str;
     }
+    getListForCell(){
+      let str = [];
+      for (let i = 0; i < this.id.length; i++) {
+        str[i] = this.x[i] + "," + this.y[i] + ",6," + this.id[i] + "," + this.t[i] + "," + this.name[i];
+      }
+      return str;
+    }
+    contains(sth){
+      return this.name.includes(sth)
+    }
     
 }
 module.exports = POIlist;
