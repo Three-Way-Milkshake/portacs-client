@@ -173,7 +173,6 @@ function createConnectionServer(id, password) {
                     }
                     console.log("TASK: ");
                     console.log(tmp);
-                    
                     l.addListAss(tmp);
                     socket.emit("listAss", l.getAss());
                     break;
