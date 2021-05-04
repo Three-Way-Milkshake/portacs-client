@@ -1,11 +1,10 @@
 .task_ok{
     width: 15%;
     padding: 1em 0.5em;
-    margin-top: 1.5em;
+    margin: auto 1em;
     font-size: 1.5em;
-    text-align: center;
-      
-    float: left;
+    text-align: center; 
+    margin-left: 1.7em;     
 }
 ol {
     font-size: 2.5em;

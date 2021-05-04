@@ -1,8 +1,9 @@
 .startbb{
     width: 50%;
+    background-color: rgb(12, 12, 148);
+    border: 1px solid darkblue;
     padding: 1em 0.5em;
-    margin-left: 1em;
     font-size: 1.5em;
     text-align: center;
-    border-radius: 85px;   
 }
+
