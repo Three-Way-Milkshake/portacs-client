@@ -1,6 +1,6 @@
 class ListsTask {
     ass = [];
-    notAss = ["ciao"];
+    notAss = [/* "ciao" */];
     listJustAdded;
     getAss(){
         return this.ass;
