@@ -59,10 +59,47 @@ class Map {
       let strMap = "";
       for (let i = 0; i < this.map.length; i++) {
         for (let j = 0; j < this.map[i].length; j++) {
-          strMap += this.map[i][j];
+          switch(this.map[i][j]){
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+              strMap += this.map[i][j];
+              break;
+            default:
+              strMap+="6";
+          }
         }
       }
       return strMap;
+    }
+
+    getPoisWellMapped() {
+      let pois={}
+      for (let i = 0; i < this.map.length; i++) {
+        for (let j = 0; j < this.map[i].length; j++) {
+          switch(this.map[i][j]){
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+              //do nothing, not a POI
+              break;
+            default:
+              let name=this.map[i][j]
+              pois[name]={
+                "name": name,
+                "x": i,
+                "y": j
+              }
+          }
+        }
+      }
+      return pois;
     }
     
     mapToString() { //per angular
