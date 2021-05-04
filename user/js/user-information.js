@@ -1,4 +1,5 @@
 class UserInformation{
+    id;
     name;
     surname;
     password;
@@ -14,6 +15,10 @@ class UserInformation{
     
     setPassword(p) {
         this.password = p;
+    }
+
+    setId(id){
+        this.id=id;
     }
     
 }
