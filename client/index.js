@@ -85,7 +85,7 @@ client.on('data', (data)=>{
             case "PATH":
                 
                 canCheckAuto = true;
-                
+                mosse.deleteAllMoves();
                 for (let k = 1; k < cmd.length; k++) {
                     mosse.addMove(cmd[k]);
                     console.log("MOSSAAAAH "+k+": "+cmd[k]);
