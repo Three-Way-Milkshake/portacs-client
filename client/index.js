@@ -96,9 +96,10 @@ client.on('data', (data)=>{
                     stopped = true;
                 } else {
                     for (let k = 0; k < parseInt(cmd[1]); k++) {
-                        mosse.addMove('S');
+                        mosse.addMoveTail('S');
                     }
                 }
+                console.log(mosse);
                 break;
             case "START":
                 stopped = false;
@@ -258,6 +259,7 @@ http.listen(HTTP_PORT, () => {
 })
 
 function changePosition(mossa){
+    console.log("Devo muovermi: "+mossa);
     switch(mossa) {
       case "2": // turn right
         if      (dir == 0) dir = 1;
