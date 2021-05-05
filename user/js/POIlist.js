@@ -4,6 +4,7 @@ class POIlist{
     x = [];
     t = [];
     name = [];
+
     getListString(){
       let str = [];
       for (let i = 0; i < this.id.length; i++) {
@@ -11,6 +12,7 @@ class POIlist{
       }
       return str;
     }
+
     delete(){
       this.id = [];
       this.y = [];
@@ -18,6 +20,7 @@ class POIlist{
       this.t = [];
       this.name = [];
     }
+    
     addPOI(x, y, t, id, name){
         this.id.push(id);
         this.y.push(y);
@@ -25,6 +28,7 @@ class POIlist{
         this.t.push(t);
         this.name.push(name);
     }
+    
     getListMap(){
       let str = [];
       for (let i = 0; i < this.id.length; i++) {
@@ -32,6 +36,7 @@ class POIlist{
       }
       return str;
     }
+    
     getListForCell(){
       let str = [];
       for (let i = 0; i < this.id.length; i++) {
@@ -39,6 +44,7 @@ class POIlist{
       }
       return str;
     }
+    
     contains(sth){
       return this.name.includes(sth)
     }

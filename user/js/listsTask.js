@@ -1,7 +1,8 @@
 class ListsTask {
     ass = [];
     notAss = [/* "ciao" */];
-    listJustAdded;
+    listJustAdded = "";
+    
     getAss(){
         return this.ass;
     }
@@ -16,7 +17,7 @@ class ListsTask {
 
     addListnotAss(id) {
         this.notAss.push(id + "," + this.listJustAdded);
-        this.listJustAdded = ""
+        this.listJustAdded = "";
     }
 
     addListAss(list) {
