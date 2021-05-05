@@ -64,11 +64,12 @@ client.on('error', ()=>{
 client.on('data', (data)=>{
     data = data.toString().replace(/(\r\n|\n|\r)/gm, "");
     let msg=data.toString().split(";");
+    let sendPosition=false;
     for (let i = 0; i < msg.length; i++) {
         let cmd = msg[i].split(",");
         switch(cmd[0]){
             case "ALIVE": 
-             
+                sendPosition=true;
                 
                 break;
             case "MAP":
@@ -117,7 +118,7 @@ client.on('data', (data)=>{
         }
     }
     //muovere il muletto in automatic driving
-    if (!manualDriving && !stopped) {
+    if (sendPosition && !manualDriving && !stopped) {
         changePosition(mosse.getLastInsertMove());
     }
     //task completata
@@ -128,8 +129,17 @@ client.on('data', (data)=>{
     if ((x+","+y) == poi.getPosfromId(lista.getFirstPOI())){
         io.emit("completedtaskbutton"); //scambiato x e y
     }
-    client.write(c.getDatiESvuota("POS," + x + "," + y + "," + dir)); 
-    client.write('\n');
+    if(sendPosition){
+        let toSend=c.getDatiESvuota("POS," + x + "," + y + "," + dir)
+        console.log("sending (POS): "+toSend);
+        client.write(toSend); 
+        client.write('\n');
+    }
+    /* else{
+        let toSend=c.getDatiESvuota()
+        console.log("sending: "+toSend);
+        client.write(toSend); 
+    } */
     
 });
 
@@ -309,4 +319,4 @@ setInterval(() => {
             changePosition(tempMove === undefined ? "0" : tempMove);
         } 
     }
-}, 1000);
+}, 500);
