@@ -12,6 +12,8 @@ export class MapComponent implements OnInit {
   tmp : string[][] = [];
   pos: UnitPosition;
   nextPOI: string = '';
+  xnextPOI!: number;
+  ynextPOI!: number;
   listPOIID : string[] = [];
   listPOIx : number[] = [];
   listPOIy : number[] = [];
@@ -41,12 +43,24 @@ export class MapComponent implements OnInit {
     });
     this.service.onNewPOI().subscribe((data) => {
       this.ngZone.run(() => {
+        console.log(data)
         this.nextPOI = String(data);
-        console.log(data);
+        
       });
     });
   }
 
+  findNextPoi(){
+    for (let i = 0; i < this.listPOIID.length; i++){
+      if(this.listPOIName[i] === this.nextPOI){
+        this.xnextPOI = this.listPOIx[i];
+        this.ynextPOI = this.listPOIy[i];
+        
+        
+      }
+      
+    }
+  }
   savePOI(data : string) {
     console.log(data);
     let tmpStr = data.split(';')
@@ -84,7 +98,9 @@ export class MapComponent implements OnInit {
       }
       i++;
     }
+    this.findNextPoi();
     this.setPOIonMap();
+
     //scambiato x e y
     this.tmp[this.pos.posX][this.pos.posY] = this.dirToIntArray(); //metto il muletto nella mappa con la sua direzione
     
@@ -93,7 +109,17 @@ export class MapComponent implements OnInit {
   setPOIonMap() {
     for (let i = 0; i < this.listPOIID.length; i++){
       this.tmp[this.listPOIx[i]][this.listPOIy[i]] = this.listPOIName[i];
+      
     }
+    for (let i = 0; i < this.listPOIID.length; i++){
+      if(this.listPOIName[i] === this.nextPOI){
+        this.tmp[this.listPOIx[i]][this.listPOIy[i]] = "11";
+      }
+      
+    }
+    
+    
+    
     console.log(this.tmp);
   }  
 

@@ -109,8 +109,10 @@ client.on('data', (data)=>{
                     }
                     
                     listNameFromIdList();
-                    let tempVar = lista.getFirstPOI();
-                    io.emit("updatePOI", (tempVar === 'undefined'? "" : tempVar));
+                    let t = lista.getFirstPOI();
+                    let n = poi.getNameFromId(t);
+    
+                    io.emit("updatePOI", (n === 'undefined'? "" : n));
                     break;     
             default: 
                 console.log("Unrecognized message from server");
@@ -155,6 +157,7 @@ function listNameFromIdList() {
         }
     }
     io.emit("lista", tmpStr);
+    
 }
 
 function sendSth(){
@@ -170,13 +173,16 @@ function onErr(err) {
 }
 
 
+
 io.on("connection", (socket) => {
     
     //console.log("mostra il pulsante");
     // socket.emit("mappa", map.getMap());
     listNameFromIdList();
     let tempVar = lista.getFirstPOI();
-    io.emit("updatePOI", (tempVar === 'undefined'? "" : tempVar));
+    let nextPOI = poi.getNameFromId(tempVar);
+    
+    io.emit("updatePOI", (nextPOI === 'undefined'? "" : nextPOI));
     
     
     socket.on("updateposition", (data) => {
@@ -200,6 +206,7 @@ io.on("connection", (socket) => {
     });
     socket.on("start", () => { 
         c.aggiungiComando("PATH,0"); //PATH -> taskfinite -> gestito da server | 0 false -> richiede lo stesso percorso
+        
         //c.aggiungiComando("MAP");
     });
     socket.on("alert-notification", () => {
@@ -236,6 +243,10 @@ io.on("connection", (socket) => {
         if (lista.isEmpty()) {
             c.aggiungiComando("LIST");
         }
+        let temp = lista.getFirstPOI();
+        let next = poi.getNameFromId(tempVar);
+    
+        io.emit("updatePOI", (next === 'undefined'? "" : next));
         //c.aggiungiComando("MAP"); 
 
     });
