@@ -34,13 +34,13 @@ class Container {
         return str;
     }
 
-    /* getDatiESvuota() {
+    getDatiESvuotaNoParams() {
         // this.contenitore.push(posizione.toString());
         let str = this.getContainer();
         delete this.contenitore;
         this.contenitore = [];
         return str;
-    } */
+    }
 }
 module.exports = Container;
 

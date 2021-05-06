@@ -9,7 +9,8 @@ const Container = require('./src/test_js/container');
 const Listamosse = require('./src/test_js/listamosse');
 const POIlist = require('./src/test_js/poiList');
 const net = require('net');
-const SERVER_PORT = 1723;
+const SERVER_PORT = 1723,
+        MANUAL_DRIVING_SPEED = 2000;
 
 //angular
 const io = require("socket.io")(http, {
@@ -131,15 +132,20 @@ client.on('data', (data)=>{
         io.emit("completedtaskbutton"); //scambiato x e y
     }
     if(sendPosition){
+        if(manualDriving){
+            c.aggiungiComando("PATH,0");
+            // mosse.deleteAllMoves();
+        }
         let toSend=c.getDatiESvuota("POS," + x + "," + y + "," + dir)
         console.log("sending (POS): "+toSend);
         client.write(toSend); 
         client.write('\n');
     }
     /* else{
-        let toSend=c.getDatiESvuota()
+        let toSend=c.getDatiESvuotaNoParams()
         console.log("sending: "+toSend);
         client.write(toSend); 
+        client.write('\n');
     } */
     
 });
@@ -230,6 +236,7 @@ io.on("connection", (socket) => {
     socket.on("automatica", () => {
         manualDriving = false;
         manualDrivingList.deleteAllMoves();
+        mosse.deleteAllMoves();
         c.aggiungiComando("PATH,0"); //0 false -> richiede lo stesso percorso
     });
     socket.on("manuale", () => {
@@ -320,5 +327,6 @@ setInterval(() => {
         if (!manualStop || tempMove == "2" || tempMove == "3" || tempMove == "1") {
             changePosition(tempMove === undefined ? "0" : tempMove);
         } 
+        //c.aggiungiComando("PATH,0");
     }
-}, 500);
+}, MANUAL_DRIVING_SPEED);
