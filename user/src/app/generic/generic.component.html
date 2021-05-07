@@ -1,5 +1,9 @@
 <div *ngIf="isLoggedIn">
 <h1>DASHBOARD</h1>
+<div class="divErr" *ngIf="errEcc">
+    <p class="err"><b>È SUCCESSO UN EVENTO ECCEZIONALE</b></p>
+    <button (click)="okEcc()">Ok</button>
+</div>
 <ul>
     <li><a routerLink="viewmap">Mappa</a></li>
     <li><a routerLink="poilist">Lista POI</a></li>

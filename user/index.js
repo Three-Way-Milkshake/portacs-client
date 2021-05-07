@@ -80,6 +80,9 @@ function createConnectionServer(id, password) {
                     io.emit("loginerror", cmd[1]);
                     failClient = true;
                     break;
+                case "ECC":
+                    io.emit('ecc');
+                    break;
                 case "MAP":
                     //se cmd[1]=OK ho cambiato la mappa
                     //se cmd[1]=fail errore cambio mappa
