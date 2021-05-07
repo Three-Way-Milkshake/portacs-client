@@ -19,8 +19,8 @@ export class PersonalAccountService {
   }
   onNewEcc() {
     return new Observable(observer => {
-      socket.on('ecc', () => {
-        observer.next();
+      socket.on('ecc', (data : string) => {
+        observer.next(data);
       });
     });
   }

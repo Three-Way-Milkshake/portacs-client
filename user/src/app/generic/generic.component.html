@@ -1,7 +1,7 @@
 <div *ngIf="isLoggedIn">
 <h1>DASHBOARD</h1>
 <div class="divErr" *ngIf="errEcc">
-    <p class="err"><b>È SUCCESSO UN EVENTO ECCEZIONALE</b></p>
+    <p class="err"><b>{{msgEcc}}</b></p>
     <button (click)="okEcc()">Ok</button>
 </div>
 <ul>

@@ -8,6 +8,7 @@ import { NgZone } from '@angular/core';
   styleUrls: ['./generic.component.css']
 })
 export class GenericComponent implements OnInit {
+  msgEcc = "";
   errEcc = false;
   isAdmin : boolean = this.checkIsAdmin();
   isManager : boolean = this.checkIsManager();
@@ -40,9 +41,10 @@ export class GenericComponent implements OnInit {
         this.checkLogin(data);
       }); 
     });
-    this.service.onNewEcc().subscribe(() =>{
+    this.service.onNewEcc().subscribe((data : string) =>{
       this.ngZone.run(() => {
         this.errEcc = true;
+        this.msgEcc = data;
       }); 
     });
   }

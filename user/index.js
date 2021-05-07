@@ -81,7 +81,7 @@ function createConnectionServer(id, password) {
                     failClient = true;
                     break;
                 case "ECC":
-                    io.emit('ecc');
+                    io.emit('ecc', cmd[1]);
                     break;
                 case "MAP":
                     //se cmd[1]=OK ho cambiato la mappa
