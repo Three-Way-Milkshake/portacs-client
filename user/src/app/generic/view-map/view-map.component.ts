@@ -22,6 +22,7 @@ export class ViewMapComponent implements OnInit {
   listPOIt : string[] = [];
   listPOIName : string[] = [];
   idName : string[][] = [];
+  poiMap : string[][] = [];
   constructor(private ngZone: NgZone, private servicePOI: POIListService) {}
 
   ngOnInit() {
@@ -95,6 +96,9 @@ export class ViewMapComponent implements OnInit {
     }
     console.log(this.pos);
     this.setPOIonMap();
+    if (this.listPOIx != null) {
+      this.setNamePOIOnMap();
+    }
     if (this.pos != null) {
       this.setIdOnMap();
       console.log(this.idName);
@@ -112,12 +116,33 @@ export class ViewMapComponent implements OnInit {
       this.idName[this.pos[t].posX][this.pos[t].posY] = (this.pos[t].id).toString();
     }
   }
+
+  setNamePOIOnMap() {
+    for (let t = 0; t < this.listPOIx.length; t++) {
+      if (this.poiMap[this.listPOIx[t]] == null) {
+        this.poiMap[this.listPOIx[t]] = [];
+      }
+      this.poiMap[this.listPOIx[t]][this.listPOIy[t]] = (this.listPOIName[t]).toString();
+    }
+  }
   
   setPOIonMap() {
     for (let i = 0; i < this.listPOIID.length; i++){
-      this.tmp[this.listPOIx[i]][this.listPOIy[i]] = this.listPOIName[i];
+      this.tmp[this.listPOIx[i]][this.listPOIy[i]] = this.typeToMap(this.listPOIt[i]);
     }
-  }  
+  }
+
+  typeToMap(typeCell : string) {
+    if (typeCell == "0") {
+      return "20";
+    } else if (typeCell == "1") {
+      return "21";
+    } else if (typeCell == "2") {
+      return "22";
+    } else {
+      return "-1";
+    }
+  }
 
   getDir(x : number, y : number) {
     for (let t = 0; t < this.pos.length; t++) {

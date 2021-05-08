@@ -34,10 +34,34 @@ img{
     background-color: white;
 }
 
-.POI{
+.POILoad{
     width: 100%;
     height: 100%;
     background-color: red;
+    text-align: center;
+    color: white;
+    padding: 0;
+    margin: 0;
+    font-size: 1.2em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.POIUnload{
+    width: 100%;
+    height: 100%;
+    background-color:rgb(173, 112, 72);
+    text-align: center;
+    color: white;
+    padding: 0;
+    margin: 0;
+    font-size: 1.2em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.POIExit{
+    width: 100%;
+    height: 100%;
+    background-color: blue;
     text-align: center;
     color: white;
     padding: 0;
@@ -76,7 +100,7 @@ img{
 .imgUnitRed {
     width: 100%;
     height: 100%;
-    background-color: red;
+    background-color: green;
     position: relative;
     background-repeat: no-repeat;
     background-size:contain;

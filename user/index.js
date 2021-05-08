@@ -101,7 +101,10 @@ function createConnectionServer(id, password) {
                     poil.delete();
                     for (let k = 2; k < parseInt(cmd[1]*5+2); k+=5) {
                         poil.addPOI(cmd[k], cmd[k+1], cmd[k+2], cmd[k+3], cmd[k+4]);
+                        console.log("----------POIIIII---------");
+                        console.log(cmd[k+2]);
                     }
+                    
                     io.emit("poilist", poil.getListString());
                     io.emit("poilistmap", poil.getListMap());
                     break;
@@ -293,20 +296,21 @@ io.on("connection", (socket) => {
                 poil.addPOI(content.x, content.y, 0, 0, p)
             }
         }
-        // let poiArr = map.getPOIonMap();
-        console.log("Here is the new MAP: "+map);
         ctj.aggiungiComando("MAP,"+map.getR()+","+map.getC()+","+map.getMapForServer());
         let pois=poil.getListForCell();
-        // let toSend='';
+        
         for(let i=0; i<pois.length; ++i){
-            // let sliced=pois[i].split(',');
-            // toSend+=sliced
-            console.log('CELL,'+pois[i]+';')
-            ctj.aggiungiComando('CELL,'+pois[i])
+            
+            //ctj.aggiungiComando('CELL,'+pois[i])
         }
-        /* for (let k = 0; k < poiArr.length; k++) {
-            ctj.aggiungiComando("CELL,"+poiArr[k]);
-        } */
+    });
+    socket.on("newcell", (cell) => {
+        console.log("CELL,"+cell);
+        ctj.aggiungiComando("CELL,"+cell);
+    });
+    socket.on("newpoi", (poi) => {
+        console.log("CELL,"+poi);
+        ctj.aggiungiComando("CELL,"+poi);
     });
     socket.on("getlistAss", () => {
         l.remove();

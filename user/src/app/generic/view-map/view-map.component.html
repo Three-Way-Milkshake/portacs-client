@@ -10,7 +10,6 @@
                 <div *ngSwitchCase="3" class="dir">&#8594;</div>
                 <div *ngSwitchCase="4" class="dir">&#8595;</div>
                 <div *ngSwitchCase="5" class="dir">&#8592;</div>
-                <!--<img *ngSwitchCase="7" class="unit" src="assets/mulettoN.png">-->
                 <div *ngSwitchCase="7" class="imgUnit" [style.background-image]="'url(assets/mulettoN.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
                 <div *ngSwitchCase="8" class="imgUnit" [style.background-image]="'url(assets/mulettoE.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
                 <div *ngSwitchCase="9" class="imgUnit" [style.background-image]="'url(assets/mulettoS.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
@@ -19,11 +18,9 @@
                 <div *ngSwitchCase="12" class="imgUnitRed" [style.background-image]="'url(assets/mulettoE.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
                 <div *ngSwitchCase="13" class="imgUnitRed" [style.background-image]="'url(assets/mulettoS.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
                 <div *ngSwitchCase="14" class="imgUnitRed" [style.background-image]="'url(assets/mulettoO.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
-                <!--<img *ngSwitchCase="8" class="unit" src="assets/mulettoE.png">
-                <img *ngSwitchCase="9" class="unit" src="assets/mulettoS.png">
-                <img *ngSwitchCase="10" class="unit" src="assets/mulettoO.png">-->
-                <p *ngSwitchDefault class="POI">{{cell}}</p>
-                
+                <p *ngSwitchCase="20" class="POILoad">{{poiMap[i][j]}}</p>
+                <p *ngSwitchCase="21" class="POIUnload">{{poiMap[i][j]}}</p>
+                <p *ngSwitchCase="22" class="POIExit">{{poiMap[i][j]}}</p>   
             </div>
             
            

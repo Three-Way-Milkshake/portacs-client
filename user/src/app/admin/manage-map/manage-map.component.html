@@ -9,7 +9,10 @@
                 <input *ngSwitchCase="3" type="submit" class="dir" value="&#8594;" (click)="pressedButton(i, j)"/>
                 <input *ngSwitchCase="4" type="submit" class="dir" value="&#8595;" (click)="pressedButton(i, j)"/> 
                 <input *ngSwitchCase="5" type="submit" class="dir" value="&#8592;" (click)="pressedButton(i, j)"/> 
-                <input *ngSwitchDefault type="submit" class="POI" value="{{cell}}" (click)="pressedButton(i, j)"/> 
+                <input *ngSwitchCase="20" type="submit" class="POILoad" value="{{poiMap[i][j]}}" (click)="pressedButton(i, j)"/>
+                <input *ngSwitchCase="21" type="submit" class="POIUnload" value="{{poiMap[i][j]}}" (click)="pressedButton(i, j)"/> 
+                <input *ngSwitchCase="22" type="submit" class="POIExit" value="{{poiMap[i][j]}}" (click)="pressedButton(i, j)"/>
+                <p *ngSwitchDefault>{{cell}}</p>
             </div>
         </td>
     </tr>
@@ -29,8 +32,11 @@
             <td class="non"><input type="submit" class="dir" value="&#8595;" (click)="changeType(4)"/></td>
             <td class="non"><input type="submit" class="dir" value="&#8592;" (click)="changeType(5)"/></td>
             <td class="non">
+                <select class="custom-select" [(ngModel)]="selectedType">
+                    <option *ngFor="let typeCell of listType">{{typeCell}}</option>
+                </select>
                 <input type="text" placeholder="Nuovo POI" class="POI-input" #POI value=""/>
-                <button class="add-button" (click)="changeType(POI.value)" >
+                <button class="add-button" (click)="changePOI(POI.value, selectedType)" >
                     Aggiungi POI
                 </button> 
             </td> 
