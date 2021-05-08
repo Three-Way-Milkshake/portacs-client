@@ -5,3 +5,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Set up npm
+      - name: build client
+        working-directory: ./client
+        run: ng build
+        continue-on-error: true
+      - name: build user
+        working-directory: ./user
+        run: ng build
+        continue-on-error: true
+      - name: testing client angular
+        working-directory: ./client
+        run: ng test
+        continue-on-error: true
+      - name: testing user angular
+        working-directory: ./client
+        run: ng test
+        continue-on-error: true
