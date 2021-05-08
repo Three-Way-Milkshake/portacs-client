@@ -6,6 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up npm
+        run: npm install
       - name: build client
         working-directory: ./client
         run: ng build
