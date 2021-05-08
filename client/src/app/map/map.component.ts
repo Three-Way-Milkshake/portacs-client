@@ -19,6 +19,7 @@ export class MapComponent implements OnInit {
   listPOIy : number[] = [];
   listPOIt : string[] = [];
   listPOIName: string[] = [];
+  poiMap : string[][] = [];
   constructor(private service: MapService, private ngZone: NgZone) {
     this.pos = {posX: environment.x, posY: environment.y, dir: 0};
    }
@@ -100,15 +101,27 @@ export class MapComponent implements OnInit {
     }
     this.findNextPoi();
     this.setPOIonMap();
+    if (this.listPOIx != null) {
+      this.setNamePOIOnMap();
+    }
 
     //scambiato x e y
     this.tmp[this.pos.posX][this.pos.posY] = this.dirToIntArray(); //metto il muletto nella mappa con la sua direzione
     
   }
 
+  setNamePOIOnMap() {
+    for (let t = 0; t < this.listPOIx.length; t++) {
+      if (this.poiMap[this.listPOIx[t]] == null) {
+        this.poiMap[this.listPOIx[t]] = [];
+      }
+      this.poiMap[this.listPOIx[t]][this.listPOIy[t]] = (this.listPOIName[t]).toString();
+    }
+  }
+
   setPOIonMap() {
     for (let i = 0; i < this.listPOIID.length; i++){
-      this.tmp[this.listPOIx[i]][this.listPOIy[i]] = this.listPOIName[i];
+      this.tmp[this.listPOIx[i]][this.listPOIy[i]] = this.typeToMap(this.listPOIt[i]);
       
     }
     for (let i = 0; i < this.listPOIID.length; i++){
@@ -117,11 +130,19 @@ export class MapComponent implements OnInit {
       }
       
     }
-    
-    
-    
-    console.log(this.tmp);
-  }  
+
+  } 
+  typeToMap(typeCell : string) {
+    if (typeCell == "0") {
+      return "20";
+    } else if (typeCell == "1") {
+      return "21";
+    } else if (typeCell == "2") {
+      return "22";
+    } else {
+      return "-1";
+    }
+  } 
 
   dirToIntArray() {
     if (this.pos.dir == 0) {        // facing NORD

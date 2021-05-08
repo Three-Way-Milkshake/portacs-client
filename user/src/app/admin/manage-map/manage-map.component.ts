@@ -47,7 +47,11 @@ export class ManageMapComponent implements OnInit {
   }
 
   setPOI(data: string[]) {
-    
+    this.listPOIID = [];
+  this.listPOIx  = [];
+  this.listPOIy  = [];
+  this.listPOIt = [];
+  this.listPOIName  = [];
     for (let i = 0; i < data.length ; i++){
       
       let dataTmp = data[i].split(",");
