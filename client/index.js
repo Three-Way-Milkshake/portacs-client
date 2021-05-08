@@ -66,6 +66,9 @@ client.on('data', (data)=>{
     let msg=data.toString().split(";");
     for (let i = 0; i < msg.length; i++) {
         let cmd = msg[i].split(",");
+        if (cmd[0] == "") {
+            continue; // fix
+        }
         switch(cmd[0]){
             case "ALIVE": 
              
@@ -82,12 +85,11 @@ client.on('data', (data)=>{
                 io.emit("poilistmap", poi.getListMap());
                 break;
             case "PATH":
-                
+                console.log("--------\nPATH");
                 canCheckAuto = true;
-                
+                //non sarebbe cmd[1].length nel ciclo? ora funziona con PATH,..,..,..,..,..
                 for (let k = 1; k < cmd.length; k++) {
                     mosse.addMove(cmd[k]);
-                    console.log("MOSSAAAAH "+k+": "+cmd[k]);
                 }
                 break;
             case "STOP":
@@ -115,7 +117,7 @@ client.on('data', (data)=>{
                     io.emit("updatePOI", (n === 'undefined'? "" : n));
                     break;     
             default: 
-                console.log("Unrecognized message from server");
+                console.log("Unrecognized message from server: "+cmd[0]);
         }
     }
     //muovere il muletto in automatic driving
@@ -123,10 +125,6 @@ client.on('data', (data)=>{
         changePosition(mosse.getLastInsertMove());
     }
     //task completata
-    console.log("------------------------");
-    console.log(y+","+x);
-    console.log(poi.getPosfromId(lista.getFirstPOI()));
-    console.log("------------------------");
     if ((x+","+y) == poi.getPosfromId(lista.getFirstPOI())){
         io.emit("completedtaskbutton"); //scambiato x e y
     }
@@ -206,7 +204,7 @@ io.on("connection", (socket) => {
     });
     socket.on("start", () => { 
         c.aggiungiComando("PATH,0"); //PATH -> taskfinite -> gestito da server | 0 false -> richiede lo stesso percorso
-        
+        console.log("Inviato comando PATH,0");
         //c.aggiungiComando("MAP");
     });
     socket.on("alert-notification", () => {
