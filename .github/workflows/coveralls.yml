@@ -14,8 +14,9 @@ jobs:
         working-directory: ./client
         run: npm install
       - name: Set up npm user
-        working-directory: ./user
-        run: npm install
+        working-directory: ./client
+        run: npm install -g @angular/cli
+        
       - name: build client
         working-directory: ./client
         run: ng build
