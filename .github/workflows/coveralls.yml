@@ -10,10 +10,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
+          
       - name: Set up npm client
         working-directory: ./client
         run: npm install
-      - name: Set up npm user
+      - name: Set up npm client ng
         working-directory: ./client
         run: npm install -g @angular/cli
         
@@ -21,15 +22,25 @@ jobs:
         working-directory: ./client
         run: ng build
         continue-on-error: true
+      - name: testing client angular
+        working-directory: ./client
+        run: ng test -- --no-watch --no-progress --code-coverage --browsers=ChromeHeadlessCI
+        continue-on-error: true
+      
+      
+      - name: Set up npm user
+        working-directory: ./user
+        run: npm install
+      - name: Set up npm user ng
+        working-directory: ./user
+        run: npm install -g @angular/cli
+        
       - name: build user
         working-directory: ./user
         run: ng build
         continue-on-error: true
-      - name: testing client angular
-        working-directory: ./client
-        run: ng test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
-        continue-on-error: true
+      
       - name: testing user angular
-        working-directory: ./client
-        run: ng test --browsers=ChromeHeadlessCI
+        working-directory: ./user
+        run: ng test -- --no-watch --no-progress --code-coverage --browsers=ChromeHeadlessCI
         continue-on-error: true
