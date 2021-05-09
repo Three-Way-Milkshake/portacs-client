@@ -10,7 +10,7 @@ const Listamosse = require('./src/test_js/listamosse');
 const POIlist = require('./src/test_js/poiList');
 const net = require('net');
 const SERVER_PORT = 1723,
-        MANUAL_DRIVING_SPEED = 2000;
+        MANUAL_DRIVING_SPEED = process.argv[8]==='quick'?500:1000;
 
 //angular
 const io = require("socket.io")(http, {
