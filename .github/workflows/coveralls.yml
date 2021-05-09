@@ -27,7 +27,7 @@ jobs:
         continue-on-error: true
       - name: testing client angular
         working-directory: ./client
-        run: ng test --browsers=ChromeHeadlessCI
+        run: ng test --browsers=ChromeHeadlessCI --no-watch
         continue-on-error: true
       - name: testing user angular
         working-directory: ./client
