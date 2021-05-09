@@ -20,11 +20,11 @@ jobs:
         
       - name: build client
         working-directory: ./client
-        run: ng build
+        run: ng build -c dev1
         continue-on-error: true
       - name: testing client angular
         working-directory: ./client
-        run: ng test -- --no-watch --no-progress --code-coverage --browsers=ChromeHeadlessCI
+        run: ng test -- --no-watch --no-progress --code-coverage --browsers=ChromeHeadlessCI -c dev1
         continue-on-error: true
       
       
