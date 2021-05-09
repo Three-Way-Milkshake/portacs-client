@@ -35,3 +35,11 @@ li a:hover{
 h2{
   text-align: center;
 }
+.err {
+  color: yellow;
+  background-color: red;
+  padding: 0.5%;
+}
+.divErr{
+  margin-bottom: 2%;
+}

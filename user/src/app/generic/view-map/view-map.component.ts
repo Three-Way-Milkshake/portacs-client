@@ -21,6 +21,8 @@ export class ViewMapComponent implements OnInit {
   listPOIy : number[] = [];
   listPOIt : string[] = [];
   listPOIName : string[] = [];
+  idName : string[][] = [];
+  poiMap : string[][] = [];
   constructor(private ngZone: NgZone, private servicePOI: POIListService) {}
 
   ngOnInit() {
@@ -92,20 +94,55 @@ export class ViewMapComponent implements OnInit {
       }
       i++;
     }
-    
+    console.log(this.pos);
     this.setPOIonMap();
+    if (this.listPOIx != null) {
+      this.setNamePOIOnMap();
+    }
     if (this.pos != null) {
+      this.setIdOnMap();
+      console.log(this.idName);
       for (let t = 0; t < this.pos.length; t++) {
         this.tmp[this.pos[t].posX][this.pos[t].posY] = (this.pos[t].dir).toString();
       }
     }
   }
+
+  setIdOnMap() {
+    for (let t = 0; t < this.pos.length; t++) {
+      if (this.idName[this.pos[t].posX] == null) {
+        this.idName[this.pos[t].posX] = [];
+      }
+      this.idName[this.pos[t].posX][this.pos[t].posY] = (this.pos[t].id).toString();
+    }
+  }
+
+  setNamePOIOnMap() {
+    for (let t = 0; t < this.listPOIx.length; t++) {
+      if (this.poiMap[this.listPOIx[t]] == null) {
+        this.poiMap[this.listPOIx[t]] = [];
+      }
+      this.poiMap[this.listPOIx[t]][this.listPOIy[t]] = (this.listPOIName[t]).toString();
+    }
+  }
   
   setPOIonMap() {
     for (let i = 0; i < this.listPOIID.length; i++){
-      this.tmp[this.listPOIx[i]][this.listPOIy[i]] = this.listPOIName[i];
+      this.tmp[this.listPOIx[i]][this.listPOIy[i]] = this.typeToMap(this.listPOIt[i]);
     }
-  }  
+  }
+
+  typeToMap(typeCell : string) {
+    if (typeCell == "0") {
+      return "20";
+    } else if (typeCell == "1") {
+      return "21";
+    } else if (typeCell == "2") {
+      return "22";
+    } else {
+      return "-1";
+    }
+  }
 
   getDir(x : number, y : number) {
     for (let t = 0; t < this.pos.length; t++) {
@@ -116,38 +153,51 @@ export class ViewMapComponent implements OnInit {
     return -1;
   }
 
-  dirToNumber(d : string) {
-    if        (d == "0") {
-      return 7;
-    } else if (d == "1") {
-      return 8;
-    } else if (d == "2") {
-      return 9;
-    } else if (d == "3") {
-      return 10;
+  isPOI(x : number, y : number) {
+    for (let i = 0; i < this.listPOIx.length; i++) {
+      if (this.listPOIx[i] == x && this.listPOIy[i] == y) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  dirToNumber(d : string, x : number, y : number) {
+    if (this.isPOI(x, y)) {
+      if        (d == "0") {
+        return 11;
+      } else if (d == "1") {
+        return 12;
+      } else if (d == "2") {
+        return 13;
+      } else if (d == "3") {
+        return 14;
+      } else {
+        return -1;
+      }
     } else {
-      return -1;
+      if        (d == "0") {
+        return 7;
+      } else if (d == "1") {
+        return 8;
+      } else if (d == "2") {
+        return 9;
+      } else if (d == "3") {
+        return 10;
+      } else {
+        return -1;
+      }
     }
   }
 
   changePosition(cmd : string){
-    /*
-    cmd = cmd.toString().replace(/(\r\n|\n|\r)/gm, "");
-    let data : string[] = cmd.toString().split(",");
-    for (let j = 0, i = 0; i < data.length; i= i+3, j++) {
-      this.pos[j] = {posX: parseInt(data[i]), posY: parseInt(data[i+1]), dir: this.dirToNumber(data[i+2])};
-    }
-    socket.emit("getmap");
-    */
-   
     cmd = cmd.toString().replace(/(\r\n|\n|\r)/gm, "");
     let data : string[] = cmd.toString().split(";");//una unità
     let unitTemp : string[];
     for (let k = 1; k < parseInt(data[0])+1; k++) {
       unitTemp = data[k].split(',');
-      this.pos[k-1] = {posX: parseInt(unitTemp[1]), posY: parseInt(unitTemp[2]), dir: this.dirToNumber(unitTemp[3])};
+      this.pos[k-1] = {id: unitTemp[0], posX: parseInt(unitTemp[1]), posY: parseInt(unitTemp[2]), dir: this.dirToNumber(unitTemp[3], parseInt(unitTemp[1]), parseInt(unitTemp[2]))};
     }
-    
     socket.emit("getmap");
   }
 

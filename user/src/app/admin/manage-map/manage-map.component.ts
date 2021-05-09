@@ -2,6 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgZone } from '@angular/core';
 import { POIListService } from 'src/app/generic/generic-service/poilist.service';
+import { NewCellList } from 'src/app/newcelllist';
+import { NewPoiList } from 'src/app/newpoilist';
 import { ManageMapService } from '../admin-services/manage-map.service';
 
 @Component({
@@ -10,7 +12,6 @@ import { ManageMapService } from '../admin-services/manage-map.service';
   styleUrls: ['./manage-map.component.css']
 })
 export class ManageMapComponent implements OnInit {
-  map : string = '';
   tmp : string[][] = [];
   listPOIID : string[] = [];
   listPOIx : number[] = [];
@@ -20,6 +21,13 @@ export class ManageMapComponent implements OnInit {
   displaySelection : boolean = false;
   lastButtonI : number;
   lastButtonJ : number;
+  selectedType : string = "carico";
+  poiMap : string[][] = [];
+  listType: string[] = ["carico", "scarico", "uscita"];
+
+  tmpPOI : NewPoiList[] = [];
+  tmpCell : NewCellList[] = [];
+
   constructor(private service : ManageMapService, private ngZone: NgZone, private servicePOI: POIListService) { }
 
   ngOnInit(): void {
@@ -39,7 +47,11 @@ export class ManageMapComponent implements OnInit {
   }
 
   setPOI(data: string[]) {
-    
+    this.listPOIID = [];
+  this.listPOIx  = [];
+  this.listPOIy  = [];
+  this.listPOIt = [];
+  this.listPOIName  = [];
     for (let i = 0; i < data.length ; i++){
       
       let dataTmp = data[i].split(",");
@@ -71,12 +83,38 @@ export class ManageMapComponent implements OnInit {
       i++; 
     }
     this.setPOIonMap();
+    if (this.listPOIx != null) {
+      this.setNamePOIOnMap();
+    }
   }
+
+  setNamePOIOnMap() {
+    this.poiMap = [];
+    for (let t = 0; t < this.listPOIx.length; t++) {
+      if (this.poiMap[this.listPOIx[t]] == null) {
+        this.poiMap[this.listPOIx[t]] = [];
+      }
+      this.poiMap[this.listPOIx[t]][this.listPOIy[t]] = (this.listPOIName[t]).toString();
+    }
+  }
+
   setPOIonMap() {
-    for (let i = 0; i < this.listPOIID.length; i++){
-      this.tmp[this.listPOIx[i]][this.listPOIy[i]] = this.listPOIName[i];
+    for (let i = 0; i < this.listPOIx.length; i++){
+      this.tmp[this.listPOIx[i]][this.listPOIy[i]] = this.typeToMap(this.listPOIt[i]);
     }
   } 
+
+  typeToMap(typeCell : string) {
+    if (typeCell == "0") {
+      return "20";
+    } else if (typeCell == "1") {
+      return "21";
+    } else if (typeCell == "2") {
+      return "22";
+    } else {
+      return "-1";
+    }
+  }
 
   getValues(){
     this.service.getValues();
@@ -121,9 +159,64 @@ export class ManageMapComponent implements OnInit {
   changeType(type : string){
     this.tmp[this.lastButtonI][this.lastButtonJ] = type.toString();
     this.displaySelection = false;
+    this.addTempCell(this.lastButtonI, this.lastButtonJ, parseInt(type));
+  }
+
+  changePOI(name : string, type : string){
+    if (name != "") {
+      this.tmp[this.lastButtonI][this.lastButtonJ] = this.typeStringToMap(type.toString());
+      this.displaySelection = false;
+      this.addTempPOI(this.lastButtonI, this.lastButtonJ, 6, 0, this.typeToEnum(type), name);
+      this.listPOIx[this.listPOIx.length] = this.lastButtonI;
+      this.listPOIy[this.listPOIy.length] = this.lastButtonJ;
+      this.listPOIt[this.listPOIt.length] = this.typeToEnum(type).toString();
+      this.listPOIName[this.listPOIName.length] = name;
+      this.setNamePOIOnMap();
+    }
+    
+  }
+
+  typeToEnum(typeCell : string) {
+    if (typeCell == "carico") {
+      return 0;
+    } else if (typeCell == "scarico") {
+      return 1;
+    } else if (typeCell == "uscita") {
+      return 2;
+    } else {
+      return -1;
+    }
+  }
+
+  addTempPOI(x : number, y : number, a : number, id: number, type : number, name: string) {
+    this.tmpPOI[this.tmpPOI.length] = {x : x, y : y, a : a, id : id, t : type, name: name};
+  }
+
+  addTempCell(x : number, y : number, a : number) {
+    this.tmpCell[this.tmpCell.length] = {x : x, y : y, a : a};
+  }
+
+  typeStringToMap(typeCell : string) {
+    if (typeCell == "carico") {
+      return "20";
+    } else if (typeCell == "scarico") {
+      return "21";
+    } else if (typeCell == "uscita") {
+      return "22";
+    } else {
+      return "-1";
+    }
   }
 
   confirmMap(){
     this.service.changeMap(this.tmp);
+    for (let i = 0; i < this.tmpCell.length; i++) {
+      this.service.newCell(this.tmpCell[i].x+","+this.tmpCell[i].y+","+this.tmpCell[i].a);
+    }
+    this.tmpCell = [];
+    for (let i = 0; i < this.tmpPOI.length; i++) {
+      this.service.newPOI(this.tmpPOI[i].x+","+this.tmpPOI[i].y+","+this.tmpPOI[i].a+","+this.tmpPOI[i].id+","+this.tmpPOI[i].t+","+this.tmpPOI[i].name);
+    }
+    this.tmpPOI = [];
   }
 }

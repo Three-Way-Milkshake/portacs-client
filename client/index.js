@@ -68,6 +68,9 @@ client.on('data', (data)=>{
     let sendPosition=false;
     for (let i = 0; i < msg.length; i++) {
         let cmd = msg[i].split(",");
+        if (cmd[0] == "") {
+            continue; // fix
+        }
         switch(cmd[0]){
             case "ALIVE": 
                 sendPosition=true;
@@ -84,12 +87,12 @@ client.on('data', (data)=>{
                 io.emit("poilistmap", poi.getListMap());
                 break;
             case "PATH":
-                
+                console.log("--------\nPATH");
                 canCheckAuto = true;
                 mosse.deleteAllMoves();
+                //non sarebbe cmd[1].length nel ciclo? ora funziona con PATH,..,..,..,..,..
                 for (let k = 1; k < cmd.length; k++) {
                     mosse.addMove(cmd[k]);
-                    console.log("MOSSAAAAH "+k+": "+cmd[k]);
                 }
                 break;
             case "STOP":
@@ -112,11 +115,13 @@ client.on('data', (data)=>{
                     }
                     
                     listNameFromIdList();
-                    let tempVar = lista.getFirstPOI();
-                    io.emit("updatePOI", (tempVar === 'undefined'? "" : tempVar));
+                    let t = lista.getFirstPOI();
+                    let n = poi.getNameFromId(t);
+    
+                    io.emit("updatePOI", (n === 'undefined'? "" : n));
                     break;     
             default: 
-                console.log("Unrecognized message from server");
+                console.log("Unrecognized message from server: "+cmd[0]);
         }
     }
     //muovere il muletto in automatic driving
@@ -124,10 +129,6 @@ client.on('data', (data)=>{
         changePosition(mosse.getLastInsertMove());
     }
     //task completata
-    console.log("------------------------");
-    console.log(y+","+x);
-    console.log(poi.getPosfromId(lista.getFirstPOI()));
-    console.log("------------------------");
     if ((x+","+y) == poi.getPosfromId(lista.getFirstPOI())){
         io.emit("completedtaskbutton"); //scambiato x e y
     }
@@ -172,6 +173,7 @@ function listNameFromIdList() {
         }
     }
     io.emit("lista", tmpStr);
+    
 }
 
 function sendSth(){
@@ -187,13 +189,16 @@ function onErr(err) {
 }
 
 
+
 io.on("connection", (socket) => {
     
     //console.log("mostra il pulsante");
     // socket.emit("mappa", map.getMap());
     listNameFromIdList();
     let tempVar = lista.getFirstPOI();
-    io.emit("updatePOI", (tempVar === 'undefined'? "" : tempVar));
+    let nextPOI = poi.getNameFromId(tempVar);
+    
+    io.emit("updatePOI", (nextPOI === 'undefined'? "" : nextPOI));
     
     
     socket.on("updateposition", (data) => {
@@ -217,6 +222,7 @@ io.on("connection", (socket) => {
     });
     socket.on("start", () => { 
         c.aggiungiComando("PATH,0"); //PATH -> taskfinite -> gestito da server | 0 false -> richiede lo stesso percorso
+        console.log("Inviato comando PATH,0");
         //c.aggiungiComando("MAP");
     });
     socket.on("alert-notification", () => {
@@ -254,6 +260,10 @@ io.on("connection", (socket) => {
         if (lista.isEmpty()) {
             c.aggiungiComando("LIST");
         }
+        let temp = lista.getFirstPOI();
+        let next = poi.getNameFromId(tempVar);
+    
+        io.emit("updatePOI", (next === 'undefined'? "" : next));
         //c.aggiungiComando("MAP"); 
 
     });

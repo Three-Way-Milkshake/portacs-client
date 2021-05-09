@@ -9,10 +9,12 @@
     <div>
         <label>Password</label>
         <input type="password" #Password value={{password}}>
-        
+        <label>Reinserisci la password</label>
+        <input type="password" #Password2 value={{password2}}>
+        <p *ngIf="err" class="err">Le password non coincidono</p>
     </div>
 
-    <button class="add-button" (click)="save(Name.value, Surname.value, Password.value)" >
+    <button class="add-button" (click)="save(Name.value, Surname.value, Password.value, Password2.value)" >
       Salva mofiche
     </button> 
 
