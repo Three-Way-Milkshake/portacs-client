@@ -90,6 +90,30 @@
                   "with": "src/environments/environment.dev3.ts"
                 }
               ]
+            },
+			"dev4":{
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev4.ts"
+                }
+              ]
+            },
+			"dev5":{
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev5.ts"
+                }
+              ]
+            },
+			"dev6":{
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev6.ts"
+                }
+              ]
             }
           }
         },
@@ -110,6 +134,12 @@
             },
             "dev3": {
               "browserTarget": "muletto:build:dev3"
+            },
+			"dev4": {
+              "browserTarget": "muletto:build:dev4"
+            },
+			"dev5": {
+              "browserTarget": "muletto:build:dev5"
             }
           }
         },
@@ -166,6 +196,22 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.dev3.ts"
+                }
+              ]
+            },
+			"dev4":{
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev4.ts"
+                }
+              ]
+            },
+			"dev5":{
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev5.ts"
                 }
               ]
             }
