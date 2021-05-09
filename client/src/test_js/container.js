@@ -33,6 +33,14 @@ class Container {
         this.contenitore = [];
         return str;
     }
+
+    getDatiESvuotaNoParams() {
+        // this.contenitore.push(posizione.toString());
+        let str = this.getContainer();
+        delete this.contenitore;
+        this.contenitore = [];
+        return str;
+    }
 }
 module.exports = Container;
 

@@ -9,7 +9,8 @@ const Container = require('./src/test_js/container');
 const Listamosse = require('./src/test_js/listamosse');
 const POIlist = require('./src/test_js/poiList');
 const net = require('net');
-const SERVER_PORT = 1723;
+const SERVER_PORT = 1723,
+        MANUAL_DRIVING_SPEED = process.argv[8]==='quick'?500:1000;
 
 //angular
 const io = require("socket.io")(http, {
@@ -64,6 +65,7 @@ client.on('error', ()=>{
 client.on('data', (data)=>{
     data = data.toString().replace(/(\r\n|\n|\r)/gm, "");
     let msg=data.toString().split(";");
+    let sendPosition=false;
     for (let i = 0; i < msg.length; i++) {
         let cmd = msg[i].split(",");
         if (cmd[0] == "") {
@@ -71,7 +73,7 @@ client.on('data', (data)=>{
         }
         switch(cmd[0]){
             case "ALIVE": 
-             
+                sendPosition=true;
                 
                 break;
             case "MAP":
@@ -87,6 +89,7 @@ client.on('data', (data)=>{
             case "PATH":
                 console.log("--------\nPATH");
                 canCheckAuto = true;
+                mosse.deleteAllMoves();
                 //non sarebbe cmd[1].length nel ciclo? ora funziona con PATH,..,..,..,..,..
                 for (let k = 1; k < cmd.length; k++) {
                     mosse.addMove(cmd[k]);
@@ -97,9 +100,10 @@ client.on('data', (data)=>{
                     stopped = true;
                 } else {
                     for (let k = 0; k < parseInt(cmd[1]); k++) {
-                        mosse.addMove('S');
+                        mosse.addMoveTail('S');
                     }
                 }
+                console.log(mosse);
                 break;
             case "START":
                 stopped = false;
@@ -121,15 +125,29 @@ client.on('data', (data)=>{
         }
     }
     //muovere il muletto in automatic driving
-    if (!manualDriving && !stopped) {
+    if (sendPosition && !manualDriving && !stopped) {
         changePosition(mosse.getLastInsertMove());
     }
     //task completata
     if ((x+","+y) == poi.getPosfromId(lista.getFirstPOI())){
         io.emit("completedtaskbutton"); //scambiato x e y
     }
-    client.write(c.getDatiESvuota("POS," + x + "," + y + "," + dir)); 
-    client.write('\n');
+    if(sendPosition){
+        if(manualDriving){
+            c.aggiungiComando("PATH,0");
+            // mosse.deleteAllMoves();
+        }
+        let toSend=c.getDatiESvuota("POS," + x + "," + y + "," + dir)
+        console.log("sending (POS): "+toSend);
+        client.write(toSend); 
+        client.write('\n');
+    }
+    /* else{
+        let toSend=c.getDatiESvuotaNoParams()
+        console.log("sending: "+toSend);
+        client.write(toSend); 
+        client.write('\n');
+    } */
     
 });
 
@@ -224,6 +242,7 @@ io.on("connection", (socket) => {
     socket.on("automatica", () => {
         manualDriving = false;
         manualDrivingList.deleteAllMoves();
+        mosse.deleteAllMoves();
         c.aggiungiComando("PATH,0"); //0 false -> richiede lo stesso percorso
     });
     socket.on("manuale", () => {
@@ -257,6 +276,7 @@ http.listen(HTTP_PORT, () => {
 })
 
 function changePosition(mossa){
+    console.log("Devo muovermi: "+mossa);
     switch(mossa) {
       case "2": // turn right
         if      (dir == 0) dir = 1;
@@ -317,5 +337,6 @@ setInterval(() => {
         if (!manualStop || tempMove == "2" || tempMove == "3" || tempMove == "1") {
             changePosition(tempMove === undefined ? "0" : tempMove);
         } 
+        //c.aggiungiComando("PATH,0");
     }
-}, 1000);
+}, MANUAL_DRIVING_SPEED);

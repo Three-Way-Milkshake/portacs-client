@@ -11,7 +11,7 @@ class Listamosse {
             this.moves.push(seq[i]);
         }
     }
-    addMove(mossa){
+    addMoveTail(mossa){
         this.moves.push(mossa);
     }
     deleteAllMoves() {
