@@ -17,6 +17,13 @@ export class PersonalAccountService {
       });
     });
   }
+  onNewEcc() {
+    return new Observable(observer => {
+      socket.on('ecc', (data : string) => {
+        observer.next(data);
+      });
+    });
+  }
   
   correctLogin() {
     return new Observable(observer => {

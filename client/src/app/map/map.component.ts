@@ -12,11 +12,14 @@ export class MapComponent implements OnInit {
   tmp : string[][] = [];
   pos: UnitPosition;
   nextPOI: string = '';
+  xnextPOI!: number;
+  ynextPOI!: number;
   listPOIID : string[] = [];
   listPOIx : number[] = [];
   listPOIy : number[] = [];
   listPOIt : string[] = [];
   listPOIName: string[] = [];
+  poiMap : string[][] = [];
   constructor(private service: MapService, private ngZone: NgZone) {
     this.pos = {posX: environment.x, posY: environment.y, dir: 0};
    }
@@ -41,12 +44,24 @@ export class MapComponent implements OnInit {
     });
     this.service.onNewPOI().subscribe((data) => {
       this.ngZone.run(() => {
+        console.log(data)
         this.nextPOI = String(data);
-        console.log(data);
+        
       });
     });
   }
 
+  findNextPoi(){
+    for (let i = 0; i < this.listPOIID.length; i++){
+      if(this.listPOIName[i] === this.nextPOI){
+        this.xnextPOI = this.listPOIx[i];
+        this.ynextPOI = this.listPOIy[i];
+        
+        
+      }
+      
+    }
+  }
   savePOI(data : string) {
     console.log(data);
     let tmpStr = data.split(';')
@@ -84,18 +99,50 @@ export class MapComponent implements OnInit {
       }
       i++;
     }
+    this.findNextPoi();
     this.setPOIonMap();
+    if (this.listPOIx != null) {
+      this.setNamePOIOnMap();
+    }
+
     //scambiato x e y
     this.tmp[this.pos.posX][this.pos.posY] = this.dirToIntArray(); //metto il muletto nella mappa con la sua direzione
     
   }
 
+  setNamePOIOnMap() {
+    for (let t = 0; t < this.listPOIx.length; t++) {
+      if (this.poiMap[this.listPOIx[t]] == null) {
+        this.poiMap[this.listPOIx[t]] = [];
+      }
+      this.poiMap[this.listPOIx[t]][this.listPOIy[t]] = (this.listPOIName[t]).toString();
+    }
+  }
+
   setPOIonMap() {
     for (let i = 0; i < this.listPOIID.length; i++){
-      this.tmp[this.listPOIx[i]][this.listPOIy[i]] = this.listPOIName[i];
+      this.tmp[this.listPOIx[i]][this.listPOIy[i]] = this.typeToMap(this.listPOIt[i]);
+      
     }
-    console.log(this.tmp);
-  }  
+    for (let i = 0; i < this.listPOIID.length; i++){
+      if(this.listPOIName[i] === this.nextPOI){
+        this.tmp[this.listPOIx[i]][this.listPOIy[i]] = "11";
+      }
+      
+    }
+
+  } 
+  typeToMap(typeCell : string) {
+    if (typeCell == "0") {
+      return "20";
+    } else if (typeCell == "1") {
+      return "21";
+    } else if (typeCell == "2") {
+      return "22";
+    } else {
+      return "-1";
+    }
+  } 
 
   dirToIntArray() {
     if (this.pos.dir == 0) {        // facing NORD

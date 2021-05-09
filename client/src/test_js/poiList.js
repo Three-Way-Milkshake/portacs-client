@@ -4,9 +4,12 @@ class POIlist{
     x = [];
     t = [];
     name = [];
+    
+    //Ma quando viene usato questo metodo?
     getListString(){
       return this.poi;
     }
+    
     delete(){
       this.id = [];
       this.y = [];

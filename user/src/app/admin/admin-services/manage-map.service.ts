@@ -20,5 +20,12 @@ export class ManageMapService {
   changeMap(map : string[][]){
     socket.emit("changedmap", map);
   }
+
+  newCell(cell:string){
+    socket.emit("newcell", cell);
+  }
+  newPOI(poi : string){
+    socket.emit("newpoi", poi);
+  }
   constructor() { }
 }

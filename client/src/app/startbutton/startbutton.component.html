@@ -1,2 +1,2 @@
 
-<button pButton type="button" label="Start" class="startbb" (click)="start()"></button>
+<button *ngIf="isOnScreen" pButton type="button" label="Start" class="startbb" (click)="start()"></button>

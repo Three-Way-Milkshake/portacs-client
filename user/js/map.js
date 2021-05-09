@@ -33,6 +33,7 @@ class Map {
       if (this.map.length > 0) {
         return this.map[0].length;
       }
+      return 0;
     }
 
     setMap(m) {
@@ -57,8 +58,8 @@ class Map {
 
     getMapForServer() {
       let strMap = "";
-      for (let i = 0; i < this.map.length; i++) {
-        for (let j = 0; j < this.map[i].length; j++) {
+      for (let i = 0; i < this.getR(); i++) {
+        for (let j = 0; j < this.getC(); j++) {
           switch(this.map[i][j]){
             case '0':
             case '1':
@@ -78,8 +79,8 @@ class Map {
 
     getPoisWellMapped() {
       let pois={}
-      for (let i = 0; i < this.map.length; i++) {
-        for (let j = 0; j < this.map[i].length; j++) {
+      for (let i = 0; i < this.getR(); i++) {
+        for (let j = 0; j < this.getC(); j++) {
           switch(this.map[i][j]){
             case '0':
             case '1':
@@ -113,7 +114,7 @@ class Map {
           }
         }
         out += "]";
-        if (this.map.length - i > 0) {
+        if (this.map.length - i > 1) {
           out += ", "
         }
       }

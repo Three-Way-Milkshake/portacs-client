@@ -1,8 +1,8 @@
 class UserInformation{
-    id;
-    name;
-    surname;
-    password;
+    id = "";
+    name = "";
+    surname = "";
+    password = "";
 
     getInformation() {
         return this.name + "," + this.surname + "," + this.password; 

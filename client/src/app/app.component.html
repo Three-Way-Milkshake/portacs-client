@@ -20,18 +20,18 @@
     <button pButton type="button"  label="Metti in guida {{guida}}" (click)="cambio()"></button>
 
     <div class="guida">
-    <div *ngIf="automatica; else manuale">
-        <h1>Guida Automatica</h1>
+
+        <h1>Suggerimenti Guida</h1>
         <div class="arrows">
             <app-arrows></app-arrows>
         </div>
-    </div>
-    <ng-template #manuale>
+
+        <div *ngIf="!automatica">
         <div class="manuale">
             <h1> Guida Manuale </h1>
             <app-manualdriving></app-manualdriving>
         </div>
-    </ng-template>
+    </div>
     </div>
     
     

@@ -7,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./startbutton.component.css']
 })
 export class StartButtonComponent {
+  isOnScreen : boolean = true;
 
   constructor(private service: StartbuttonService) { }
 
   start() {
     this.service.onPress();
+    this.isOnScreen = false;
   }
 }

@@ -31,19 +31,19 @@ export class ArrowsComponent implements OnInit {
 
   updateArrows(data : string) {
     switch (data) {
-      case "R":
+      case "2":
         this.dir = [false, false, true, false];
         break;
-      case "L":
+      case "3":
         this.dir = [true, false, false, false];
         break;
-      case "T":
+      case "1":
         this.dir = [false, true, false, false];
         break;
-      case "S":
+      case "4":
         this.dir = [false, false, false, false];
         break;
-      case "M":
+      case "0":
         this.dir = [false, false, false, true];
         break;
     }
