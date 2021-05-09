@@ -16,6 +16,11 @@ jobs:
         run: |
          npm install
          npm install -g @angular/cli
+      - name: Set up npm user
+        working-directory: ./user
+        run: | 
+         npm install
+         npm install -g @angular/cli
         
       - name: build client
         working-directory: ./client
@@ -25,14 +30,12 @@ jobs:
         working-directory: ./client
         run: ng test -c dev1 -- --no-watch --no-progress --code-coverage --browsers=ChromeHeadlessCI
         continue-on-error: true
+      - name: testing client node
+        working-directory: ./client
+        run: npm test
+        continue-on-error: true
       
-      
-      - name: Set up npm user
-        working-directory: ./user
-        run: npm install
-      - name: Set up npm user ng
-        working-directory: ./user
-        run: npm install -g @angular/cli
+
         
       - name: build user
         working-directory: ./user
@@ -42,4 +45,8 @@ jobs:
       - name: testing user angular
         working-directory: ./user
         run: ng test -- --no-watch --no-progress --code-coverage --browsers=ChromeHeadlessCI
+        continue-on-error: true
+      - name: testing user node
+        working-directory: ./user
+        run: npm test
         continue-on-error: true
