@@ -108,8 +108,8 @@ client.on('data', (data)=>{
             case "START":
                 stopped = false;
                 break;
-                case "LIST": 
-                
+                case "LIST":
+
                     for (let z = 1; z < cmd.length; z++) {
                         lista.addPOI(cmd[z]);
                     }
@@ -117,7 +117,7 @@ client.on('data', (data)=>{
                     listNameFromIdList();
                     let t = lista.getFirstPOI();
                     let n = poi.getNameFromId(t);
-    
+                    io.emit("showstart");
                     io.emit("updatePOI", (n === 'undefined'? "" : n));
                     break;     
             default: 
