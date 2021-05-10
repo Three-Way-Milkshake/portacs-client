@@ -335,13 +335,10 @@ function changePosition(mossa){
     if (!manualDriving) {
         io.emit("arrows", mossa);
     } else {
-        console.log("///////////////////////////");
         let t = mosse.getLastInsertMove();
-        console.log("ho fatto: "+t);
         if (mossa == t) {
             isCorrectMove = true;
             t = mosse.getLastInsertMove();
-            console.log("quello che dovrò fare: "+t);
             io.emit("arrows", t);
         } else {
             isCorrectMove = false;

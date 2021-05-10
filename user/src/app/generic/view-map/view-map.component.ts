@@ -23,8 +23,7 @@ export class ViewMapComponent implements OnInit {
   listPOIName : string[] = [];
   idName : string[][] = [];
   poiMap : string[][] = [];
-  forklift : string[] = [];
-  tasklist : string[] = [];
+  tasklist : string[][] = [];
   constructor(private ngZone: NgZone, private servicePOI: POIListService) {}
 
   ngOnInit() {
@@ -45,6 +44,23 @@ export class ViewMapComponent implements OnInit {
         this.setPOI(data);
       });
     });
+
+    this.onNewList().subscribe((data : string[]) => {
+      this.ngZone.run(() => {
+        this.setList(data);
+      });
+    });
+  }
+
+  setList(data : string[]){
+    for (let i = 0; i < data.length; i++) {
+      this.tasklist[i] = [];
+      let str = data[i].split(',');
+      for (let j = 0; j < str.length; j++) {
+        this.tasklist[i][j] = str[j];
+      }
+    }
+    console.log(this.tasklist);
   }
 
   setPOI(data: string[]) {
@@ -71,6 +87,15 @@ export class ViewMapComponent implements OnInit {
   onNewAction(){
     return new Observable(observer => {
       socket.on('unit', (msg: string) => {
+        observer.next(msg);
+      });
+    });
+    
+  }
+
+  onNewList(){
+    return new Observable(observer => {
+      socket.on('listtable', (msg: string[]) => {
         observer.next(msg);
       });
     });

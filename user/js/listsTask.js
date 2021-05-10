@@ -4,6 +4,7 @@ class ListsTask {
     listJustAdded = "";
     
     
+    
     getAss(){
         return this.ass;
     }

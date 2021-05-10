@@ -13,6 +13,29 @@ class POIlist{
       return str;
     }
 
+    turnIdToName(strArray) {
+      console.log(strArray);
+      let arr = []
+      for (let k = 0; k < strArray.length; k++) {
+        let tmp = strArray[k].split(',');
+        arr[k] = tmp[0]
+        for (let l = 1; l < tmp.length; l++) {
+          arr[k] += "," + this.getNameFromId(tmp[l]);
+        }
+      }
+      console.log(arr);
+      return arr;
+    }
+
+    getNameFromId(id) {
+      for (let i = 0; i < this.id.length; i++) {
+        if (id == this.id[i]) {
+          return this.name[i]; 
+        }
+      }
+      return "";
+    }
+    
     delete(){
       this.id = [];
       this.y = [];

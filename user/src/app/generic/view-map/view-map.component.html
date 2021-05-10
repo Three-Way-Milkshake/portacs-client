@@ -1,6 +1,6 @@
 <h2>Mappa</h2>
 
-<table>
+<table class="map">
     <tr *ngFor="let row of tmp; let i = index">
         <td *ngFor="let cell of row; let j = index">
             <div class="cc" [ngSwitch]="cell">
@@ -28,9 +28,15 @@
     </tr>
 </table>
 
-<table>
-    <tr>
-        <td>MULETTO</td>
-        <td>LISTA</td>
+<table class="list">   
+    <tr class="first">
+        <td>Muletto</td>
+        <td>Next task</td>
+        <td colspan="100%">Others</td>
+    </tr>    
+    <tr class="row" *ngFor="let row of tasklist; let i = index">
+        <td class="col" *ngFor="let cell of row; let j = index">
+            <p class="tcell" > {{cell}} </p>
+        </td>            
     </tr>
 </table>

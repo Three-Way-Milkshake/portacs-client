@@ -175,15 +175,20 @@ function createConnectionServer(id, password) {
                     } 
                     break;
                 case "LIST":
-                   
-                    let tmp = cmd[1];
-                    for (let k=3; k < parseInt(cmd[2])+2; k++) {
-                        tmp = tmp + "," +cmd[k];
+                    l.remove();
+                    let k = 2;
+                    for (let g = 0; g < parseInt(cmd[1]); g++) {
+                        let strTask = cmd[k];
+                        for (let m = 0; m < parseInt(cmd[k+1]); m++) {
+                            strTask += "," + cmd[m+k+2];
+                        }
+                        k += parseInt(cmd[k+1])+2;
+                        console.log("strTask: "+strTask);
+                        l.addListAss(strTask);
                     }
-                    console.log("TASK: ");
-                    console.log(tmp);
-                    l.addListAss(tmp);
-                    io.emit("listAss", l.getAss());
+                    let nameList = poil.turnIdToName(l.getAss());
+                    io.emit("listAss", nameList);
+                    io.emit("listtable", nameList);
                     break;
                 case "ADF":
                     io.emit("responsenewunit", cmd[1]+","+ cmd[2]);
@@ -316,8 +321,7 @@ io.on("connection", (socket) => {
         ctj.aggiungiComando("CELL,"+poi);
     });
     socket.on("getlistAss", () => {
-        socket.emit("listAss", l.getAss());
-        
+        socket.emit("listAss", poil.turnIdToName(l.getAss()));
     });
     socket.on("getlistNotAss", () => {
         socket.emit("listnotAss", l.getNotAss());
