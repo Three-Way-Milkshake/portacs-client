@@ -29,6 +29,9 @@ class Listamosse {
     getMove() {
         return this.moves.shift();
     }
+    getLastMove() {
+        return this.moves[this.moves.length-1];
+    }
 
     addMove(moves){
         this.moves.unshift(moves);

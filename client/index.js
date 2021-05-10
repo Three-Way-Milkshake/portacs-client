@@ -37,6 +37,7 @@ let requestButton = false;
 let manualDriving = false;
 let manualStop = true; //false si muove
 let manualDrivingList = new Listamosse();
+let isCorrectMove = false;
 
 /*
 dir:
@@ -92,7 +93,11 @@ client.on('data', (data)=>{
                 mosse.deleteAllMoves();
                 //non sarebbe cmd[1].length nel ciclo? ora funziona con PATH,..,..,..,..,..
                 for (let k = 1; k < cmd.length; k++) {
+                    console.log(cmd[k]);
                     mosse.addMove(cmd[k]);
+                }
+                if (manualDriving && !isCorrectMove) {
+                    io.emit("arrows", mosse.getLastMove());
                 }
                 break;
             case "STOP":
@@ -327,7 +332,21 @@ function changePosition(mossa){
               mossa ="4"; // stop
     }
     io.emit("updatemap", x+","+y+","+dir);
-    io.emit("arrows", mossa);
+    if (!manualDriving) {
+        io.emit("arrows", mossa);
+    } else {
+        console.log("///////////////////////////");
+        let t = mosse.getLastInsertMove();
+        console.log("ho fatto: "+t);
+        if (mossa == t) {
+            isCorrectMove = true;
+            t = mosse.getLastInsertMove();
+            console.log("quello che dovrò fare: "+t);
+            io.emit("arrows", t);
+        } else {
+            isCorrectMove = false;
+        }
+    }
 }
 
 setInterval(() => {
