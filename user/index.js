@@ -44,6 +44,7 @@ var client;
 function createConnectionServer(id, password) {
     user.setPassword(password);
     var failClient = false;
+    ctj.getDatiESvuota();
     client = net.connect(SERVER_PORT, 'localhost', ()=>{
         console.log('connected to server');
         client.write("USER\n"+id+"\n"+password+"\n");
@@ -178,7 +179,7 @@ function createConnectionServer(id, password) {
                     console.log("TASK: ");
                     console.log(tmp);
                     l.addListAss(tmp);
-                    socket.emit("listAss", l.getAss());
+                    io.emit("listAss", l.getAss());
                     break;
                 case "ADF":
                     io.emit("responsenewunit", cmd[1]+","+ cmd[2]);
