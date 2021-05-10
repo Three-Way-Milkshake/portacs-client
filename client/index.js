@@ -108,18 +108,18 @@ client.on('data', (data)=>{
             case "START":
                 stopped = false;
                 break;
-                case "LIST":
+            case "LIST":
 
-                    for (let z = 1; z < cmd.length; z++) {
-                        lista.addPOI(cmd[z]);
-                    }
+                for (let z = 1; z < cmd.length; z++) {
+                    lista.addPOI(cmd[z]);
+                }
                     
-                    listNameFromIdList();
-                    let t = lista.getFirstPOI();
-                    let n = poi.getNameFromId(t);
-                    io.emit("showstart");
-                    io.emit("updatePOI", (n === 'undefined'? "" : n));
-                    break;     
+                listNameFromIdList();
+                let t = lista.getFirstPOI();
+                let n = poi.getNameFromId(t);
+                io.emit("showstart");
+                io.emit("updatePOI", (n === 'undefined'? "" : n));
+                break;     
             default: 
                 console.log("Unrecognized message from server: "+cmd[0]);
         }

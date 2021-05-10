@@ -1,5 +1,5 @@
 class ListsTask {
-    ass = [];
+    ass = ["f1,p1,p2,p3", "f2,p3,p4", "f2, p5,p5"];
     notAss = [/* "ciao" */];
     listJustAdded = "";
     

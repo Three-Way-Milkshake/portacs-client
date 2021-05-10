@@ -70,6 +70,9 @@ function createConnectionServer(id, password) {
         let msg=data.toString().split(";");
         for (let i = 0; i < msg.length; i++) {
             let cmd = msg[i].split(",");
+            if (cmd[0] == "") {
+                continue; // fix
+            }
             switch(cmd[0]){
                 case "OK":
                     console.log(cmd);
@@ -171,6 +174,7 @@ function createConnectionServer(id, password) {
                     } 
                     break;
                 case "LIST":
+                    
                     let tmp = cmd[1];
                     for (let k=3; k < parseInt(cmd[2])+2; k++) {
                         tmp = tmp + "," +cmd[k];
@@ -178,7 +182,7 @@ function createConnectionServer(id, password) {
                     console.log("TASK: ");
                     console.log(tmp);
                     l.addListAss(tmp);
-                    socket.emit("listAss", l.getAss());
+                    io.emit("listAss", l.getAss());
                     break;
                 case "ADF":
                     io.emit("responsenewunit", cmd[1]+","+ cmd[2]);
@@ -313,6 +317,7 @@ io.on("connection", (socket) => {
     socket.on("getlistAss", () => {
         l.remove();
         ctj.aggiungiComando("LIST");
+        console.log("\nLISTA RICHIESTA\n");
     });
     socket.on("getlistNotAss", () => {
         socket.emit("listnotAss", l.getNotAss());
