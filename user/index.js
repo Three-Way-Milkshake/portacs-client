@@ -315,6 +315,7 @@ io.on("connection", (socket) => {
     socket.on("newcell", (cell) => {
         console.log("CELL,"+cell);
         ctj.aggiungiComando("CELL,"+cell);
+
     });
     socket.on("newpoi", (poi) => {
         console.log("CELL,"+poi);

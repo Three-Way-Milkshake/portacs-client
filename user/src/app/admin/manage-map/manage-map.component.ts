@@ -27,6 +27,8 @@ export class ManageMapComponent implements OnInit {
 
   tmpPOI : NewPoiList[] = [];
   tmpCell : NewCellList[] = [];
+  errore : boolean =false;
+  msg : string = "";
 
   constructor(private service : ManageMapService, private ngZone: NgZone, private servicePOI: POIListService) { }
 
@@ -128,9 +130,22 @@ export class ManageMapComponent implements OnInit {
     }
   }
   
+  noPOIRow(n : number) {
+    for (let i = 0; i < this.listPOIx.length; i++) {
+      console.log((this.listPOIx[i]+" > " + n));
+      if (this.listPOIx[i] >= n-1) {
+        return false;
+      }
+    }
+    return true;
+  }
+  
   deleteRow(){
-    if (this.tmp.length > 1) {
+    if (this.tmp.length > 1 && this.noPOIRow(this.tmp.length)) {
       this.tmp.pop();
+    } else {
+      this.errore= true;
+      this.msg = "elimina i POI presenti nella riga che si intende eliminare"
     }
   }
 
@@ -140,12 +155,26 @@ export class ManageMapComponent implements OnInit {
       this.tmp[i][l] = "1";
     }
   }
+  
+  noPOICol(n : number) {
+    for (let i = 0; i < this.listPOIy.length; i++) {
+      console.log((this.listPOIy[i]+" > " + n));
+      if (this.listPOIy[i] >= n-1) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   deleteCol(){
-    if(this.tmp[0].length > 1){
+    if(this.tmp[0].length > 1 && this.noPOICol(this.tmp[0].length)){
       for (let i : number = 0; i < this.tmp.length; i++) {
         this.tmp[i].pop();
       }
-    }   
+    }  else{
+      this.errore= true;
+      this.msg = "elimina i POI presenti nell'ultima colonna"
+    }
   }
 
   pressedButton(i : number, j : number){
@@ -163,10 +192,15 @@ export class ManageMapComponent implements OnInit {
   }
 
   changePOI(name : string, type : string){
+    let idTemp = 0;
+    let tmpIdFromPos = this.idFromPosition(this.lastButtonI, this.lastButtonJ);
+    if (tmpIdFromPos != "") {
+      idTemp = parseInt(tmpIdFromPos);
+    }
     if (name != "") {
       this.tmp[this.lastButtonI][this.lastButtonJ] = this.typeStringToMap(type.toString());
       this.displaySelection = false;
-      this.addTempPOI(this.lastButtonI, this.lastButtonJ, 6, 0, this.typeToEnum(type), name);
+      this.addTempPOI(this.lastButtonI, this.lastButtonJ, 6, idTemp, this.typeToEnum(type), name);
       this.listPOIx[this.listPOIx.length] = this.lastButtonI;
       this.listPOIy[this.listPOIy.length] = this.lastButtonJ;
       this.listPOIt[this.listPOIt.length] = this.typeToEnum(type).toString();
@@ -208,10 +242,25 @@ export class ManageMapComponent implements OnInit {
     }
   }
 
+
+  idFromPosition(x : number, y : number) {
+    for (let i = 0; i < this.listPOIx.length; i++) {
+      if (x == this.listPOIx[i] && y == this.listPOIy[i]){
+        return this.listPOIID[i];
+      }
+    }
+    return "";
+  }
+
   confirmMap(){
     this.service.changeMap(this.tmp);
     for (let i = 0; i < this.tmpCell.length; i++) {
-      this.service.newCell(this.tmpCell[i].x+","+this.tmpCell[i].y+","+this.tmpCell[i].a);
+      let idBoh = this.idFromPosition(this.tmpCell[i].x, this.tmpCell[i].y);
+      if (idBoh != "") {
+        this.service.newCell(this.tmpCell[i].x+","+this.tmpCell[i].y+","+this.tmpCell[i].a + "," + idBoh);
+      } else {
+        this.service.newCell(this.tmpCell[i].x+","+this.tmpCell[i].y+","+this.tmpCell[i].a);
+      }
     }
     this.tmpCell = [];
     for (let i = 0; i < this.tmpPOI.length; i++) {
