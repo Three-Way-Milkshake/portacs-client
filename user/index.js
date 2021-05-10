@@ -175,7 +175,7 @@ function createConnectionServer(id, password) {
                     } 
                     break;
                 case "LIST":
-                    
+                    l.svuota();
                     let tmp = cmd[1];
                     for (let k=3; k < parseInt(cmd[2])+2; k++) {
                         tmp = tmp + "," +cmd[k];

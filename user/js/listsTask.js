@@ -3,6 +3,9 @@ class ListsTask {
     notAss = [/* "ciao" */];
     listJustAdded = "";
     
+    svuota(){
+        this.ass = [];
+    }
     getAss(){
         return this.ass;
     }
