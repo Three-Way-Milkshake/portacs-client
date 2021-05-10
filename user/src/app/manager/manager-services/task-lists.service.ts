@@ -32,7 +32,7 @@ export class TaskListsService {
     socket.emit("getlistNotAss");
   }
 
-  remove(id){
+  remove(id : string){
     socket.emit("removeList", id);
   }
 }

@@ -23,6 +23,8 @@ export class ViewMapComponent implements OnInit {
   listPOIName : string[] = [];
   idName : string[][] = [];
   poiMap : string[][] = [];
+  forklift : string[] = [];
+  tasklist : string[] = [];
   constructor(private ngZone: NgZone, private servicePOI: POIListService) {}
 
   ngOnInit() {

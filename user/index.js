@@ -175,7 +175,7 @@ function createConnectionServer(id, password) {
                     } 
                     break;
                 case "LIST":
-                    l.svuota();
+                   
                     let tmp = cmd[1];
                     for (let k=3; k < parseInt(cmd[2])+2; k++) {
                         tmp = tmp + "," +cmd[k];
@@ -316,9 +316,8 @@ io.on("connection", (socket) => {
         ctj.aggiungiComando("CELL,"+poi);
     });
     socket.on("getlistAss", () => {
-        l.remove();
-        ctj.aggiungiComando("LIST");
-        console.log("\nLISTA RICHIESTA\n");
+        socket.emit("listAss", l.getAss());
+        
     });
     socket.on("getlistNotAss", () => {
         socket.emit("listnotAss", l.getNotAss());
@@ -345,6 +344,7 @@ io.on("connection", (socket) => {
         l.addTemporaryList(data);
     });
     socket.on("removeList", (data) =>{
+        console.log(data);
         ctj.aggiungiComando("RML,"+data);
         l.removeList(data);
         socket.emit("listnotAss", l.getNotAss());

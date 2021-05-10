@@ -36,7 +36,10 @@ export class TaskListsComponent implements OnInit {
 
   remove(a){
     let tmp = a.split(",");
-    this.service.remove(tmp[0]);
+    let x = tmp[0].split(":");
+    let x2 = x[1].split(';');
+    console.log(x2[0]);
+    this.service.remove(x2[0]);
     
   }
   
