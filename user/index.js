@@ -44,6 +44,7 @@ var client;
 function createConnectionServer(id, password) {
     user.setPassword(password);
     var failClient = false;
+    ctj.getDatiESvuota();
     client = net.connect(SERVER_PORT, 'localhost', ()=>{
         console.log('connected to server');
         client.write("USER\n"+id+"\n"+password+"\n");
