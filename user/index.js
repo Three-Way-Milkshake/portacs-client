@@ -166,6 +166,7 @@ function createConnectionServer(id, password) {
                     io.emit("responsenewlist", cmd[1]+","+ cmd[2]);
                     if(cmd[1] == "OK") {
                         l.addListnotAss(cmd[2]);
+                        console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                     } 
                     break;
                 case "RML":
@@ -182,10 +183,12 @@ function createConnectionServer(id, password) {
                         for (let m = 0; m < parseInt(cmd[k+1]); m++) {
                             strTask += "," + cmd[m+k+2];
                         }
+                        l.removeListNotAss(strTask);
                         k += parseInt(cmd[k+1])+2;
                         console.log("strTask: "+strTask);
                         l.addListAss(strTask);
                     }
+                    io.emit("listnotAss", l.getNotAss());
                     let nameList = poil.turnIdToName(l.getAss());
                     io.emit("listAss", nameList);
                     io.emit("listtable", nameList);

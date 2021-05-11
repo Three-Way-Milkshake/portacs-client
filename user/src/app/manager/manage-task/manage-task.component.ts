@@ -11,6 +11,7 @@ import { NgZone } from '@angular/core';
 export class ManageTaskComponent implements OnInit {
   selectedPoi : string;
   poi : string[] = [];
+  view : string[] = [];
   newList : string[] = [];
   added : boolean= false;
   error : boolean = false;
@@ -49,7 +50,11 @@ export class ManageTaskComponent implements OnInit {
     this.newList = [];
   }
   add(sP : string){
-    this.newList.push(sP);
+    /*
+    let tmp : string = ((sP.split(",")[0]).split(':')[1]).trim();
+    this.newList.push(this.poi[this.findIndexByName(tmp)]);
+    */
+   this.newList.push(sP);
   }
 
   deleteCurrentTask(l : string){
@@ -60,15 +65,43 @@ export class ManageTaskComponent implements OnInit {
   }
 
   confirm(){
-    this.service.confirm(this.newList);
+    let arr : string[] = [];
+    for(let i= 0; i < this.newList.length; i++){
+      let tmp : string = ((this.newList[i].split(",")[0]).split(':')[1]).trim();
+      arr.push(this.poi[this.findIndexByName(tmp)]);
+    }
+    this.service.confirm(arr);
+  }
+
+  typeToName(id: number) {
+    if (id == 0) {
+      return "Carico";
+    } else if (id == 1) {
+      return "Scarico"
+    } else if (id == 2) {
+      return "Base";
+    } else {
+      return "";
+    }
+  }
+
+  findIndexByName(name : string) {
+    for (let i = 0; i < this.poi.length; i++) {
+      let tmpName = this.poi[i].split(',')[2];
+      if (name == tmpName) {
+        return i;
+      }
+    }
+    return -1;
   }
 
   setValues(s: string[]) {
-    //let tmp : string[] = s.split(",");
     if (s.length > 0) {
       this.selectedPoi = s[0];
     }
     for (let i = 0; i < s.length; i++){
+      let tmp : string[] = s[i].split(",");
+      this.view[i] = "Nome: " + tmp[2] + ", Tipo POI: " + this.typeToName(parseInt(tmp[0]));
       this.poi[i] = s[i];
     }
   }

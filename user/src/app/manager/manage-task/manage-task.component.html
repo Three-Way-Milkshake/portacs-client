@@ -3,7 +3,7 @@
 <div class = "addTask"> 
     
     <select class="custom-select" [(ngModel)]="selectedPoi">
-        <option *ngFor="let p of poi">{{p}}</option>
+        <option *ngFor="let p of view">{{p}}</option>
       </select>
       <input type="submit" value="Aggiungi" (click)="add(selectedPoi)">
 </div>
