@@ -166,7 +166,6 @@ function createConnectionServer(id, password) {
                     io.emit("responsenewlist", cmd[1]+","+ cmd[2]);
                     if(cmd[1] == "OK") {
                         l.addListnotAss(cmd[2]);
-                        console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                     } 
                     break;
                 case "RML":
@@ -185,7 +184,6 @@ function createConnectionServer(id, password) {
                         }
                         l.removeListNotAss(strTask);
                         k += parseInt(cmd[k+1])+2;
-                        console.log("strTask: "+strTask);
                         l.addListAss(strTask);
                     }
                     io.emit("listnotAss", l.getNotAss());
@@ -345,14 +343,11 @@ io.on("connection", (socket) => {
         // for(let i=1; i<slicer.length; i+=3){
         //     toSend+=slicer[i];
         // }
-        console.log(data);
-        console.log(toSend)
         // ctj.aggiungiComando("ADL,"+data);
         ctj.aggiungiComando("ADL,"+toSend+';');
         l.addTemporaryList(data);
     });
     socket.on("removeList", (data) =>{
-        console.log(data);
         ctj.aggiungiComando("RML,"+data);
         l.removeList(data);
         socket.emit("listnotAss", l.getNotAss());
