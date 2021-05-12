@@ -4,36 +4,36 @@
     <div class = "alert">
         <app-admin-notification></app-admin-notification>
     </div>
-        
-    <div class = "taskList">
-        <app-tasklist></app-tasklist>
-    </div>
-    <div class = "startb">
-        <app-startbutton></app-startbutton>
-    </div>
-    
     <div class = "map">
+        <h2>Mappa</h2>
         <app-map></app-map>
     </div>
-
-    
-    <button pButton type="button"  label="Metti in guida {{guida}}" (click)="cambio()"></button>
-
-    <div class="guida">
-
-        <h1>Suggerimenti Guida</h1>
-        <div class="arrows">
-            <app-arrows></app-arrows>
+    <div class="bloccograndissimo">
+        <h2>Lista Task</h2>
+        <div class = "taskList">
+            <app-tasklist></app-tasklist>
         </div>
+        <div class = "startb">
+            <app-startbutton></app-startbutton>
+        </div>
+        
+        <button pButton type="button"  label="Metti in guida {{guida}}" (click)="cambio()"></button>
 
-        <div *ngIf="!automatica">
-        <div class="manuale">
-            <h1> Guida Manuale </h1>
-            <app-manualdriving></app-manualdriving>
+        <div class="guida">
+
+            <h2>Suggerimenti Guida</h2>
+            <div class="arrows">
+                <app-arrows></app-arrows>
+            </div>
+
+            <div *ngIf="!automatica">
+            <div class="manuale">
+                <h1> Guida Manuale </h1>
+                <app-manualdriving></app-manualdriving>
+            </div>
+        </div>
         </div>
     </div>
-    </div>
-    
     
 
 </div>

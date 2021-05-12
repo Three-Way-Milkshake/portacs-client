@@ -40,8 +40,9 @@ dir:
 */
   //-----------------------------CLIENT---------------------------------
 var client;
-
+let count = 0;
 function createConnectionServer(id, password) {
+    console.log("\n\n\n\n\n\n\nNUOVA CONNESSIONE AL SERVER\n\n\n\n\n\n\n\n\n\n\n");
     user.setPassword(password);
     var failClient = false;
     ctj.getDatiESvuota();
@@ -66,7 +67,8 @@ function createConnectionServer(id, password) {
     });
 
     client.on('data', (data)=>{
-        console.log(data);
+        console.log(count +" -- RICEVUTO SOCKET CON: "+data);
+        count++;
         data = data.toString().replace(/(\r\n|\n|\r)/gm, "");
         let msg=data.toString().split(";");
         for (let i = 0; i < msg.length; i++) {
@@ -76,7 +78,6 @@ function createConnectionServer(id, password) {
             }
             switch(cmd[0]){
                 case "OK":
-                    console.log(cmd);
                     io.emit("logincorrect", cmd[1]);
                     user.setInfo(cmd[2], cmd[3]);
                     break;
@@ -314,12 +315,10 @@ io.on("connection", (socket) => {
         }
     });
     socket.on("newcell", (cell) => {
-        console.log("CELL,"+cell);
         ctj.aggiungiComando("CELL,"+cell);
 
     });
     socket.on("newpoi", (poi) => {
-        console.log("CELL,"+poi);
         ctj.aggiungiComando("CELL,"+poi);
     });
     socket.on("getlistAss", () => {
@@ -337,7 +336,6 @@ io.on("connection", (socket) => {
             if(i<data.length-1){
                 toSend+=',';
             }
-            console.log(data[i].split(','));
         }
         // let slicer=data.slice(',');
         // for(let i=1; i<slicer.length; i+=3){

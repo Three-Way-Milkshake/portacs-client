@@ -14,7 +14,6 @@ class POIlist{
     }
 
     turnIdToName(strArray) {
-      console.log(strArray);
       let arr = []
       for (let k = 0; k < strArray.length; k++) {
         let tmp = strArray[k].split(',');
@@ -23,7 +22,6 @@ class POIlist{
           arr[k] += "," + this.getNameFromId(tmp[l]);
         }
       }
-      console.log(arr);
       return arr;
     }
 

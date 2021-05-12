@@ -5,17 +5,25 @@
 
 .freccia, .manuale {
     padding: 2em;    
-    width: 80%;
+    width: 30%;
 }
 
 h1 {
     text-align: center;
     font-size: 4em;
 }
-
+h2{
+    font-size: 3em;
+}
 .map {
     margin: 1em;
     width: 40%;
+    float: left;
+}
+
+.bloccograndissimo{
+    float: right;
+    width: 50%;
 }
 
 .startb{

@@ -14,3 +14,35 @@ ol {
 li{
     width: 2%;
 }
+.list{    
+    width: auto;
+    padding-left: 5%;
+    font-size: 2em;
+    text-align: center;
+}
+.first{
+    background-color: rgb(38, 147, 236);
+    color: whitesmoke;
+    border: 1px solid black;
+}
+
+.th-table{
+    background-color: #333;
+    color: whitesmoke;
+    border: 1px solid black;
+}
+
+.col{
+    background-color: whitesmoke;
+    color: black;
+    border: 1px solid black;
+    width: 10%;
+    text-align: center;
+ 
+}
+
+
+.col:nth-child(1){
+    background-color:#77ba99;
+    width: 15%;
+}

@@ -2,7 +2,7 @@ h1 {
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 .left, .right, .down{
-    width: 10%;
+    width: 30%;
     float:left;
 }
 .startstop{
