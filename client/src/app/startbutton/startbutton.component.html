@@ -1,2 +1,3 @@
-
 <button *ngIf="isOnScreen" pButton type="button" label="Start" class="startbb" (click)="start()"></button>
+<button *ngIf="isReqList" pButton type="button" label="Richiedi nuova lista" class="startbb" (click)="list()"></button> 
+<p *ngIf="err">Non è presente alcuna lista, riprova</p>

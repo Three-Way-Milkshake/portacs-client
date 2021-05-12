@@ -18,6 +18,26 @@ export class StartbuttonService {
       });
     });
   }
+
+  onNewWaiting() {
+    return new Observable(observer => {
+      socket.on('showrequestlist', () => {
+        observer.next();
+      });
+    });
+  }
+
+  onNewError(){
+    return new Observable(observer => {
+      socket.on('shownolist', () => {
+        observer.next();
+      });
+    });
+  }
+  requestList() {
+    socket.emit('reqlist');
+  }
+
   onPress() {
     socket.emit('start');
   }

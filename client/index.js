@@ -9,6 +9,7 @@ const Container = require('./src/test_js/container');
 const Listamosse = require('./src/test_js/listamosse');
 const POIlist = require('./src/test_js/poiList');
 const net = require('net');
+const { createJsxText } = require("typescript");
 const SERVER_PORT = 1723,
         MANUAL_DRIVING_SPEED = process.argv[8]==='quick'?500:1000;
 
@@ -38,6 +39,8 @@ let manualDriving = false;
 let manualStop = true; //false si muove
 let manualDrivingList = new Listamosse();
 let isCorrectMove = false;
+let isGoingBase = false;
+let checkNuovaLista = false;
 
 /*
 dir:
@@ -113,6 +116,13 @@ client.on('data', (data)=>{
             case "START":
                 stopped = false;
                 break;
+            case "NULL":
+                io.emit('shownolist');
+                io.emit('showrequestlist');
+                break;
+            case "LISTB":
+                isGoingBase = true;
+                //lasciare senza break
             case "LIST":
 
                 for (let z = 1; z < cmd.length; z++) {
@@ -135,8 +145,19 @@ client.on('data', (data)=>{
     }
     //task completata
     if ((x+","+y) == poi.getPosfromId(lista.getFirstPOI())){
-        io.emit("completedtaskbutton"); //scambiato x e y
+        if (isGoingBase) {
+            checkNuovaLista = true;
+            io.emit("showrequestlist");
+        } else {
+            io.emit("completedtaskbutton"); //scambiato x e y
+        }
+    } else {
+        if (checkNuovaLista) {
+            isGoingBase = false;
+            checkNuovaLista = false;
+        }
     }
+    
     if(sendPosition){
         if(manualDriving){
             c.aggiungiComando("PATH,0");
@@ -253,6 +274,9 @@ io.on("connection", (socket) => {
     socket.on("manuale", () => {
         manualDriving = true;
         manualStop = true;
+    });
+    socket.on("reqlist", () => {
+        c.aggiungiComando("LIST");
     });
     
     //task
