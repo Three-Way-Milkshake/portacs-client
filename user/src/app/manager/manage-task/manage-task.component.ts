@@ -30,8 +30,6 @@ export class ManageTaskComponent implements OnInit {
     this.service.response().subscribe((data) => {
       this.ngZone.run(() => {
         this.confermation(String(data));
-
-
       });      
     });
 
@@ -101,8 +99,10 @@ export class ManageTaskComponent implements OnInit {
     }
     for (let i = 0; i < s.length; i++){
       let tmp : string[] = s[i].split(",");
-      this.view[i] = "Nome: " + tmp[2] + ", Tipo POI: " + this.typeToName(parseInt(tmp[0]));
-      this.poi[i] = s[i];
+      if (parseInt(tmp[0]) != 2) {
+        this.view[i] = "Nome: " + tmp[2] + ", Tipo POI: " + this.typeToName(parseInt(tmp[0]));
+        this.poi[i] = s[i];
+      }
     }
   }
   
