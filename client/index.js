@@ -91,6 +91,7 @@ client.on('data', (data)=>{
                 io.emit("poilistmap", poi.getListMap());
                 break;
             case "PATH":
+                if(cmd[1]==="EMPTY") continue;
                 console.log("--------\nPATH");
                 canCheckAuto = true;
                 mosse.deleteAllMoves();
@@ -148,6 +149,7 @@ client.on('data', (data)=>{
         if (isGoingBase) {
             checkNuovaLista = true;
             io.emit("showrequestlist");
+            c.aggiungiComando("BASE");  
         } else {
             io.emit("completedtaskbutton"); //scambiato x e y
         }
