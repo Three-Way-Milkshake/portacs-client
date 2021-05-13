@@ -8,6 +8,8 @@ import { NgZone } from '@angular/core';
   styleUrls: ['./generic.component.css']
 })
 export class GenericComponent implements OnInit {
+  nome : string = "";
+  cognome : string = "";
   msgEcc = "";
   errEcc = false;
   isAdmin : boolean = this.checkIsAdmin();
@@ -36,6 +38,15 @@ export class GenericComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.service.getValues();
+    this.service.onNewUser().subscribe((data: string) => {
+      this.ngZone.run(() => {
+        let tmpData : string[] = data.split(',');
+        this.nome = tmpData[0];
+        this.cognome = tmpData[1];
+      
+      });      
+    });
     this.service.correctLogin().subscribe((data : string) =>{
       this.ngZone.run(() => {
         this.checkLogin(data);

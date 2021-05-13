@@ -46,7 +46,6 @@ export class MapComponent implements OnInit {
       this.ngZone.run(() => {
         console.log(data)
         this.nextPOI = String(data);
-        
       });
     });
   }
@@ -55,15 +54,21 @@ export class MapComponent implements OnInit {
     for (let i = 0; i < this.listPOIID.length; i++){
       if(this.listPOIName[i] === this.nextPOI){
         this.xnextPOI = this.listPOIx[i];
-        this.ynextPOI = this.listPOIy[i];
-        
-        
-      }
-      
+        this.ynextPOI = this.listPOIy[i];     
+      } 
     }
   }
+
+  delete() {
+    this.listPOIID = [];
+    this.listPOIx = [];
+    this.listPOIy = [];
+    this.listPOIt = [];
+    this.listPOIName = [];
+  }
+
   savePOI(data : string) {
-    console.log(data);
+    this.delete();
     let tmpStr = data.split(';')
     for (let i = 0; i < tmpStr.length ; i++){
       if (tmpStr[i] != "") {

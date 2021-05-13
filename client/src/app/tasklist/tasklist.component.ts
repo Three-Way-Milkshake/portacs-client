@@ -19,29 +19,31 @@ export class TasklistComponent implements OnInit {
     this.service.onNewList().subscribe((data) => {
       this.ngZone.run(() => {
         this.setValues(String(data));
+        console.log("normal = true");
         this.normal = true;
         this.showTable = true;
       });      
     });
     //show button
-    this.service.onGetButton().subscribe( () =>{
+    this.service.onGetButton().subscribe(() =>{
       this.ngZone.run(() => {
         console.log("mostro il pulsante di task");
         this.showButton = true;
-      })
-    })
+      });
+    });
 
-    this.service.onGotoBase().subscribe( () =>{
+    this.service.onGotoBase().subscribe(() =>{
       this.ngZone.run(() => {
+        console.log("normal = false");
         this.normal = false;
-      })
-    })
+      });
+    });
     this.service.doneBase().subscribe(() =>{
       this.ngZone.run(() => {
         this.normal = true;
         this.showTable = false;
-      })
-    })
+      });
+    });
   }
 
   

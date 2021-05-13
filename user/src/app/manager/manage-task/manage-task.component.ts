@@ -63,12 +63,14 @@ export class ManageTaskComponent implements OnInit {
   }
 
   confirm(){
-    let arr : string[] = [];
-    for(let i= 0; i < this.newList.length; i++){
-      let tmp : string = ((this.newList[i].split(",")[0]).split(':')[1]).trim();
-      arr.push(this.poi[this.findIndexByName(tmp)]);
+    if(this.newList.length != 0){
+      let arr : string[] = [];
+      for(let i= 0; i < this.newList.length; i++){
+        let tmp : string = ((this.newList[i].split(",")[0]).split(':')[1]).trim();
+        arr.push(this.poi[this.findIndexByName(tmp)]);
+      }
+      this.service.confirm(arr);
     }
-    this.service.confirm(arr);
   }
 
   typeToName(id: number) {
@@ -94,7 +96,7 @@ export class ManageTaskComponent implements OnInit {
   }
 
   setValues(s: string[]) {
-    if (s.length > 0) {
+    if ((typeof s !== 'undefined') && s.length > 0) {
       this.selectedPoi = s[0];
     }
     let t = 0;

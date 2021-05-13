@@ -124,7 +124,6 @@ client.on('data', (data)=>{
                 break;
             case "LISTB":
                 isGoingBase = true;
-                io.emit('gotobase')
                 //lasciare senza break
             case "LIST":
                 lista.deleteLista();
@@ -137,6 +136,9 @@ client.on('data', (data)=>{
                 let n = poi.getNameFromId(t);
                 io.emit("startbutton");
                 io.emit("updatePOI", (n === 'undefined'? "" : n));
+                if (isGoingBase) {
+                    io.emit('gotobase');
+                }
                 break;     
             default: 
                 console.log("Unrecognized message from server: "+cmd[0]);
