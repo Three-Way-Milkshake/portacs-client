@@ -81,6 +81,7 @@ client.on('data', (data)=>{
                 
                 break;
             case "MAP":
+                io.emit("showstart");
                 map.createMap(parseInt(cmd[1]), parseInt(cmd[2]), cmd[3]);
                 break;
             case "POI":
@@ -123,6 +124,7 @@ client.on('data', (data)=>{
                 break;
             case "LISTB":
                 isGoingBase = true;
+                io.emit('gotobase')
                 //lasciare senza break
             case "LIST":
 
@@ -147,6 +149,7 @@ client.on('data', (data)=>{
     //task completata
     if ((x+","+y) == poi.getPosfromId(lista.getFirstPOI())){
         if (isGoingBase) {
+            lista.removeFirstPOI();
             checkNuovaLista = true;
             io.emit("showrequestlist");
             c.aggiungiComando("BASE");  

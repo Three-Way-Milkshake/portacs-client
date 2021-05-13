@@ -7,7 +7,7 @@
     margin-left: 1.7em;     
 }
 ol {
-    font-size: 2.5em;
+    font-size: .5em;
     margin-left: 3%;
    
 }
@@ -45,4 +45,8 @@ li{
 .col:nth-child(1){
     background-color:#77ba99;
     width: 15%;
+}
+
+#base{
+    background-color:blue;
 }

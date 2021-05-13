@@ -11,7 +11,7 @@ export class TasklistComponent implements OnInit {
 
   showButton : boolean = false;
   lista : string [] = [];
-
+  normal : boolean = true;
   constructor(private service: TasklistService, private ngZone: NgZone) {}
 
   ngOnInit() {
@@ -19,6 +19,7 @@ export class TasklistComponent implements OnInit {
     this.service.onNewList().subscribe((data) => {
       this.ngZone.run(() => {
         this.setValues(String(data));
+        this.normal = true;
       });      
     });
     //show button
@@ -26,6 +27,12 @@ export class TasklistComponent implements OnInit {
       this.ngZone.run(() => {
         console.log("mostro il pulsante di task");
         this.showButton = true;
+      })
+    })
+
+    this.service.onGotoBase().subscribe( () =>{
+      this.ngZone.run(() => {
+        this.normal = false;
       })
     })
   }

@@ -3,8 +3,8 @@ td{
 }
 
 .cc{
-    width: 5em;
-    height: 5em;
+    width: 3em;
+    height: 3em;
     padding: 0;
     margin: 0;   
     
@@ -17,18 +17,18 @@ td{
     background-color: green;
     text-align: center;
     color: white;
-    padding-top: 0.5em;
+    padding-top: 0.4em;
     margin: 0;
-    font-size: 2em;
+    font-size: 1.5em;
     word-wrap: break-word;
 }
 
 img{
-    width: 5em;
+    width: 3em;
 }
 
 .dir{
-    font-size: 4em;
+    font-size: 3em;
     text-align: center;
     font-weight: bold;
     background-color: white;
@@ -42,9 +42,9 @@ img{
     color: white;
     padding: 0em;
     margin: 0;
-    font-size: 2em;
+    font-size: 1.5em;
     word-wrap: break-word;
-    padding-top: 0.5em;
+    padding-top: 0.4em;
 }
 
 .POIUnload{
@@ -54,9 +54,9 @@ img{
     text-align: center;
     color: white;
     padding: 0em;
-    padding-top: 0.5em;
+    padding-top: 0.4em;
     margin: 0;
-    font-size: 2em;
+    font-size: 1.5em;
     word-wrap: break-word;
 }
 
@@ -68,9 +68,9 @@ img{
     color: white;
     padding: 0em;
     margin: 0;
-    font-size: 2em;
+    font-size: 1.5em;
     word-wrap: break-word;
-    padding-top: 0.5em;
+    padding-top: 0.4em;
 }
 
 .NTr{

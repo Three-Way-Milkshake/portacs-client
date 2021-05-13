@@ -23,6 +23,13 @@ export class TasklistService {
     });
   }
   
+  onGotoBase(){
+    return new Observable(observer => {
+      socket.on('gotobase', () => {
+        observer.next();
+      });
+    });
+  }
 
   onNewList() {
     return new Observable(observer => {
