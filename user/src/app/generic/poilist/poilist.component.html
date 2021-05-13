@@ -1,6 +1,15 @@
 <h2>Lista di tutti i POI presenti nella mappa</h2>
-<ul class="poilist">
-    <li *ngFor="let poi of list">
-      {{poi}}
-    </li>
-  </ul>
+
+
+<table class="list">
+  <tr>
+    <th>ID</th>
+    <th>Nome</th>
+    <th>Tipo</th>
+  </tr>
+  <tr *ngFor="let p of id; let i = index">
+    <td class="col">{{p}}</td>
+    <td class="col">{{name[i]}}</td>
+    <td class="col">{{type[i]}}</td>
+  </tr>
+</table>

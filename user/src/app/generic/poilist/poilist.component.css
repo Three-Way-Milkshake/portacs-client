@@ -5,3 +5,20 @@
 h2{
     text-align: center;
 }
+.list{    
+    border: none;
+    width: auto;
+    padding-left: 5%;
+    text-align: center;
+    margin-left: 30%;
+}
+.col{
+    background-color: whitesmoke;
+    color: black;
+    width: 10%;
+    text-align: center;
+    font-size: large;
+}
+th{
+    background-color: #d7c0d0;
+}
