@@ -84,6 +84,7 @@ client.on('data', (data)=>{
                 map.createMap(parseInt(cmd[1]), parseInt(cmd[2]), cmd[3]);
                 break;
             case "POI":
+                poi.delete();
                 for (let k = 2; k < parseInt(cmd[1])*5+2; k+=5) {
                     poi.addPOI(cmd[k], cmd[k+1], cmd[k+2], cmd[k+3], cmd[k+4]);
                 }
