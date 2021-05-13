@@ -22,6 +22,7 @@ export class ListUnitComponent implements OnInit {
     this.service.getListUnit();
     this.service.onNewListUnit().subscribe((data : string[]) => {
       this.ngZone.run(() => {
+        this.selectedUnit = data[0];
         this.listUnit = data;
       });      
     });

@@ -18,9 +18,10 @@
 <div class = "deleteunit"> 
     <h2>Elimina Unità</h2>
     <select class="custom-select" [(ngModel)]="selectedUnit">
+        
         <option *ngFor="let unit of listUnit">{{unit}}</option>
       </select>
-      <input type="submit" value="Elmina {{selectedUnit}}" (click)="delete()">
+      <input type="submit" value="Elimina {{selectedUnit}}" (click)="delete()">
 </div>
 
 <div *ngIf= "added">
@@ -30,7 +31,7 @@
     <h3>Unità eliminata</h3>
 </div>
 <div *ngIf= "fail">
-    <h3>Non è stata possibile l'operazione per il seguente problema {{msg}}</h3>
+    <h3>Non è stata possibile l'operazione per il seguente problema: {{msg}}</h3>
 </div>
 
 <h2>Lista unità</h2>
