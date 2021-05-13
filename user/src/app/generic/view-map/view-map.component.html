@@ -30,11 +30,14 @@
 
 <table class="list">   
     <tr class="first">
+        <td>Stato</td>
         <td>Muletto</td>
         <td>Next task</td>
         <td colspan="100%">Others</td>
     </tr>    
     <tr class="row" *ngFor="let row of tasklist; let i = index">
+        <td class="col">{{status}}</td>
+
         <td class="col" *ngFor="let cell of row; let j = index">
             <p class="tcell" > {{cell}} </p>
         </td>            

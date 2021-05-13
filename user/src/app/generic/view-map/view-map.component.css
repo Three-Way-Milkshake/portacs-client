@@ -147,16 +147,15 @@ div.imgUnitRed p {
     font-size: large;
 }
 
-.col:nth-child(1){
-    background-color:#d7c0d0;
-    width: 20%;
-}
-
 .col:nth-child(2){
-    background-color:#77ba99;
+    background-color:#d7c0d0;
     width: 15%;
 }
 
+.col:nth-child(3){
+    background-color:#77ba99;
+    width: 15%;
+}
 
 .map{
     width: auto;

@@ -34,10 +34,12 @@
     <h3>Non è stata possibile l'operazione per il seguente problema: {{msg}}</h3>
 </div>
 
-<h2>Lista unità</h2>
 
-<ol>
-    <li *ngFor="let unit of listUnit">
-        {{unit}}
-     </li>
-</ol>
+<div class="listau">
+    <h2>Lista unità</h2>
+    <ul>
+        <li *ngFor="let unit of listUnit">
+            {{unit}}
+        </li>
+    </ul>
+</div>

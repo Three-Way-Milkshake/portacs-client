@@ -32,8 +32,12 @@ export class ListUnitComponent implements OnInit {
         let tmpData = data.split(",");
         if (tmpData[0] == "OK") {
           this.deleted = true;
+          this.fail = false;
+          this.added = false;
         } else {
           this.fail = true;
+          this.added = false;
+          this.deleted = false;
           this.msg = tmpData[1];
         }
       });      
@@ -45,9 +49,13 @@ export class ListUnitComponent implements OnInit {
         
         if (tmpData[0] == "OK") {
           this.added = true;
+          this.fail = false;
+          this.deleted = false;
           this.token = tmpData[1];
         } else {
           this.fail = true;
+          this.deleted = false;
+          this.added = false;
           this.msg = tmpData[1];
         }
       });      

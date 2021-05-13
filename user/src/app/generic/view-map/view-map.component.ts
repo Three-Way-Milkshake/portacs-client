@@ -14,6 +14,7 @@ const socket = io("http://127.0.0.1:8090/");
   styleUrls: ['./view-map.component.css']
 })
 export class ViewMapComponent implements OnInit {
+  status : string[] =[];
   tmp : string[][] = [];
   pos : UnitPosition [] = [];
   listPOIID : string[] = [];
@@ -53,6 +54,8 @@ export class ViewMapComponent implements OnInit {
   }
 
   setList(data : string[]){
+    console.log(data);
+    this.tasklist = [];
     for (let i = 0; i < data.length; i++) {
       this.tasklist[i] = [];
       let str = data[i].split(',');

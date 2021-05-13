@@ -45,6 +45,26 @@ select {
   line-height: inherit;
 }
 
+.listau{
+  width: 20%;
+  margin-left: 40%;
+}
+
+.listau ul {
+  list-style-type: none;
+  padding: 0;
+  border: 1px solid #333;
+}
+
+.listau ul li {
+  padding: 8px 16px;
+  border-bottom: 1px solid #333;
+  background-color: rgb(216, 216, 216);
+}
+
+.listau ul li:last-child {
+  border-bottom: none
+}
 
 
 
