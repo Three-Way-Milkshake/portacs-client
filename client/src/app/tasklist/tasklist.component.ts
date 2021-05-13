@@ -8,7 +8,7 @@ import { TasklistService } from '../services/tasklist.service';
   styleUrls: ['./tasklist.component.css']
 })
 export class TasklistComponent implements OnInit {
-
+  showTable : boolean = true;
   showButton : boolean = false;
   lista : string [] = [];
   normal : boolean = true;
@@ -20,6 +20,7 @@ export class TasklistComponent implements OnInit {
       this.ngZone.run(() => {
         this.setValues(String(data));
         this.normal = true;
+        this.showTable = true;
       });      
     });
     //show button
@@ -33,6 +34,12 @@ export class TasklistComponent implements OnInit {
     this.service.onGotoBase().subscribe( () =>{
       this.ngZone.run(() => {
         this.normal = false;
+      })
+    })
+    this.service.doneBase().subscribe(() =>{
+      this.ngZone.run(() => {
+        this.normal = true;
+        this.showTable = false;
       })
     })
   }

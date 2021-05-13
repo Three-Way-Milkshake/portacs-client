@@ -7,7 +7,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
   styleUrls: ['./startbutton.component.css']
 })
 export class StartButtonComponent implements OnInit {
-  isOnScreen : boolean = false;
+  isOnScreen : boolean = true;
   isReqList : boolean = false;
   err : boolean = false;
  
@@ -18,6 +18,7 @@ export class StartButtonComponent implements OnInit {
     this.service.onNewStart().subscribe(() => {
       this.ngZone.run(() => {
         this.isOnScreen = true;
+        console.log("mostro pulsante start");
       });      
     });
     this.service.onNewWaiting().subscribe(() => {

@@ -81,7 +81,6 @@ client.on('data', (data)=>{
                 
                 break;
             case "MAP":
-                io.emit("showstart");
                 map.createMap(parseInt(cmd[1]), parseInt(cmd[2]), cmd[3]);
                 break;
             case "POI":
@@ -127,7 +126,7 @@ client.on('data', (data)=>{
                 io.emit('gotobase')
                 //lasciare senza break
             case "LIST":
-
+                lista.deleteLista();
                 for (let z = 1; z < cmd.length; z++) {
                     lista.addPOI(cmd[z]);
                 }
@@ -135,7 +134,7 @@ client.on('data', (data)=>{
                 listNameFromIdList();
                 let t = lista.getFirstPOI();
                 let n = poi.getNameFromId(t);
-                io.emit("showstart");
+                io.emit("startbutton");
                 io.emit("updatePOI", (n === 'undefined'? "" : n));
                 break;     
             default: 
@@ -149,10 +148,11 @@ client.on('data', (data)=>{
     //task completata
     if ((x+","+y) == poi.getPosfromId(lista.getFirstPOI())){
         if (isGoingBase) {
-            lista.removeFirstPOI();
+            io.emit('arrivedbase');
+            lista.deleteLista();
             checkNuovaLista = true;
             io.emit("showrequestlist");
-            c.aggiungiComando("BASE");  
+            c.aggiungiComando("BASE"); 
         } else {
             io.emit("completedtaskbutton"); //scambiato x e y
         }

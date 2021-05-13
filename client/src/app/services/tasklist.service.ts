@@ -39,7 +39,13 @@ export class TasklistService {
     });
   }
 
-
+  doneBase(){
+    return new Observable(observer => {
+      socket.on('arrivedbase', (list: string) => {
+        observer.next(list);
+      });
+    });
+  }
   doneTask(){
     socket.emit("taskcompletata");
     

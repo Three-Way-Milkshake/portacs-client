@@ -48,5 +48,9 @@ li{
 }
 
 #base{
-    background-color:blue;
+    background-color:rgb(38, 147, 236);
+}
+
+.nolist {
+    color: red;
 }

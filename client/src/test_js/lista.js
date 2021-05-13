@@ -4,6 +4,10 @@ class Lista {
     constructor() {
       this.lista = [];
     }
+
+    deleteLista() {
+      this.lista = [];
+    }
   
     getLista() {
       return this.listaToString();

@@ -13,7 +13,7 @@ export class StartbuttonService {
 
   onNewStart() {
     return new Observable(observer => {
-      socket.on('showstart', () => {
+      socket.on('startbutton', () => {
         observer.next();
       });
     });
