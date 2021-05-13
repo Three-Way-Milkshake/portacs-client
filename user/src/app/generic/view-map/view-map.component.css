@@ -147,9 +147,14 @@ div.imgUnitRed p {
     font-size: large;
 }
 
+.col:nth-child(1){
+    background-color:rgb(207, 207, 207);
+    width: 20%;
+}
+
 .col:nth-child(2){
     background-color:#d7c0d0;
-    width: 15%;
+    width: 10%;
 }
 
 .col:nth-child(3){

@@ -36,7 +36,7 @@
         <td colspan="100%">Others</td>
     </tr>    
     <tr class="row" *ngFor="let row of tasklist; let i = index">
-        <td class="col">{{status}}</td>
+        <td class="col">{{status[i]}}</td>
 
         <td class="col" *ngFor="let cell of row; let j = index">
             <p class="tcell" > {{cell}} </p>

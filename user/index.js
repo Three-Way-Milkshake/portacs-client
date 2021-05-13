@@ -188,7 +188,9 @@ function createConnectionServer(id, password) {
                         l.addListAss(strTask);
                     }
                     io.emit("listnotAss", l.getNotAss());
+                    console.log("AAAAAAAAAAAAAAA"+cmd+"\n"+l.getAss()+"\n");
                     let nameList = poil.turnIdToName(l.getAss());
+                    console.log(nameList+"\n\n\n");
                     io.emit("listAss", nameList);
                     io.emit("listtable", nameList);
                     break;

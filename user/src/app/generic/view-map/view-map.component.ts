@@ -53,17 +53,79 @@ export class ViewMapComponent implements OnInit {
     });
   }
 
-  setList(data : string[]){
-    console.log(data);
+  checkStatusBase(x : number, y : number) {
+    let tmpStatus = "Ritornando alla base";
+    for (let i = 0 ; i < this.listPOIx.length; i++) {
+      if (this.listPOIx[i] == x && this.listPOIy[i] == y) {
+        if (this.listPOIt[i] == "0" || this.listPOIt[i] == "1") {
+          return "Waiting";
+        } else if (this.listPOIt[i] == "2") {
+          return "Parcheggiato";
+        }
+      }
+    }
+    return tmpStatus;
+  }
+
+  checkStatusNormal(x : number, y : number) {
+    let tmpStatus = "In movimento";
+    for (let i = 0 ; i < this.listPOIx.length; i++) {
+      if (this.listPOIx[i] == x && this.listPOIy[i] == y) {
+        if (this.listPOIt[i] == "0") {
+          return "Caricando";
+        } else if (this.listPOIt[i] == "1") {
+          return "Scaricando";
+        } else if (this.listPOIt[i] == "2") {
+          return "Parcheggiato";
+        }
+      }
+    }
+    return tmpStatus;
+  }
+
+  getXUnit(unit : string) {
+    for (let i = 0; i < this.pos.length; i++) {
+      if (this.pos[i].id == unit) {
+        return this.pos[i].posX;
+      }
+    }
+    return -1;
+  }
+  getYUnit(unit: string){
+    for (let i = 0; i < this.pos.length; i++) {
+      if (this.pos[i].id == unit) {
+        return this.pos[i].posY;
+      }
+    }
+    return -1;
+  }
+  
+  isBase(poi : string) {
+    for (let i = 0; i < this.listPOIName.length; i++) {
+      if (poi == this.listPOIName[i] && this.listPOIt[i] == "2") {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  setList(data : string[]){ 
+    console.log(data);   
+    this.status = [];
     this.tasklist = [];
     for (let i = 0; i < data.length; i++) {
       this.tasklist[i] = [];
       let str = data[i].split(',');
-      for (let j = 0; j < str.length; j++) {
-        this.tasklist[i][j] = str[j];
+      if ((str.length == 2 && this.isBase(str[1])) || str.length == 1) { // unità senza lista di task
+        this.status[i] = this.checkStatusBase(this.getXUnit(str[0]), this.getYUnit(str[0]));
+        this.tasklist[i][0] = str[0];
+      } else {
+        this.status[i] = this.checkStatusNormal(this.getXUnit(str[0]), this.getYUnit(str[0]));
+        for (let j = 0; j < str.length; j++) {
+          this.tasklist[i][j] = str[j];
+        }
       }
     }
-    console.log(this.tasklist);
   }
 
   setPOI(data: string[]) {
@@ -124,14 +186,12 @@ export class ViewMapComponent implements OnInit {
       }
       i++;
     }
-    console.log(this.pos);
     this.setPOIonMap();
     if (this.listPOIx != null) {
       this.setNamePOIOnMap();
     }
     if (this.pos != null) {
       this.setIdOnMap();
-      console.log(this.idName);
       for (let t = 0; t < this.pos.length; t++) {
         this.tmp[this.pos[t].posX][this.pos[t].posY] = (this.pos[t].dir).toString();
       }
