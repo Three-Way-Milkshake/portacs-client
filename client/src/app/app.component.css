@@ -3,10 +3,7 @@
     display: inline;
 }
 
-.freccia, .manuale {
-    padding: 2em;    
-    width: 30%;
-}
+
 
 h1 {
     text-align: center;
@@ -21,9 +18,12 @@ h2{
 .map {
     margin: 0em;
     width: 40%;
- 
+    padding: 3em;
 }
-
+.arrows, .manuale{
+    width: 100%;
+    padding: 1em;
+}
 
 
 .startb{
@@ -33,6 +33,7 @@ h2{
 
 
 .cambioguida{
+    margin: 0em;
     width: 15%;
     padding: 1em;
     font-size: 1.5em;

@@ -9,6 +9,10 @@ td{
     margin: 0;   
     
 }
+.map{
+    float: left;
+    display: inline;
+}
 
 
 .nextPOI{
