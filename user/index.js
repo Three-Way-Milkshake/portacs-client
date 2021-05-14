@@ -40,9 +40,8 @@ dir:
 */
   //-----------------------------CLIENT---------------------------------
 var client;
-let count = 0;
 function createConnectionServer(id, password) {
-    console.log("\n\n\n\n\n\n\nNUOVA CONNESSIONE AL SERVER\n\n\n\n\n\n\n\n\n\n\n");
+    console.log("\n\n\nNUOVA CONNESSIONE AL SERVER\n\n\n");
     user.setPassword(password);
     var failClient = false;
     ctj.getDatiESvuota();
@@ -67,8 +66,6 @@ function createConnectionServer(id, password) {
     });
 
     client.on('data', (data)=>{
-        console.log(count +" -- RICEVUTO SOCKET CON: "+data);
-        count++;
         data = data.toString().replace(/(\r\n|\n|\r)/gm, "");
         let msg=data.toString().split(";");
         for (let i = 0; i < msg.length; i++) {
@@ -176,6 +173,8 @@ function createConnectionServer(id, password) {
                     } 
                     break;
                 case "LIST":
+                    //console.log("\n\n\n\n\nPRIMA: "+l.getNotAss());
+                    io.emit("listnotAss", l.getNotAss());
                     l.remove();
                     let k = 2;
                     for (let g = 0; g < parseInt(cmd[1]); g++) {
@@ -188,9 +187,8 @@ function createConnectionServer(id, password) {
                         l.addListAss(strTask);
                     }
                     io.emit("listnotAss", l.getNotAss());
-                    console.log("AAAAAAAAAAAAAAA"+cmd+"\n"+l.getAss()+"\n");
+                    //console.log("DOPO: "+l.getNotAss());
                     let nameList = poil.turnIdToName(l.getAss());
-                    console.log(nameList+"\n\n\n");
                     io.emit("listAss", nameList);
                     io.emit("listtable", nameList);
                     break;
@@ -217,7 +215,7 @@ function createConnectionServer(id, password) {
         if (!failClient) {
             client.write(ctj.getDatiESvuota());
             client.write('\n', ()=>{
-                console.log("response sent");
+                //console.log("response sent");
             });
         } else {
             client.destroy();

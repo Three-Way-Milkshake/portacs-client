@@ -14,10 +14,18 @@
                 <div *ngSwitchCase="8" class="imgUnit" [style.background-image]="'url(assets/mulettoE.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
                 <div *ngSwitchCase="9" class="imgUnit" [style.background-image]="'url(assets/mulettoS.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
                 <div *ngSwitchCase="10" class="imgUnit" [style.background-image]="'url(assets/mulettoO.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
-                <div *ngSwitchCase="11" class="imgUnitRed" [style.background-image]="'url(assets/mulettoN.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
-                <div *ngSwitchCase="12" class="imgUnitRed" [style.background-image]="'url(assets/mulettoE.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
-                <div *ngSwitchCase="13" class="imgUnitRed" [style.background-image]="'url(assets/mulettoS.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
-                <div *ngSwitchCase="14" class="imgUnitRed" [style.background-image]="'url(assets/mulettoO.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
+                <div *ngSwitchCase="30" class="imgUnitRed" [style.background-image]="'url(assets/mulettoN.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
+                <div *ngSwitchCase="31" class="imgUnitRed" [style.background-image]="'url(assets/mulettoE.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
+                <div *ngSwitchCase="32" class="imgUnitRed" [style.background-image]="'url(assets/mulettoS.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
+                <div *ngSwitchCase="33" class="imgUnitRed" [style.background-image]="'url(assets/mulettoO.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
+                <div *ngSwitchCase="40" class="imgUnitBrown" [style.background-image]="'url(assets/mulettoN.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
+                <div *ngSwitchCase="41" class="imgUnitBrown" [style.background-image]="'url(assets/mulettoE.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
+                <div *ngSwitchCase="42" class="imgUnitBrown" [style.background-image]="'url(assets/mulettoS.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
+                <div *ngSwitchCase="43" class="imgUnitBrown" [style.background-image]="'url(assets/mulettoO.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
+                <div *ngSwitchCase="50" class="imgUnitBlue" [style.background-image]="'url(assets/mulettoN.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
+                <div *ngSwitchCase="51" class="imgUnitBlue" [style.background-image]="'url(assets/mulettoE.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
+                <div *ngSwitchCase="52" class="imgUnitBlue" [style.background-image]="'url(assets/mulettoS.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
+                <div *ngSwitchCase="53" class="imgUnitBlue" [style.background-image]="'url(assets/mulettoO.png)'"><p class="idUnit">{{idName[i][j]}}</p></div>
                 <p *ngSwitchCase="20" class="POILoad">{{poiMap[i][j]}}</p>
                 <p *ngSwitchCase="21" class="POIUnload">{{poiMap[i][j]}}</p>
                 <p *ngSwitchCase="22" class="POIExit">{{poiMap[i][j]}}</p>   
@@ -32,8 +40,8 @@
     <tr class="first">
         <td>Stato</td>
         <td>Muletto</td>
-        <td>Next task</td>
-        <td colspan="100%">Others</td>
+        <td>Prossima task</td>
+        <td colspan="100%">Altre task</td>
     </tr>    
     <tr class="row" *ngFor="let row of tasklist; let i = index">
         <td class="col">{{status[i]}}</td>
@@ -41,5 +49,32 @@
         <td class="col" *ngFor="let cell of row; let j = index">
             <p class="tcell" > {{cell}} </p>
         </td>            
+    </tr>
+</table>
+
+<table class="legend">
+    <tr>
+        <td class="color">Cella</td>
+        <td>Tipo</td>
+    </tr>
+    <tr>
+        <td class="NTr">&nbsp;</td>
+        <td>Zona non transitabile</td> 
+    </tr>
+    <tr>
+        <td class="YTr">&nbsp;</td>
+        <td>Zona transitabile</td> 
+    </tr>
+    <tr>
+        <td class="POILoad">&nbsp;</td>
+        <td>POI di carico</td> 
+    </tr>
+    <tr>
+        <td class="POIUnload">&nbsp;</td>
+        <td>POI di scarico</td> 
+    </tr>
+    <tr>
+        <td class="POIExit">&nbsp;</td>
+        <td>POI d'uscita</td> 
     </tr>
 </table>

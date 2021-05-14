@@ -4,18 +4,20 @@
     <div class = "alert">
         <app-admin-notification></app-admin-notification>
     </div>
-    <div class = "map">
-        <h2>Mappa</h2>
-        <app-map></app-map>
-    </div>
-    <div class="bloccograndissimo">
-        <h2>Lista Task</h2>
-        <div class = "taskList">
+    <div class="taskList">
+        
+        <div>
             <app-tasklist></app-tasklist>
         </div>
         <div class = "startb">
             <app-startbutton></app-startbutton>
         </div>
+    </div>
+    <div class = "map">
+        <h2>Mappa</h2>
+        <app-map></app-map>
+    </div>
+    
         
         <button pButton type="button"  label="Metti in guida {{guida}}" (click)="cambio()"></button>
 
@@ -36,5 +38,5 @@
     </div>
     
 
-</div>
+
 

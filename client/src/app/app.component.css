@@ -10,31 +10,27 @@
 
 h1 {
     text-align: center;
-    font-size: 4em;
+    font-size: 2em;
+    margin: 0;
+    margin-bottom: 0.1em;
 }
 h2{
-    font-size: 3em;
+    font-size: 1.5em;
+    margin: 0;
 }
 .map {
-    margin: 1em;
+    margin: 0em;
     width: 40%;
-    float: left;
+ 
 }
 
-.bloccograndissimo{
-    float: right;
-    width: 50%;
-}
+
 
 .startb{
-    width: 30em;
-    padding: 2em;
+   padding: 0.6em;
 }
 
-.alert{
-    width: 60em;
-    padding: 2em;
-}
+
 
 .cambioguida{
     width: 15%;

@@ -3,10 +3,10 @@
     <li *ngFor="let id of listManagerId; let i = index">
        ID: {{listManagerId[i]}} 
         <form>
-            <label id="name">Name: </label>
+            <label id="name">Nome: </label>
             <input for="name" #Name value={{listManagerName[i]}} />
     
-        <label id="surname">Surname: </label>
+        <label id="surname">Cognome: </label>
         <input for="surname" #Surname value={{listManagerSurname[i]}} />
         </form>
        

@@ -243,6 +243,15 @@ export class ViewMapComponent implements OnInit {
     return -1;
   }
 
+  typePOI(x : number, y : number) {
+    for (let i = 0; i < this.listPOIx.length; i++) {
+      if (this.listPOIx[i] == x && this.listPOIy[i] == y) {
+        return this.listPOIt[i];
+      }
+    }
+    return "-1";
+  }
+
   isPOI(x : number, y : number) {
     for (let i = 0; i < this.listPOIx.length; i++) {
       if (this.listPOIx[i] == x && this.listPOIy[i] == y) {
@@ -255,13 +264,13 @@ export class ViewMapComponent implements OnInit {
   dirToNumber(d : string, x : number, y : number) {
     if (this.isPOI(x, y)) {
       if        (d == "0") {
-        return 11;
+        return 30 + parseInt(this.typePOI(x, y))*10;
       } else if (d == "1") {
-        return 12;
+        return 31 + parseInt(this.typePOI(x, y))*10;
       } else if (d == "2") {
-        return 13;
+        return 32 + parseInt(this.typePOI(x, y))*10;
       } else if (d == "3") {
-        return 14;
+        return 33 + parseInt(this.typePOI(x, y))*10;
       } else {
         return -1;
       }

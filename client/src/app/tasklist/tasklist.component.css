@@ -1,23 +1,19 @@
 .task_ok{
-    width: 15%;
-    padding: 1em 0.5em;
-    margin: auto 1em;
-    font-size: 1.5em;
+    float: left;
+    width: auto;
+    padding: 0.4em;
+    margin: 0.5em 1em;
+    font-size: 1em;
     text-align: center; 
-    margin-left: 1.7em;     
+    margin-left: 1.7em;   
+    background-color: rgb(12, 12, 148);
+    border: 1px solid darkblue;  
 }
-ol {
-    font-size: .5em;
-    margin-left: 3%;
-   
-}
-li{
-    width: 2%;
-}
+
 .list{    
     width: auto;
     padding-left: 5%;
-    font-size: 2em;
+    font-size: 1em;
     text-align: center;
 }
 .first{
@@ -53,4 +49,6 @@ li{
 
 .nolist {
     color: red;
+    text-align: center;
+    margin: 0;
 }

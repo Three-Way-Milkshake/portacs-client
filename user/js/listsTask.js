@@ -26,7 +26,7 @@ class ListsTask {
                         c++;
                     }
                 }
-                if (c == (tmpStr.length-1)) {
+                if (c == (tmpStr.length-1) && c != 0) {
                     this.notAss.splice(j, 1);
                     break;
                 }
