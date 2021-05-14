@@ -211,17 +211,17 @@ img{
 .legend {
     border: none;
     width: auto;
-    padding-left: 5%;   
+    padding: 2% 5%;   
 }
 
 .legend td:nth-child(1) {
-    width: 1em;
+    width: 2em;
 }
 
-.legend td {
-    padding: 5%;
+.legend tr {
+    padding: 1%;
 }
 
-.color{
-    width: auto;
+.legend td:nth-child(2) {
+    width: 10em;
 }

@@ -199,11 +199,20 @@ export class ViewMapComponent implements OnInit {
   }
 
   setIdOnMap() {
+    this.idName = [];
     for (let t = 0; t < this.pos.length; t++) {
       if (this.idName[this.pos[t].posX] == null) {
         this.idName[this.pos[t].posX] = [];
       }
-      this.idName[this.pos[t].posX][this.pos[t].posY] = (this.pos[t].id).toString();
+      if (this.isPOI(this.pos[t].posX, this.pos[t].posY) && this.typePOI(this.pos[t].posX, this.pos[t].posY) == "2") {
+        if (this.idName[this.pos[t].posX][this.pos[t].posY] == null) {
+          this.idName[this.pos[t].posX][this.pos[t].posY] = "1";
+        } else {
+          this.idName[this.pos[t].posX][this.pos[t].posY] = String(parseInt(this.idName[this.pos[t].posX][this.pos[t].posY])+1);
+        }
+      } else {
+        this.idName[this.pos[t].posX][this.pos[t].posY] = (this.pos[t].id).toString();
+      }
     }
   }
 

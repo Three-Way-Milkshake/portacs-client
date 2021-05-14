@@ -19,16 +19,19 @@ export class TaskListsComponent implements OnInit {
     this.service.getListNotAss();
     this.service.onNewListAss().subscribe((data : string []) => {
       this.ngZone.run(() => {
-        
-        this.ass = data;
+        this.ass = [];
+        for (let i = 0; i < data.length; i++) {
+          let str = data[i].split(',');
+          if (str.length > 1) {
+            this.ass.push(data[i]);
+          }
+        }
       });      
     });
     
     this.service.onNewListNotAss().subscribe((data : string[]) => {
       this.ngZone.run(() => {
-        this.setValues(data);
-        //this.notAss = data
-        
+        this.setValues(data);  
       });      
     });
 
@@ -39,8 +42,7 @@ export class TaskListsComponent implements OnInit {
     let x = tmp[0].split(":");
     let x2 = x[1].split(';');
     console.log(x2[0]);
-    this.service.remove(x2[0]);
-    
+    this.service.remove(x2[0]);  
   }
   
   setValues(data: string[]){
@@ -55,6 +57,4 @@ export class TaskListsComponent implements OnInit {
       }
     }
   }
-  
-
 }
