@@ -41,6 +41,7 @@ let manualDrivingList = new Listamosse();
 let isCorrectMove = false;
 let isGoingBase = false;
 let checkNuovaLista = false;
+let count = 0;
 
 /*
 dir:
@@ -92,13 +93,13 @@ client.on('data', (data)=>{
                 io.emit("poilistmap", poi.getListMap());
                 break;
             case "PATH":
+                console.log("\n\n-----PATH-----\n"+cmd);
+                count++;
                 if(cmd[1]==="EMPTY") continue;
-                console.log("--------\nPATH");
                 canCheckAuto = true;
                 mosse.deleteAllMoves();
                 //non sarebbe cmd[1].length nel ciclo? ora funziona con PATH,..,..,..,..,..
                 for (let k = 1; k < cmd.length; k++) {
-                    console.log(cmd[k]);
                     mosse.addMove(cmd[k]);
                 }
                 if (manualDriving && !isCorrectMove) {
@@ -110,10 +111,9 @@ client.on('data', (data)=>{
                     stopped = true;
                 } else {
                     for (let k = 0; k < parseInt(cmd[1]); k++) {
-                        mosse.addMoveTail('S');
+                        mosse.addMoveTail('4');
                     }
                 }
-                console.log(mosse);
                 break;
             case "START":
                 stopped = false;
@@ -145,7 +145,8 @@ client.on('data', (data)=>{
         }
     }
     //muovere il muletto in automatic driving
-    if (sendPosition && !manualDriving && !stopped) {
+    if (sendPosition && !manualDriving && !stopped && count > 1) {
+        console.log("LISTA MOSSE: "+mosse.getMoves());
         changePosition(mosse.getLastInsertMove());
     }
     //task completata
@@ -171,8 +172,9 @@ client.on('data', (data)=>{
             c.aggiungiComando("PATH,0");
             // mosse.deleteAllMoves();
         }
+        console.log("Bro siamo qui: --------------------------- POS," + x + "," + y + "," + dir)
         let toSend=c.getDatiESvuota("POS," + x + "," + y + "," + dir)
-        console.log("sending (POS): "+toSend);
+        //console.log("sending (POS): "+toSend);
         client.write(toSend); 
         client.write('\n');
     }
@@ -256,7 +258,6 @@ io.on("connection", (socket) => {
     });
     socket.on("start", () => { 
         c.aggiungiComando("PATH,0"); //PATH -> taskfinite -> gestito da server | 0 false -> richiede lo stesso percorso
-        console.log("Inviato comando PATH,0");
         //c.aggiungiComando("MAP");
     });
     socket.on("alert-notification", () => {
@@ -274,9 +275,12 @@ io.on("connection", (socket) => {
         manualStop = true;
     });
     socket.on("automatica", () => {
-        manualDriving = false;
         manualDrivingList.deleteAllMoves();
         mosse.deleteAllMoves();
+        manualDriving = false;
+        count = 0;
+        console.log("\n\n\n\n\nn\n\n\\n\n\n\n\n\n\n\n\nnon va nienteEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+        c.aggiungiComando("POS," + x + "," + y + "," + dir);
         c.aggiungiComando("PATH,0"); //0 false -> richiede lo stesso percorso
     });
     socket.on("manuale", () => {
@@ -313,7 +317,7 @@ http.listen(HTTP_PORT, () => {
 })
 
 function changePosition(mossa){
-    console.log("Devo muovermi: "+mossa);
+    console.log("Devo muovermi: "+mossa + "\nmanual? "+manualDriving);
     switch(mossa) {
       case "2": // turn right
         if      (dir == 0) dir = 1;
@@ -344,6 +348,8 @@ function changePosition(mossa){
           //scambiato x e y
           let movVertic = x; 
           let movOrizz = y;
+          console.log("-------");
+          //console.log("v "+movVertic+"\no "+movOrizz);
           if        (dir == 0) {
             movVertic--;
           } else if (dir == 2) {
@@ -353,9 +359,10 @@ function changePosition(mossa){
           } else if (dir == 3) {
             movOrizz--;
           }
+          //console.log("v "+movVertic+"\no "+movOrizz);
           
           if (movOrizz >= 0 && movVertic >= 0 && movOrizz < map.getCol() && movVertic < map.getRow() && (map.getCell(movVertic, movOrizz) != '0')) {
-              //scambiato x e y
+              console.log("Mossa eseguita");
               x = movVertic;
               y = movOrizz;
           }
@@ -363,6 +370,7 @@ function changePosition(mossa){
           default:
               mossa ="4"; // stop
     }
+    console.log(x + ", " + y + ", " + dir);
     io.emit("updatemap", x+","+y+","+dir);
     if (!manualDriving) {
         io.emit("arrows", mossa);
@@ -370,7 +378,7 @@ function changePosition(mossa){
         let t = mosse.getLastInsertMove();
         if (mossa == t) {
             isCorrectMove = true;
-            t = mosse.getLastInsertMove();
+            t = mosse.getLastMove();
             io.emit("arrows", t);
         } else {
             isCorrectMove = false;

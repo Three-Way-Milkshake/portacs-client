@@ -14,8 +14,14 @@ class Container {
     //MAP,4,8,102410z0101010c020010b10a
 
     
-    aggiungiComando(parametro) { 
-        this.contenitore.push(parametro.toString());
+    aggiungiComando(parametro) {
+        if (this.contenitore.indexOf(parametro) === -1) {
+            console.log("Parametro: "+parametro);
+            console.log(this.contenitore);
+            this.contenitore.push(parametro.toString());
+        }  else {
+            console.log("NON AGGIUNGO: "+parametro);
+        } 
     }
 
     getContainer() {
