@@ -3,17 +3,17 @@ FROM node:14-alpine
 COPY dist/ /dist
 COPY index.js /index.js 
 COPY node_package.json /package.json
-COPY src/ /src
-COPY forklift_launcher.sh /launcher.sh
+COPY js/ /js
+COPY user_launcher.sh /launcher.sh
 
 ENV SERVER_ADDR=192.168.3.129
-ENV ngPort1=4201
-ENV ngPort2=8081
-ENV startX=0
-ENV startY=0
-ENV forkliftId=f1
-ENV forkliftToken=abc
-ENV configurationEnv=default
+ENV ngPort1=4300
+ENV ngPort2=8090
+# ENV startX=0
+# ENV startY=0
+# ENV forkliftId=f1
+# ENV forkliftToken=abc
+# ENV configurationEnv=default
 
 EXPOSE $ngPort1
 EXPOSE $ngPort2
