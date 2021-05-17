@@ -22,4 +22,24 @@ describe('RegistrationManagerComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should accept name', () => {
+    component.name="Mario"
+    expect(component.name).toEqual("Mario");
+  });
+  it('should accept surname', () => {
+    component.surname="Mario"
+    expect(component.surname).toEqual("Mario");
+  });
+  it('should accept id', () => {
+    component.id="Mario"
+    expect(component.id).toEqual("Mario");
+  });
+  it('should accept pwd', () => {
+    component.pwd="Mario"
+    expect(component.pwd).toEqual("Mario");
+  });
+
+
 });
+

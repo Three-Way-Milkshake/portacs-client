@@ -22,4 +22,8 @@ describe('ListUnitComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should listunit', () => {
+    component.listUnit[0] = "0";
+    expect(component.listUnit[0]).toEqual("0");
+  });
 });

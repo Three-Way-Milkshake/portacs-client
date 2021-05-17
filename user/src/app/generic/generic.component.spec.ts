@@ -22,4 +22,9 @@ describe('GenericComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('okEcc', () => {
+    component.okEcc();
+    expect(component.errEcc).toBeFalsy();
+  });
 });

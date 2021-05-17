@@ -252,6 +252,8 @@ export class ManageMapComponent implements OnInit {
     return "";
   }
 
+  
+
   confirmMap(){
     this.service.changeMap(this.tmp);
     for (let i = 0; i < this.tmpCell.length; i++) {

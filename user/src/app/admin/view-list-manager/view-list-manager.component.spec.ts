@@ -22,4 +22,12 @@ describe('ViewListManagerComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('setValues', () => {
+    component.setValues(["0,0,0"]);
+    expect(component.listManagerId[0]).toEqual("0");
+    expect(component.listManagerName[0]).toEqual("0");
+    expect(component.listManagerSurname[0]).toEqual("0");
+  });
+
 });
