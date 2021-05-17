@@ -56,7 +56,7 @@ let c = new Container();
 
   //-----------------------------CLIENT---------------------------------
 
-var client = net.connect(SERVER_PORT, 'localhost', ()=>{
+var client = net.connect(SERVER_PORT, process.env.SERVER_ADDR, ()=>{
     console.log('connected to server');
     client.write(`FORKLIFT\n${process.argv[6]}\n${process.argv[7]}\nLIST;`);
     client.setNoDelay();
