@@ -24,9 +24,6 @@ export class POIListComponent implements OnInit {
   }
 
   setValues(s: string[]) {
-    
-    
-
     for (let k = 0; k < s.length; k++) {
       let tmp : string[] = s[k].split(",");
       this.list[k] = "ID: "+tmp[1]+", Nome: "+tmp[2] +", Tipo: "+ this.typeToName(parseInt(tmp[0]));

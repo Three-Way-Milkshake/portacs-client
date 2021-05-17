@@ -5,6 +5,9 @@ class Listamosse {
     */
     moves = [];
     
+    getMoves() {
+        return this.moves;
+    }
     createMosse(seq){
         this.moves = [];
         for (let i = 0; i < seq.length; i++) {

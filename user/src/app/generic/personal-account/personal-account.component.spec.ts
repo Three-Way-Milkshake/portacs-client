@@ -22,4 +22,20 @@ describe('PersonalAccountComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('save', () => {
+    component.save("0","0","0","0");
+    expect(component.name).toEqual("0");
+    expect(component.surname).toEqual("0");
+    expect(component.password).toEqual("0");
+    expect(component.password2).toEqual("0");
+  });
+
+  it('setValues', () => {
+    component.setValues("0,0,0,0");
+    expect(component.name[0]).toEqual("0");
+    expect(component.surname[0]).toEqual("0");
+    expect(component.password).toEqual("0");
+    expect(component.password2[0]).toEqual("0");
+  });
 });
