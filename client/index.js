@@ -196,10 +196,16 @@ client.on('data', (data)=>{
  
 client.on('end', ()=>{ 
     console.log('disconnected from server');
+    process.env.startX=x;
+    process.env.startY=y;
+    process.exit(1);
 });
 
 client.on('close', ()=>{
     console.log('Socket is fully closed now.');
+    process.env.startX=x;
+    process.env.startY=y;
+    process.exit(1);
 })
 
 function listNameFromIdList() {
