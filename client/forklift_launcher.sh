@@ -8,4 +8,5 @@ fi
 
 serve -l $ngPort1 &
 cd /
-node index.js $ngPort1 $ngPort2 $startX $startY $forkliftId $forkliftToken 
+# node index.js $ngPort1 $ngPort2 $startX $startY $forkliftId $forkliftToken
+nodemon -w index.js -x 'node index.js $ngPort1 $ngPort2 $startX $startY $forkliftId $forkliftToken || (sleep 0.5 ; touch index.js)'

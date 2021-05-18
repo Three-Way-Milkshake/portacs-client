@@ -6,6 +6,9 @@ COPY node_package.json /package.json
 COPY js/ /js
 COPY user_launcher.sh /launcher.sh
 
+RUN npm i -g serve
+RUN cd / ; npm i
+
 ENV SERVER_ADDR=192.168.3.129
 ENV ngPort1=4300
 ENV ngPort2=8090
@@ -18,8 +21,6 @@ ENV ngPort2=8090
 EXPOSE $ngPort1
 EXPOSE $ngPort2
 
-RUN npm i -g serve
-RUN cd / ; npm i
 # RUN cd dist/muletto ; serve -l 4201 &
 
 # CMD cd dist/muletto ; serve -l ${angularPort} 

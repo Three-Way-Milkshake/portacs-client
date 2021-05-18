@@ -65,6 +65,8 @@ var client = net.connect(SERVER_PORT, process.env.SERVER_ADDR, ()=>{
 client.setEncoding('utf8');
 client.on('error', ()=>{
     console.log("Something went wrong with the server. Quitting.");
+    process.env.startX=x;
+    process.env.startY=y;
     process.exit(1);
 })
 
