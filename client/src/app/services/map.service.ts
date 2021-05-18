@@ -1,7 +1,7 @@
 import { Injectable, Output } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+
 import { io } from "socket.io-client";
-import { observable, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { environment } from './../../environments/environment';
 
@@ -11,7 +11,7 @@ const socket = io(`http://127.0.0.1:${environment.socketio_port}/`);
   providedIn: 'root'
 })
 export class MapService {
-  constructor(private http: HttpClient) { }
+  constructor() { }
 
   onNewPOIList() {
     return new Observable(observer => {
