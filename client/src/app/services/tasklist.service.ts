@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { io } from "socket.io-client";
@@ -10,7 +10,7 @@ const socket = io(`http://127.0.0.1:${environment.socketio_port}/`);
 })
 export class TasklistService {
 
-  constructor(private http: HttpClient) {
+  constructor() {
     
   }
 

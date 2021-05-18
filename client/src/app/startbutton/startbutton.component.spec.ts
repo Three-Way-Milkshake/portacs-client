@@ -22,4 +22,14 @@ describe('StartButtonComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('list', () => {
+    component.start();
+    expect(component.isReqList).toEqual(false);
+  });
+
+  it('start', () => {
+    component.start();
+    expect(component.isOnScreen).toEqual(false);
+  });
 });

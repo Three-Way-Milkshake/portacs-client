@@ -22,4 +22,9 @@ describe('TasklistComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('setValues', () => {
+    component.setValues("0")
+    expect(component.lista[0]).toEqual("0");
+  });
 });

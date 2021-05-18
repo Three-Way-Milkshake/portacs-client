@@ -22,4 +22,17 @@ describe('ManualDrivingComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should start', () => {
+    component.stop = true;
+    component.startstop();
+    expect(component.cmd).toEqual("Start");
+  });
+  it('should stop', () => {
+    
+    component.startstop();
+    expect(component.cmd).toEqual("Stop");
+  });
+
+
 });
