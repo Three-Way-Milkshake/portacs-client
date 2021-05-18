@@ -25,6 +25,7 @@ export class MapComponent implements OnInit {
    }
   ngOnInit() {
     this.service.requestPOI();
+    this.service.requestMap();
     this.service.onNewAction().subscribe((data) => {
       this.ngZone.run(() => {
         this.changePosition(String(data));
