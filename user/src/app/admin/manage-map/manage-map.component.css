@@ -33,7 +33,7 @@ input{
 .POIExit{
     width: 100%;
     height: 100%;
-    background-color: blue;
+    background-color: rgb(255, 196, 0);
     color: white;
 }
 
