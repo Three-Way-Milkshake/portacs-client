@@ -1,10 +1,11 @@
 FROM node:14-alpine
 
-COPY dist/ /dist
 COPY node_package.json /package.json
 
 RUN npm i -g serve nodemon
 RUN cd / ; npm i
+
+COPY dist/ /dist
 
 COPY index.js /index.js 
 COPY src/ /src
