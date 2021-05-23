@@ -86,6 +86,7 @@ client.on('data', (data)=>{
                 break;
             case "MAP":
                 map.createMap(parseInt(cmd[1]), parseInt(cmd[2]), cmd[3]);
+                io.emit("mappa", map.getMap());
                 break;
             case "POI":
                 poi.delete();

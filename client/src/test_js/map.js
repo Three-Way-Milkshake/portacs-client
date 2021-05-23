@@ -40,7 +40,7 @@ class Map {
     }
     
     createMap(r, c, seq) {
-      
+      this.map = [];
       this.row = parseInt(r);
       this.col = parseInt(c);
       let counter=0;

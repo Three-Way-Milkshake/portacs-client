@@ -87,6 +87,7 @@ export class MapComponent implements OnInit {
     transform data in a string
   */
   setValues(data: string) {
+    this.tmp = [];
     this.tmp[0] = [];
     let k = 0; //virgole
     let j = 0; //parentesi
