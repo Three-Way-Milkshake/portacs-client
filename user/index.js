@@ -100,6 +100,7 @@ function createConnectionServer(id, password) {
                     }
                     break;
                 case "POI":
+                    poil.delete();
                     for (let k = 2; k < parseInt(cmd[1]*5+2); k+=5) {
                         poil.addPOI(cmd[k], cmd[k+1], cmd[k+2], cmd[k+3], cmd[k+4]);
                     }

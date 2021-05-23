@@ -269,5 +269,6 @@ export class ManageMapComponent implements OnInit {
       this.service.newPOI(this.tmpPOI[i].x+","+this.tmpPOI[i].y+","+this.tmpPOI[i].a+","+this.tmpPOI[i].id+","+this.tmpPOI[i].t+","+this.tmpPOI[i].name);
     }
     this.tmpPOI = [];
+    setTimeout(function(){ window.location.reload(); }, 300);
   }
 }
