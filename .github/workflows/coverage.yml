@@ -1,0 +1,52 @@
+name: JS CI
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+          
+      - name: Set up npm client
+        working-directory: ./client
+        run: |
+         npm install
+         npm install -g @angular/cli
+      - name: Set up npm user
+        working-directory: ./user
+        run: | 
+         npm install
+         npm install -g @angular/cli
+        
+      - name: build client
+        working-directory: ./client
+        run: ng build -c dev1
+        continue-on-error: true
+      - name: testing client angular
+        working-directory: ./client
+        run: ng test -c dev1 -- --no-watch --no-progress --code-coverage --browsers=ChromeHeadlessCI
+        continue-on-error: true
+      - name: testing client node
+        working-directory: ./client
+        run: npm test
+        continue-on-error: true
+      
+
+        
+      - name: build user
+        working-directory: ./user
+        run: ng build
+        continue-on-error: true
+      
+      - name: testing user angular
+        working-directory: ./user
+        run: ng test -- --no-watch --no-progress --code-coverage --browsers=ChromeHeadlessCI
+        continue-on-error: true
+      - name: testing user node
+        working-directory: ./user
+        run: npm test
+        continue-on-error: true
