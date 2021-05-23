@@ -256,6 +256,7 @@ export class ManageMapComponent implements OnInit {
 
   confirmMap(){
     this.service.changeMap(this.tmp);
+    console.log(this.tmp);
     for (let i = 0; i < this.tmpCell.length; i++) {
       let idBoh = this.idFromPosition(this.tmpCell[i].x, this.tmpCell[i].y);
       if (idBoh != "") {
