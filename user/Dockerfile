@@ -1,13 +1,15 @@
 FROM node:14-alpine
 
-COPY dist/ /dist
-COPY index.js /index.js 
 COPY node_package.json /package.json
-COPY js/ /js
-COPY user_launcher.sh /launcher.sh
 
 RUN npm i -g serve
 RUN cd / ; npm i
+
+COPY dist/ /dist
+COPY index.js /index.js 
+COPY js/ /js
+COPY user_launcher.sh /launcher.sh
+
 
 ENV SERVER_ADDR=192.168.3.129
 ENV ngPort1=4300
