@@ -92,7 +92,8 @@ function createConnectionServer(id, password) {
                     if (cmd[1] == "OK") {
                         ctj.aggiungiComando("POI")
                     } else if (cmd[1] == "FAIL") {
-                        ctj.aggiungiComando("MAP");
+                        // ctj.aggiungiComando("MAP");
+                        io.emit('ecc', cmd[2]);
                     } else {
                         map.createMap(parseInt(cmd[1]), parseInt(cmd[2]), cmd[3]);
                         
@@ -351,6 +352,9 @@ io.on("connection", (socket) => {
     });
     socket.on("login", (data) =>{
         let tmpData = data.split(',');
+        map = new Map();
+        poil = new POIlist();
+        l = new ListsTask();
         //provaaa
         //socket.emit("logincorrect", "MANAGER");
         createConnectionServer(tmpData[0], tmpData[1]);
