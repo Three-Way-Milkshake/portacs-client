@@ -29,6 +29,7 @@ let tmpSurname = "";
 let tmpIDUser = "";
 let user = new UserInformation();
 let map = new Map();
+// let oldMap=new Map();
 let poil = new POIlist();
 let l = new ListsTask();
 /*
@@ -90,14 +91,18 @@ function createConnectionServer(id, password) {
                     //se cmd[1]=fail errore cambio mappa
                     //else la richiedo per la view map
                     if (cmd[1] == "OK") {
-                        ctj.aggiungiComando("POI")
+                        // ctj.aggiungiComando("POI")
                     } else if (cmd[1] == "FAIL") {
                         // ctj.aggiungiComando("MAP");
+                        // map.setMap(oldMap.getMapDeepCopy());
+                        // io.emit("managemap", map.getMap());
+                        // io.emit("map", map.getMap());
                         io.emit('ecc', cmd[2]);
                     } else {
                         map.createMap(parseInt(cmd[1]), parseInt(cmd[2]), cmd[3]);
                         
                         io.emit("map", map.getMap());
+                        io.emit("managemap", map.getMap());
                     }
                     break;
                 case "POI":
@@ -108,6 +113,7 @@ function createConnectionServer(id, password) {
                     
                     io.emit("poilist", poil.getListString());
                     io.emit("poilistmap", poil.getListMap());
+                    io.emit("poilistmanagemap", poil.getListMap());
                     break;
                 case "UNI":
                     let strUnit = cmd[1];
@@ -298,6 +304,8 @@ io.on("connection", (socket) => {
     });
     socket.on("changedmap", (data) => {
         console.log("------\nMAPPA CAMBIATA");
+        //oldMap=JSON.parse(JSON.stringify(map));
+        // oldMap.setMap(map.getMapDeepCopy());
         map.setMap(data);
         let poisWellMapped=map.getPoisWellMapped();
         for(let p in poisWellMapped){
@@ -312,10 +320,10 @@ io.on("connection", (socket) => {
         ctj.aggiungiComando("MAP,"+map.getR()+","+map.getC()+","+map.getMapForServer());
         let pois=poil.getListForCell();
         
-        for(let i=0; i<pois.length; ++i){
+        /* for(let i=0; i<pois.length; ++i){
             
             //ctj.aggiungiComando('CELL,'+pois[i])
-        }
+        } */
     });
     socket.on("newcell", (cell) => {
         ctj.aggiungiComando("CELL,"+cell);

@@ -21,7 +21,7 @@ export class MapComponent implements OnInit {
   listPOIName: string[] = [];
   poiMap : string[][] = [];
   constructor(private service: MapService, private ngZone: NgZone) {
-    this.pos = {posX: environment.x, posY: environment.y, dir: 0};
+    this.pos = {posX: environment.x, posY: environment.y, dir: 2};
    }
   ngOnInit() {
     this.service.requestPOI();

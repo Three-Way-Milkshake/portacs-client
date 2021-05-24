@@ -177,7 +177,7 @@ client.on('data', (data)=>{
             c.aggiungiComando("PATH,0");
             // mosse.deleteAllMoves();
         }
-        console.log("Bro siamo qui: --------------------------- POS," + x + "," + y + "," + dir)
+        console.log("--------------------------- POS," + x + "," + y + "," + dir)
         let toSend=c.getDatiESvuota("POS," + x + "," + y + "," + dir)
         //console.log("sending (POS): "+toSend);
         client.write(toSend); 

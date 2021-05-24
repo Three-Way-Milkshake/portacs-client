@@ -44,6 +44,10 @@ class Map {
     getMap() {
       return this.mapToString();
     }
+
+    getMapDeepCopy(){
+      return this.map.slice(0);
+    }
     
     createMap(r, c, seq) {
       let counter=0;

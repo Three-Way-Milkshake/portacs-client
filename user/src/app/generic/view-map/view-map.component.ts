@@ -58,7 +58,7 @@ export class ViewMapComponent implements OnInit {
     for (let i = 0 ; i < this.listPOIx.length; i++) {
       if (this.listPOIx[i] == x && this.listPOIy[i] == y) {
         if (this.listPOIt[i] == "0" || this.listPOIt[i] == "1") {
-          return "Waiting";
+          return "In attesa";
         } else if (this.listPOIt[i] == "2") {
           return "Parcheggiato";
         }
@@ -168,6 +168,9 @@ export class ViewMapComponent implements OnInit {
   }
 
   setValues(data: string) {
+    console.log(data);
+    
+    this.tmp=[];
     this.tmp[0] = [];
     let k = 0; //virgole
     let j = 0; //parentesi
