@@ -41,7 +41,7 @@ let manualDrivingList = new Listamosse();
 let isCorrectMove = false;
 let isGoingBase = false;
 let checkNuovaLista = false;
-let count = 0;
+let count = 1;
 
 /*
 dir:
@@ -86,6 +86,7 @@ client.on('data', (data)=>{
                 break;
             case "MAP":
                 map.createMap(parseInt(cmd[1]), parseInt(cmd[2]), cmd[3]);
+                io.emit("mappa", map.getMap());
                 break;
             case "POI":
                 poi.delete();
@@ -110,6 +111,7 @@ client.on('data', (data)=>{
                 }
                 break;
             case "STOP":
+                console.log("STOP"+cmd);
                 if (cmd[1] == '0') {
                     stopped = true;
                 } else {

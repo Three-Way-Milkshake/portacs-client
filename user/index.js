@@ -101,6 +101,7 @@ function createConnectionServer(id, password) {
                     }
                     break;
                 case "POI":
+                    poil.delete();
                     for (let k = 2; k < parseInt(cmd[1]*5+2); k+=5) {
                         poil.addPOI(cmd[k], cmd[k+1], cmd[k+2], cmd[k+3], cmd[k+4]);
                     }
@@ -296,6 +297,7 @@ io.on("connection", (socket) => {
         socket.emit("poilistmanagemap", poil.getListMap());
     });
     socket.on("changedmap", (data) => {
+        console.log("------\nMAPPA CAMBIATA");
         map.setMap(data);
         let poisWellMapped=map.getPoisWellMapped();
         for(let p in poisWellMapped){
@@ -306,6 +308,7 @@ io.on("connection", (socket) => {
                 poil.addPOI(content.x, content.y, 0, 0, p)
             }
         }
+        console.log(map.getMapForServer());
         ctj.aggiungiComando("MAP,"+map.getR()+","+map.getC()+","+map.getMapForServer());
         let pois=poil.getListForCell();
         

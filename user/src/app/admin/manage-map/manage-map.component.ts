@@ -256,6 +256,7 @@ export class ManageMapComponent implements OnInit {
 
   confirmMap(){
     this.service.changeMap(this.tmp);
+    console.log(this.tmp);
     for (let i = 0; i < this.tmpCell.length; i++) {
       let idBoh = this.idFromPosition(this.tmpCell[i].x, this.tmpCell[i].y);
       if (idBoh != "") {
@@ -269,5 +270,6 @@ export class ManageMapComponent implements OnInit {
       this.service.newPOI(this.tmpPOI[i].x+","+this.tmpPOI[i].y+","+this.tmpPOI[i].a+","+this.tmpPOI[i].id+","+this.tmpPOI[i].t+","+this.tmpPOI[i].name);
     }
     this.tmpPOI = [];
+    setTimeout(function(){ window.location.reload(); }, 300);
   }
 }
